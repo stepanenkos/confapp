@@ -50,7 +50,7 @@ class HelloActivity : AppCompatActivity() {
     }
 
     override fun onStop() {
-        Log.d(TAG, "onStop")
+        Log.d(TAG, "onStopChange")
 
         super.onStop()
     }
