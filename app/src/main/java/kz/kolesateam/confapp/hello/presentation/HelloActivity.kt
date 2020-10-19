@@ -44,7 +44,7 @@ class HelloActivity : AppCompatActivity() {
     }
 
     override fun onPause() {
-        Log.d(TAG, "onPause")
+        Log.d(TAG, "onPauseddddd")
 
         super.onPause()
     }
