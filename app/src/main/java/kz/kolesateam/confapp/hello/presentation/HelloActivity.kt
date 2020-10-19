@@ -44,13 +44,13 @@ class HelloActivity : AppCompatActivity() {
     }
 
     override fun onPause() {
-        Log.d(TAG, "onPauseddddd")
+        Log.d(TAG, "onPause")
 
         super.onPause()
     }
 
     override fun onStop() {
-        Log.d(TAG, "onStopChange")
+        Log.d(TAG, "onStop")
 
         super.onStop()
     }
