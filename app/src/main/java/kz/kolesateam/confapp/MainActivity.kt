@@ -7,7 +7,7 @@ import android.util.Log
 import android.widget.Button
 import kz.kolesateam.confapp.hello.presentation.HelloActivity
 
-private const val TAG = "MainActivity"
+private const val TAG = "MainActivityTAG"
 
 class MainActivity : AppCompatActivity() {
 
