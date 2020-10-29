@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="hello_activity_text_size_what_is_your_name">24sp</dimen>
+    <dimen name="hello_activity_text_size_enter_your_name">16sp</dimen>
+    <dimen name="hello_activity_text_size_button_continue">16sp</dimen>
+    <dimen name="hello_activity_padding_enter_your_name">16dp</dimen>
+    <dimen name="hello_activity_padding_button_continue">10dp</dimen>
+</resources>
