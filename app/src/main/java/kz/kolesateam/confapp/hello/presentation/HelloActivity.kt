@@ -1,63 +1,49 @@
 package kz.kolesateam.confapp.hello.presentation
 
+
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
+import android.text.Editable
+import android.text.TextWatcher
 import android.widget.Button
+import android.widget.EditText
 import kz.kolesateam.confapp.R
 
 private const val TAG = "HelloActivity"
-
+const val EXTRA_NAME_KEY = "NAME"
 class HelloActivity : AppCompatActivity() {
-
-    private val closeHelloButton: Button by lazy {
-        findViewById(R.id.activity_hello_close_hello_button)
-    }
+    private lateinit var editTextEnterYourName: EditText
+    private lateinit var buttonContinue: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_hello)
 
-        closeHelloButton.setOnClickListener {
-            finish()
-        }
+        editTextEnterYourName = findViewById(R.id.editTextEnterYourName)
+        buttonContinue = findViewById(R.id.buttonContinue)
 
-        Log.d(TAG, "onCreate")
+        editTextEnterYourName.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                if (!s.isNullOrBlank() && !s.isNullOrEmpty()) {
+                    buttonControl(true, resources.getColor(R.color.hello_activity_color_button_continue_enabled))
+                } else {
+                    buttonControl(false, resources.getColor(R.color.hello_activity_color_button_continue_disabled))
+                }
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+
+            }
+
+        })
+
+    }
+    private fun buttonControl(isEnabled: Boolean, backgroundColor: Int) {
+        buttonContinue.isEnabled = isEnabled
+        buttonContinue.setBackgroundColor(backgroundColor)
     }
 
-    override fun onRestart() {
-        super.onRestart()
-
-        Log.d(TAG, "onRestart")
-    }
-
-    override fun onStart() {
-        super.onStart()
-
-        Log.d(TAG, "onStart")
-    }
-
-    override fun onResume() {
-        super.onResume()
-
-        Log.d(TAG, "onResume")
-    }
-
-    override fun onPause() {
-        Log.d(TAG, "onPause")
-
-        super.onPause()
-    }
-
-    override fun onStop() {
-        Log.d(TAG, "onStop")
-
-        super.onStop()
-    }
-
-    override fun onDestroy() {
-        Log.d(TAG, "onDestroy")
-
-        super.onDestroy()
-    }
 }
