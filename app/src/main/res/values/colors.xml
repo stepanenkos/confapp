@@ -10,5 +10,5 @@
     <color name="background_color">#051021</color>
     <color name="hello_activity_color_black_text">#1C1819</color>
     <color name="hello_activity_color_button_continue_enabled">#2A81DD</color>
-    <color name="hello_activity_color_button_continue_disabled">#FFFFFFFF</color>
+    <color name="hello_activity_color_button_continue_disabled">#CACACA</color>
 </resources>
