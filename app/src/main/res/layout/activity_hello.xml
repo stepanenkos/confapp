@@ -98,7 +98,7 @@
         android:text="@string/activity_hello_string_button_continue"
         android:textAllCaps="false"
         android:textSize="@dimen/hello_activity_text_size_button_continue"
-        app:backgroundTint="@color/white"
+        app:backgroundTint="@color/hello_activity_color_button_continue_disabled"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
