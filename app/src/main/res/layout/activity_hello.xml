@@ -8,7 +8,7 @@
 
     <ImageView
         android:id="@+id/imageViewBackground"
-        android:scaleType="fitStart"
+        android:scaleType="matrix"
         android:layout_width="match_parent"
         android:layout_height="190dp"
         android:background="@color/background_color"
@@ -98,7 +98,8 @@
         android:text="@string/activity_hello_string_button_continue"
         android:textAllCaps="false"
         android:textSize="@dimen/hello_activity_text_size_button_continue"
-        app:backgroundTint="@color/hello_activity_color_button_continue_disabled"
+        android:textColor="@drawable/button_text_color"
+        android:background="@drawable/bg_button_selector"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
