@@ -27,17 +27,7 @@ class HelloActivity : AppCompatActivity() {
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                if (!s.isNullOrBlank() && !s.isNullOrEmpty()) {
-                    buttonControl(
-                        true,
-                        resources.getColor(R.color.hello_activity_color_button_continue_enabled)
-                    )
-                } else {
-                    buttonControl(
-                        false,
-                        resources.getColor(R.color.hello_activity_color_button_continue_disabled)
-                    )
-                }
+                buttonContinue.isEnabled = s?.isNotBlank() ?: false
             }
 
             override fun afterTextChanged(s: Editable?) {
@@ -58,9 +48,6 @@ class HelloActivity : AppCompatActivity() {
         }
     }
 
-    private fun buttonControl(isEnabled: Boolean, backgroundColor: Int) {
-        buttonContinue.isEnabled = isEnabled
-        buttonContinue.setBackgroundColor(backgroundColor)
-    }
+
 
 }
