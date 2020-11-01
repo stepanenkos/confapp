@@ -6,10 +6,12 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
-import android.text.TextWatcher
 import android.widget.Button
 import android.widget.EditText
 import kz.kolesateam.confapp.R
+import kz.kolesateam.confapp.presentation.common.AbstractTextWatcher
+
+const val SHARED_PREFERENCES_NAME_KEY = "name"
 
 class HelloActivity : AppCompatActivity() {
     private lateinit var editTextEnterYourName: EditText
@@ -18,36 +20,32 @@ class HelloActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_hello)
+        initViews()
+    }
 
+    private fun initViews() {
         editTextEnterYourName = findViewById(R.id.editTextEnterYourName)
         buttonContinue = findViewById(R.id.buttonContinue)
 
-        editTextEnterYourName.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-            }
-
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                buttonContinue.isEnabled = s?.isNotBlank() ?: false
-            }
-
+        editTextEnterYourName.addTextChangedListener(object : AbstractTextWatcher() {
             override fun afterTextChanged(s: Editable?) {
-
+                buttonContinue.isEnabled = s.toString().isNotBlank()
             }
-
         })
+
         buttonContinue.setOnClickListener {
-            val name = editTextEnterYourName.text.toString().trim()
-            val sharedPref = getSharedPreferences(
-                getString(R.string.shared_preferences_name_key), Context.MODE_PRIVATE)
-            with(sharedPref.edit()) {
-                putString(getString(R.string.shared_preferences_name_key), name)
-                apply()
-            }
-            val intent = Intent(this, TestHelloActivity::class.java)
-            startActivity(intent)
+            saveUserName(editTextEnterYourName.text.toString().trim())
+            startActivity(HelloRouter().createIntent(this))
         }
     }
 
-
-
+    private fun saveUserName(name: String) {
+        val sharedPref = getSharedPreferences(
+            SHARED_PREFERENCES_NAME_KEY, Context.MODE_PRIVATE
+        )
+        with(sharedPref.edit()) {
+            putString(SHARED_PREFERENCES_NAME_KEY, name)
+            apply()
+        }
+    }
 }
