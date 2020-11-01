@@ -3,5 +3,4 @@
     <string name="activity_hello_string_what_is_your_name">Как тебя зовут?</string>
     <string name="activity_hello_string_hint_enter_your_name">Введи имя</string>
     <string name="activity_hello_string_button_continue">Продолжить</string>
-    <string name="shared_preferences_name_key">NAME</string>
 </resources>
