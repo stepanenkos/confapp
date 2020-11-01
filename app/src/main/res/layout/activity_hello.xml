@@ -1,52 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".hello.presentation.HelloActivity" >
+    android:orientation="vertical"
+    tools:context=".hello.presentation.HelloActivity">
 
-    <ImageView
-        android:id="@+id/imageViewBackground"
-        android:scaleType="matrix"
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="190dp"
-        android:background="@color/background_color"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0"
-        app:srcCompat="@drawable/bg" />
+        android:layout_height="165dp"
+        android:background="@color/background_color">
 
-    <ImageView
-        android:id="@+id/imageViewCoronaImg"
-        android:layout_width="100.36dp"
-        android:layout_height="104dp"
-        android:layout_marginStart="130dp"
-        android:layout_marginTop="70dp"
-        android:layout_marginEnd="130dp"
-        app:layout_constraintBottom_toBottomOf="@+id/imageViewBackground"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/corona2_2" />
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="matrix"
+            android:src="@drawable/bg" />
 
-    <ImageView
-        android:id="@+id/imageViewLogo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="107dp"
-        android:layout_marginTop="40dp"
-        android:layout_marginEnd="107dp"
-        app:layout_constraintBottom_toTopOf="@+id/imageViewCoronaImg"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.535"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/imageViewBackground"
-        app:layout_constraintVertical_bias="0.369"
-        app:srcCompat="@drawable/ic_logo_white" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/imageViewLogo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="40dp"
+                app:srcCompat="@drawable/ic_logo_white" />
+
+            <ImageView
+                android:id="@+id/imageViewCoronaImg"
+                android:layout_width="104dp"
+                android:layout_height="104dp"
+                android:src="@drawable/corona2_2" />
+
+        </LinearLayout>
+    </FrameLayout>
 
     <TextView
         android:id="@+id/textViewWhatIsYourName"
@@ -56,53 +49,44 @@
         android:layout_marginTop="16dp"
         android:layout_marginEnd="163dp"
         android:text="@string/activity_hello_string_what_is_your_name"
-        android:textColor="@color/hello_activity_color_black_text"
-        android:textSize="@dimen/hello_activity_text_size_what_is_your_name"
+        android:textColor="@color/hello_activity_black_text"
+        android:textSize="@dimen/hello_activity_text_size_24"
         android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageViewBackground"
         tools:text="@string/activity_hello_string_what_is_your_name" />
 
     <EditText
         android:id="@+id/editTextEnterYourName"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
+        android:layout_marginStart="@dimen/margin_16"
+        android:layout_marginTop="@dimen/margin_16"
+        android:layout_marginEnd="@dimen/margin_16"
         android:ems="10"
         android:hint="@string/activity_hello_string_hint_enter_your_name"
         android:inputType="textPersonName"
-        android:paddingLeft="@dimen/hello_activity_padding_enter_your_name"
-        android:paddingRight="@dimen/hello_activity_padding_enter_your_name"
-        android:textSize="@dimen/hello_activity_text_size_enter_your_name"
-        android:textColor="@color/hello_activity_color_black_text"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.079"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewWhatIsYourName" />
+        android:paddingTop="14dp"
+        android:paddingBottom="14dp"
+        android:paddingLeft="@dimen/padding_16"
+        android:paddingRight="@dimen/padding_16"
+        android:background="@drawable/bg_edit_text"
+        android:textColor="@color/hello_activity_black_text"
+        android:textSize="@dimen/hello_activity_text_size_16" />
 
     <Button
         android:id="@+id/buttonContinue"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
+        android:layout_marginStart="@dimen/margin_16"
+        android:layout_marginTop="@dimen/margin_16"
+        android:layout_marginEnd="@dimen/margin_16"
+        android:background="@drawable/bg_button_selector"
         android:enabled="false"
         android:fontFamily="sans-serif"
-        android:paddingTop="@dimen/hello_activity_padding_button_continue"
-        android:paddingBottom="@dimen/hello_activity_padding_button_continue"
+        android:paddingTop="@dimen/padding_10"
+        android:paddingBottom="@dimen/padding_10"
         android:text="@string/activity_hello_string_button_continue"
         android:textAllCaps="false"
-        android:textSize="@dimen/hello_activity_text_size_button_continue"
         android:textColor="@drawable/button_text_color"
-        android:background="@drawable/bg_button_selector"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextEnterYourName" />
+        android:textSize="@dimen/hello_activity_text_size_16" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>
