@@ -11,8 +11,8 @@
     <color name="background_color">#051021</color>
     <!-- Hello activity -->
     <color name="hello_activity_black_text">#1C1819</color>
-    <color name="hello_activity_btn_continue_enabled">#2A81DD</color>
-    <color name="hello_activity_btn_continue_disabled">#1C1819</color>
+    <color name="hello_activity_btn_enabled">#2A81DD</color>
+    <color name="hello_activity_btn_disabled">#1C1819</color>
 
     <color name="button_text_color_enabled">#FFFFFFFF</color>
     <color name="button_text_color_disabled">#FF000000</color>

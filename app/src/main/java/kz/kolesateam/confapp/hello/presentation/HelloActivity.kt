@@ -2,7 +2,6 @@ package kz.kolesateam.confapp.hello.presentation
 
 
 import android.content.Context
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
@@ -24,8 +23,8 @@ class HelloActivity : AppCompatActivity() {
     }
 
     private fun initViews() {
-        editTextEnterYourName = findViewById(R.id.editTextEnterYourName)
-        buttonContinue = findViewById(R.id.buttonContinue)
+        editTextEnterYourName = findViewById(R.id.activity_hello_edit_text_your_name)
+        buttonContinue = findViewById(R.id.activity_hello_continue_button)
 
         editTextEnterYourName.addTextChangedListener(object : AbstractTextWatcher() {
             override fun afterTextChanged(s: Editable?) {

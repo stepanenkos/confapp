@@ -3,8 +3,8 @@
     <dimen name="hello_activity_text_size_16">16sp</dimen>
     <dimen name="hello_activity_text_size_24">24sp</dimen>
 
-    <dimen name="padding_10">10dp</dimen>
-    <dimen name="padding_16">16dp</dimen>
+    <dimen name="view_padding_10x">10dp</dimen>
+    <dimen name="view_padding_16x">16dp</dimen>
 
-    <dimen name="margin_16">16dp</dimen>
+    <dimen name="view_margin_16x">16dp</dimen>
 </resources>
