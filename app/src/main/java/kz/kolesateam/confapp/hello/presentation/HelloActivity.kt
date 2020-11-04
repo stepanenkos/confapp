@@ -13,8 +13,8 @@ import kz.kolesateam.confapp.presentation.common.AbstractTextWatcher
 const val SHARED_PREFERENCES_NAME_KEY = "name"
 
 class HelloActivity : AppCompatActivity() {
-    private lateinit var editTextEnterYourName: EditText
-    private lateinit var buttonContinue: Button
+    private lateinit var nameEditText: EditText
+    private lateinit var continueButton: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -23,17 +23,17 @@ class HelloActivity : AppCompatActivity() {
     }
 
     private fun initViews() {
-        editTextEnterYourName = findViewById(R.id.activity_hello_edit_text_your_name)
-        buttonContinue = findViewById(R.id.activity_hello_continue_button)
+        nameEditText = findViewById(R.id.activity_hello_edit_text_your_name)
+        continueButton = findViewById(R.id.activity_hello_continue_button)
 
-        editTextEnterYourName.addTextChangedListener(object : AbstractTextWatcher() {
+        nameEditText.addTextChangedListener(object : AbstractTextWatcher() {
             override fun afterTextChanged(s: Editable?) {
-                buttonContinue.isEnabled = s.toString().isNotBlank()
+                continueButton.isEnabled = s.toString().isNotBlank()
             }
         })
 
-        buttonContinue.setOnClickListener {
-            saveUserName(editTextEnterYourName.text.toString().trim())
+        continueButton.setOnClickListener {
+            saveUserName(nameEditText.text.toString().trim())
             startActivity(HelloRouter().createIntent(this))
         }
     }
