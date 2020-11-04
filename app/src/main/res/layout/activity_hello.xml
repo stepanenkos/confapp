@@ -9,7 +9,7 @@
 
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="165dp"
+        android:layout_height="@dimen/activity_hello_bg_height"
         android:background="@color/background_color">
 
         <ImageView
@@ -32,8 +32,8 @@
                 app:srcCompat="@drawable/ic_logo_white" />
 
             <ImageView
-                android:layout_width="104dp"
-                android:layout_height="104dp"
+                android:layout_width="@dimen/activity_hello_image_width"
+                android:layout_height="@dimen/activity_hello_image_height"
                 android:src="@drawable/corona2_2" />
 
         </LinearLayout>
@@ -42,9 +42,8 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="163dp"
+        android:layout_marginStart="@dimen/view_margin_16x"
+        android:layout_marginTop="@dimen/view_margin_16x"
         android:text="@string/activity_hello_what_is_your_name"
         android:textColor="@color/hello_activity_black_text"
         android:textSize="@dimen/hello_activity_text_size_24"
@@ -61,8 +60,8 @@
         android:ems="10"
         android:hint="@string/activity_hello_hint_enter_your_name"
         android:inputType="textPersonName"
-        android:paddingTop="14dp"
-        android:paddingBottom="14dp"
+        android:paddingTop="@dimen/view_padding_16x"
+        android:paddingBottom="@dimen/view_padding_16x"
         android:paddingLeft="@dimen/view_padding_16x"
         android:paddingRight="@dimen/view_padding_16x"
         android:background="@drawable/bg_edit_text"

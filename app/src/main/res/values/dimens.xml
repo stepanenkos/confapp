@@ -8,4 +8,7 @@
 
     <dimen name="view_margin_16x">16dp</dimen>
     <dimen name="margin_40x">40dp</dimen>
+    <dimen name="activity_hello_image_width">104dp</dimen>
+    <dimen name="activity_hello_image_height">104dp</dimen>
+    <dimen name="activity_hello_bg_height">165dp</dimen>
 </resources>
