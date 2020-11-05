@@ -1,20 +1,88 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".hello.presentation.HelloActivity">
 
-    <Button
-        android:id="@+id/activity_hello_close_hello_button"
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/activity_hello_bg_height"
+        android:background="@color/background_color">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="matrix"
+            android:src="@drawable/bg" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/margin_40x"
+                app:srcCompat="@drawable/ic_logo_white" />
+
+            <ImageView
+                android:layout_width="@dimen/activity_hello_image_width"
+                android:layout_height="@dimen/activity_hello_image_height"
+                android:src="@drawable/corona2_2" />
+
+        </LinearLayout>
+    </FrameLayout>
+
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Close!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        />
+        android:layout_marginStart="@dimen/view_margin_16x"
+        android:layout_marginTop="@dimen/view_margin_16x"
+        android:text="@string/activity_hello_what_is_your_name"
+        android:textColor="@color/hello_activity_black_text"
+        android:textSize="@dimen/hello_activity_text_size_24"
+        android:textStyle="bold"
+        tools:text="@string/activity_hello_what_is_your_name" />
 
-</FrameLayout>
+    <EditText
+        android:id="@+id/activity_hello_edit_text_your_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/view_margin_16x"
+        android:layout_marginTop="@dimen/view_margin_16x"
+        android:layout_marginEnd="@dimen/view_margin_16x"
+        android:ems="10"
+        android:hint="@string/activity_hello_hint_enter_your_name"
+        android:inputType="textPersonName"
+        android:paddingTop="@dimen/view_padding_16x"
+        android:paddingBottom="@dimen/view_padding_16x"
+        android:paddingLeft="@dimen/view_padding_16x"
+        android:paddingRight="@dimen/view_padding_16x"
+        android:background="@drawable/bg_edit_text"
+        android:textColor="@color/hello_activity_black_text"
+        android:textSize="@dimen/hello_activity_text_size_16" />
+
+    <Button
+        android:id="@+id/activity_hello_continue_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/view_margin_16x"
+        android:layout_marginTop="@dimen/view_margin_16x"
+        android:layout_marginEnd="@dimen/view_margin_16x"
+        android:background="@drawable/bg_button_selector"
+        android:enabled="false"
+        android:fontFamily="sans-serif"
+        android:paddingTop="@dimen/view_padding_10x"
+        android:paddingBottom="@dimen/view_padding_10x"
+        android:text="@string/action_continue"
+        android:textAllCaps="false"
+        android:textColor="@drawable/button_text_color"
+        android:textSize="@dimen/hello_activity_text_size_16" />
+
+</LinearLayout>

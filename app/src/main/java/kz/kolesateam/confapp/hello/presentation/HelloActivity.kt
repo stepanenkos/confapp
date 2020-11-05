@@ -1,63 +1,50 @@
 package kz.kolesateam.confapp.hello.presentation
 
+
+import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
+import android.text.Editable
 import android.widget.Button
+import android.widget.EditText
 import kz.kolesateam.confapp.R
+import kz.kolesateam.confapp.presentation.common.AbstractTextWatcher
 
-private const val TAG = "HelloActivity"
+const val SHARED_PREFERENCES_NAME_KEY = "name"
 
 class HelloActivity : AppCompatActivity() {
-
-    private val closeHelloButton: Button by lazy {
-        findViewById(R.id.activity_hello_close_hello_button)
-    }
+    private lateinit var nameEditText: EditText
+    private lateinit var continueButton: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_hello)
+        initViews()
+    }
 
-        closeHelloButton.setOnClickListener {
-            finish()
+    private fun initViews() {
+        nameEditText = findViewById(R.id.activity_hello_edit_text_your_name)
+        continueButton = findViewById(R.id.activity_hello_continue_button)
+
+        nameEditText.addTextChangedListener(object : AbstractTextWatcher() {
+            override fun afterTextChanged(s: Editable?) {
+                continueButton.isEnabled = s.toString().isNotBlank()
+            }
+        })
+
+        continueButton.setOnClickListener {
+            saveUserName(nameEditText.text.toString().trim())
+            startActivity(HelloRouter().createIntent(this))
         }
-
-        Log.d(TAG, "onCreate")
     }
 
-    override fun onRestart() {
-        super.onRestart()
-
-        Log.d(TAG, "onRestart")
-    }
-
-    override fun onStart() {
-        super.onStart()
-
-        Log.d(TAG, "onStart")
-    }
-
-    override fun onResume() {
-        super.onResume()
-
-        Log.d(TAG, "onResume")
-    }
-
-    override fun onPause() {
-        Log.d(TAG, "onPause")
-
-        super.onPause()
-    }
-
-    override fun onStop() {
-        Log.d(TAG, "onStop")
-
-        super.onStop()
-    }
-
-    override fun onDestroy() {
-        Log.d(TAG, "onDestroy")
-
-        super.onDestroy()
+    private fun saveUserName(name: String) {
+        val sharedPref = getSharedPreferences(
+            SHARED_PREFERENCES_NAME_KEY, Context.MODE_PRIVATE
+        )
+        with(sharedPref.edit()) {
+            putString(SHARED_PREFERENCES_NAME_KEY, name)
+            apply()
+        }
     }
 }

@@ -8,6 +8,7 @@ android {
     buildToolsVersion "30.0.1"
 
     defaultConfig {
+        vectorDrawables.useSupportLibrary = true
         applicationId "kz.kolesateam.confapp"
         minSdkVersion 19
         targetSdkVersion 30
