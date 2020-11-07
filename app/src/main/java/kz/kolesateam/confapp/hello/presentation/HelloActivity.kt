@@ -8,6 +8,7 @@ import android.text.Editable
 import android.widget.Button
 import android.widget.EditText
 import kz.kolesateam.confapp.R
+import kz.kolesateam.confapp.events.presentation.UpcomingEventsRouter
 import kz.kolesateam.confapp.presentation.common.AbstractTextWatcher
 
 const val SHARED_PREFERENCES_NAME_KEY = "name"
@@ -34,7 +35,7 @@ class HelloActivity : AppCompatActivity() {
 
         continueButton.setOnClickListener {
             saveUserName(nameEditText.text.toString().trim())
-            startActivity(HelloRouter().createIntent(this))
+            startActivity(UpcomingEventsRouter().createIntent(this))
         }
     }
 
