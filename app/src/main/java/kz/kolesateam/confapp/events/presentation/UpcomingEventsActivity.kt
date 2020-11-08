@@ -6,6 +6,7 @@ import android.view.View
 import android.widget.Button
 import android.widget.ProgressBar
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.asLiveData
 import com.fasterxml.jackson.databind.JsonNode
 import kotlinx.coroutines.Dispatchers
@@ -107,7 +108,7 @@ class UpcomingEventsActivity : AppCompatActivity() {
             upcomingEventsProgressBar.visibility = View.INVISIBLE
             val body: JsonNode = response.body()!!
             upcomingEventsTextView.setTextColor(
-                resources.getColor(textColor)
+                ContextCompat.getColor(this, textColor)
             )
             upcomingEventsTextView.text = body.toString()
         }
@@ -116,7 +117,7 @@ class UpcomingEventsActivity : AppCompatActivity() {
     private fun setViewAttributeOnFailure(t: Throwable) {
         upcomingEventsProgressBar.visibility = View.INVISIBLE
         upcomingEventsTextView.setTextColor(
-            resources.getColor(R.color.activity_upcoming_events_error_text_view)
+            ContextCompat.getColor(this, R.color.activity_upcoming_events_error_text_view)
         )
 
         upcomingEventsTextView.text = t.localizedMessage
