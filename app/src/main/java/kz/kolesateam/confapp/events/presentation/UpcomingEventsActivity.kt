@@ -58,12 +58,12 @@ class UpcomingEventsActivity : AppCompatActivity() {
         jetpackDataStore = JetpackDataStore(this)
 
         syncLoadingButton.setOnClickListener {
-            upcomingEventsProgressBar.visibility = View.VISIBLE
+            upcomingEventsProgressBar.show()
             loadSyncData()
         }
 
         asyncLoadingButton.setOnClickListener {
-            upcomingEventsProgressBar.visibility = View.VISIBLE
+            upcomingEventsProgressBar.show()
             loadAsyncData()
         }
     }
@@ -105,7 +105,7 @@ class UpcomingEventsActivity : AppCompatActivity() {
 
     private fun setViewAttributeOnResponse(response: Response<JsonNode>, textColor: Int) {
         if (response.isSuccessful) {
-            upcomingEventsProgressBar.visibility = View.INVISIBLE
+            upcomingEventsProgressBar.gone()
             val body: JsonNode = response.body()!!
             upcomingEventsTextView.setTextColor(
                 ContextCompat.getColor(this, textColor)
@@ -115,7 +115,7 @@ class UpcomingEventsActivity : AppCompatActivity() {
     }
 
     private fun setViewAttributeOnFailure(t: Throwable) {
-        upcomingEventsProgressBar.visibility = View.INVISIBLE
+        upcomingEventsProgressBar.gone()
         upcomingEventsTextView.setTextColor(
             ContextCompat.getColor(this, R.color.activity_upcoming_events_error_text_view)
         )
@@ -140,5 +140,12 @@ class UpcomingEventsActivity : AppCompatActivity() {
             upcomingEventsTextView.setTextColor(it)
 
         })
+    }
+
+    private fun View.show() {
+        visibility = View.VISIBLE
+    }
+    private fun View.gone() {
+        visibility = View.GONE
     }
 }
