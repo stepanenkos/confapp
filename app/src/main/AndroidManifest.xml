@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="kz.kolesateam.confapp">
-<uses-permission android:name="android.permission.INTERNET"/>
+<manifest
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    package="kz.kolesateam.confapp"
+    >
+
+    <uses-permission android:name="android.permission.INTERNET" />
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -9,10 +12,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.ConfApp"
-        android:usesCleartextTraffic="true">
-        <activity android:name=".events.presentation.UpcomingEventsActivity"/>
+        android:usesCleartextTraffic="true"
+        >
+        <activity android:name=".events.presentation.UpcomingEventsActivity" />
         <activity android:name=".hello.presentation.TestHelloActivity" />
-        <activity android:name=".AboutActivity" />
 
         <activity android:name=".hello.presentation.HelloActivity">
             <intent-filter>

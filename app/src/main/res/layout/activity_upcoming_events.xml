@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".events.presentation.UpcomingEventsActivity">
+    tools:context=".events.presentation.UpcomingEventsActivity"
+    >
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -17,53 +19,61 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             >
+
             <Button
                 android:id="@+id/activity_upcoming_events_btn_sync_loading"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/view_margin_8x"
                 android:layout_marginTop="@dimen/view_margin_16x"
                 android:layout_marginBottom="@dimen/view_margin_16x"
-                android:layout_marginHorizontal="@dimen/view_margin_8x"
                 android:layout_weight="1"
-                android:textAllCaps="false"
                 android:text="@string/activity_upcoming_events_btn_sync_loading"
+                android:textAllCaps="false"
                 />
 
             <Button
                 android:id="@+id/activity_upcoming_events_btn_async_loading"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/view_margin_8x"
                 android:layout_marginTop="@dimen/view_margin_16x"
                 android:layout_marginBottom="@dimen/view_margin_16x"
-                android:layout_marginHorizontal="@dimen/view_margin_8x"
                 android:layout_weight="1"
-                android:textAllCaps="false"
                 android:text="@string/activity_upcoming_events_btn_async_loading"
+                android:textAllCaps="false"
                 />
 
         </LinearLayout>
     </FrameLayout>
+
     <ScrollView
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-    <TextView
-        android:id="@+id/activity_upcoming_events_text_view"
-        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/view_margin_8x"
-        />
+        >
+
+        <TextView
+            android:id="@+id/activity_upcoming_events_text_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/view_margin_8x"
+            />
     </ScrollView>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:gravity="center"
         android:orientation="vertical"
-        android:gravity="center">
-    <ProgressBar
-        android:id="@+id/activity_upcoming_events_progress_bar"
-        style="?android:attr/progressBarStyle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:visibility="invisible"/>
+        >
+
+        <ProgressBar
+            android:id="@+id/activity_upcoming_events_progress_bar"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:visibility="invisible"
+            />
     </LinearLayout>
 </LinearLayout>
