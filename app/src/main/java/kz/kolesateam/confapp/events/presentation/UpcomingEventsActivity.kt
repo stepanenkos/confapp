@@ -18,6 +18,8 @@ import kz.kolesateam.confapp.events.data.ApiClientSingleton
 import kz.kolesateam.confapp.events.data.JetpackDataStore
 import retrofit2.*
 import retrofit2.converter.jackson.JacksonConverterFactory
+import kz.kolesateam.confapp.extensions.gone
+import kz.kolesateam.confapp.extensions.show
 
 class UpcomingEventsActivity : AppCompatActivity() {
 
@@ -140,12 +142,5 @@ class UpcomingEventsActivity : AppCompatActivity() {
             upcomingEventsTextView.setTextColor(it)
 
         })
-    }
-
-    private fun View.show() {
-        visibility = View.VISIBLE
-    }
-    private fun View.gone() {
-        visibility = View.GONE
     }
 }
