@@ -8,7 +8,6 @@ import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.asLiveData
-import com.fasterxml.jackson.databind.JsonNode
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -16,7 +15,9 @@ import kz.kolesateam.confapp.R
 import kz.kolesateam.confapp.events.data.ApiClient
 import kz.kolesateam.confapp.events.data.ApiClientSingleton
 import kz.kolesateam.confapp.events.data.JetpackDataStore
-import retrofit2.*
+import kz.kolesateam.confapp.events.data.models.BranchApiData
+import kz.kolesateam.confapp.events.data.models.FormattingString
+import kz.kolesateam.confapp.events.data.models.UpcomingEventsRepository
 import retrofit2.converter.jackson.JacksonConverterFactory
 
 class UpcomingEventsActivity : AppCompatActivity() {
@@ -31,6 +32,7 @@ class UpcomingEventsActivity : AppCompatActivity() {
         ApiClient::class.java
     )
     private lateinit var jetpackDataStore: JetpackDataStore
+    private lateinit var branchApiData: List<BranchApiData>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -68,59 +70,48 @@ class UpcomingEventsActivity : AppCompatActivity() {
         }
     }
 
-    private fun loadSyncData() {
-        GlobalScope.launch(Dispatchers.IO) {
-            runCatching {
-                val execute = apiClient.getUpcomingEvents().execute()
-                launch(Dispatchers.Main) {
-                    setViewAttributeOnResponse(
-                        execute,
-                        R.color.activity_upcoming_events_sync_text_view
-                    )
-
-                }
-            }.onFailure { t ->
-                GlobalScope.launch(Dispatchers.Main) {
-                    setViewAttributeOnFailure(t)
-                }
+private fun loadSyncData() {
+    GlobalScope.launch(Dispatchers.IO) {
+        runCatching {
+            branchApiData = UpcomingEventsRepository().loadUpcomingEventsSync()
+            launch(Dispatchers.Main) {
+                setViewAttributeOnResponse(
+                    branchApiData,
+                    R.color.activity_upcoming_events_sync_text_view
+                )
+            }
+        }.onFailure { t ->
+            GlobalScope.launch(Dispatchers.Main) {
+                setViewAttributeOnFailure(t.localizedMessage!!)
             }
         }
     }
-
+}
     private fun loadAsyncData() {
-        apiClient.getUpcomingEvents().enqueue(object : Callback<JsonNode> {
-            override fun onResponse(call: Call<JsonNode>, response: Response<JsonNode>) {
-                setViewAttributeOnResponse(
-                    response,
-                    R.color.activity_upcoming_events_async_text_view
-                )
-            }
+        UpcomingEventsRepository().getUpcomingEventsAsync({
+            branchApiData = it
+            setViewAttributeOnResponse(branchApiData, R.color.activity_upcoming_events_async_text_view)
+        },
+            {
+                setViewAttributeOnFailure(it)
+            })
 
-            override fun onFailure(call: Call<JsonNode>, t: Throwable) {
-                setViewAttributeOnFailure(t)
-            }
-
-        })
     }
 
-    private fun setViewAttributeOnResponse(response: Response<JsonNode>, textColor: Int) {
-        if (response.isSuccessful) {
+    private fun setViewAttributeOnResponse(list: List<BranchApiData>, textColor: Int) {
             upcomingEventsProgressBar.gone()
-            val body: JsonNode = response.body()!!
             upcomingEventsTextView.setTextColor(
                 ContextCompat.getColor(this, textColor)
             )
-            upcomingEventsTextView.text = body.toString()
-        }
+            upcomingEventsTextView.text = FormattingString.formatString(list)
     }
 
-    private fun setViewAttributeOnFailure(t: Throwable) {
+    private fun setViewAttributeOnFailure(throwable: String) {
         upcomingEventsProgressBar.gone()
         upcomingEventsTextView.setTextColor(
             ContextCompat.getColor(this, R.color.activity_upcoming_events_error_text_view)
         )
-
-        upcomingEventsTextView.text = t.localizedMessage
+        upcomingEventsTextView.text = throwable
     }
 
     private fun saveData() {
