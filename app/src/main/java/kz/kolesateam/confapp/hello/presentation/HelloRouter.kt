@@ -7,6 +7,6 @@ class HelloRouter {
 
     fun createIntent(
         context: Context
-    ) : Intent = Intent(context, TestHelloActivity::class.java)
+    ) : Intent = Intent(context, HelloActivity::class.java)
 
 }

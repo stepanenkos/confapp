@@ -16,4 +16,8 @@
 
     <color name="button_text_color_enabled">#FFFFFFFF</color>
     <color name="button_text_color_disabled">#FF000000</color>
+
+    <color name="activity_upcoming_events_sync_text_view">#2196F3</color>
+    <color name="activity_upcoming_events_async_text_view">#4CAF50</color>
+    <color name="activity_upcoming_events_error_text_view">#F44336</color>
 </resources>
