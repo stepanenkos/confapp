@@ -65,7 +65,7 @@ class UpcomingEventsActivity : AppCompatActivity(), EventClickListener {
         )
 
         sharedPreferences = getSharedPreferences(SHARED_PREFERENCES_NAME_KEY, Context.MODE_PRIVATE)
-        userName = sharedPreferences.getString(SHARED_PREFERENCES_NAME_KEY, DEFAULT_USER_NAME)!!
+        userName = sharedPreferences.getString(USER_NAME, DEFAULT_USER_NAME)!!
     }
 
     override fun onFavoritesImageClick(view: View) {

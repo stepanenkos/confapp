@@ -8,10 +8,12 @@ import android.text.Editable
 import android.widget.Button
 import android.widget.EditText
 import kz.kolesateam.confapp.R
+import kz.kolesateam.confapp.events.data.JetpackDataStore
 import kz.kolesateam.confapp.events.presentation.UpcomingEventsRouter
 import kz.kolesateam.confapp.presentation.common.AbstractTextWatcher
 
 const val SHARED_PREFERENCES_NAME_KEY = "name"
+const val USER_NAME = "name"
 
 class HelloActivity : AppCompatActivity() {
     private lateinit var nameEditText: EditText
@@ -26,7 +28,6 @@ class HelloActivity : AppCompatActivity() {
     private fun initViews() {
         nameEditText = findViewById(R.id.activity_hello_edit_text_your_name)
         continueButton = findViewById(R.id.activity_hello_continue_button)
-
         nameEditText.addTextChangedListener(object : AbstractTextWatcher() {
             override fun afterTextChanged(s: Editable?) {
                 continueButton.isEnabled = s.toString().isNotBlank()
@@ -35,7 +36,9 @@ class HelloActivity : AppCompatActivity() {
 
         continueButton.setOnClickListener {
             saveUserName(nameEditText.text.toString().trim())
-            startActivity(UpcomingEventsRouter().createIntent(this))
+            val intent = UpcomingEventsRouter().createIntent(this)
+            intent.putExtra(USER_NAME, nameEditText.text.toString().trim())
+            startActivity(intent)
         }
     }
 
@@ -44,7 +47,7 @@ class HelloActivity : AppCompatActivity() {
             SHARED_PREFERENCES_NAME_KEY, Context.MODE_PRIVATE
         )
         with(sharedPref.edit()) {
-            putString(SHARED_PREFERENCES_NAME_KEY, name)
+            putString(USER_NAME, name)
             apply()
         }
     }
