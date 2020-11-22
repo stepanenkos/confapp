@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    >
+
+    <LinearLayout
+        android:id="@+id/activity_upcoming_events_branch_row"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_42x"
+        android:padding="@dimen/padding_16x"
+        android:clickable="true"
+        android:orientation="horizontal"
+        android:focusable="true"
+        >
+
+        <TextView
+            android:id="@+id/activity_upcoming_events_text_view_branch_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_size_24"
+            android:padding="@dimen/padding_4x"
+            tools:text="Android"
+            />
+
+        <ImageView
+            android:id="@+id/activity_upcoming_events_image_view_branch"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_gravity="center_vertical"
+            android:padding="@dimen/padding_4x"
+            app:srcCompat="@drawable/ic_arrow_forward"
+            />
+
+    </LinearLayout>
+
+    <HorizontalScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="none"
+        android:overScrollMode="never"
+        >
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            >
+
+            <include
+                android:id="@+id/activity_upcoming_events_current_event"
+                layout="@layout/events_card_layout"
+                android:layout_width="280dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_24x"
+                android:layout_marginEnd="@dimen/margin_8x"
+                />
+
+            <include
+                android:id="@+id/activity_upcoming_events_next_event"
+                layout="@layout/events_card_layout"
+                android:layout_width="280dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/margin_16x"
+                />
+
+        </LinearLayout>
+
+    </HorizontalScrollView>
+
+</LinearLayout>
