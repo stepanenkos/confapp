@@ -1,16 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="hello_activity_text_size_16">16sp</dimen>
-    <dimen name="hello_activity_text_size_24">24sp</dimen>
+    <dimen name="text_size_16">16sp</dimen>
+    <dimen name="text_size_24">24sp</dimen>
 
-    <dimen name="view_padding_10x">10dp</dimen>
-    <dimen name="view_padding_16x">16dp</dimen>
+    <dimen name="padding_10x">10dp</dimen>
+    <dimen name="padding_16x">16dp</dimen>
 
-    <dimen name="view_margin_8x">8dp</dimen>
-    <dimen name="view_margin_16x">16dp</dimen>
+    <dimen name="margin_8x">8dp</dimen>
+    <dimen name="margin_16x">16dp</dimen>
     <dimen name="margin_40x">40dp</dimen>
+    <dimen name="margin_50x">50dp</dimen>
 
     <dimen name="activity_hello_image_width">104dp</dimen>
     <dimen name="activity_hello_image_height">104dp</dimen>
     <dimen name="activity_hello_bg_height">165dp</dimen>
+    <dimen name="margin_24x">24dp</dimen>
+    <dimen name="margin_18x">18dp</dimen>
+    <dimen name="text_size_13">13sp</dimen>
+    <dimen name="text_size_14">14sp</dimen>
+    <dimen name="card_corner_radius_3x">3dp</dimen>
+    <dimen name="padding_8x">8dp</dimen>
+    <dimen name="padding_4x">4dp</dimen>
+    <dimen name="margin_60x">60dp</dimen>
+    <dimen name="margin_42x">42dp</dimen>
+    <dimen name="padding_80x">80dp</dimen>
 </resources>

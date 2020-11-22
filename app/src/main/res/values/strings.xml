@@ -3,6 +3,7 @@
     <string name="activity_hello_what_is_your_name">Как тебя зовут?</string>
     <string name="activity_hello_hint_enter_your_name">Введи имя</string>
     <string name="action_continue">Продолжить</string>
-    <string name="activity_upcoming_events_btn_sync_loading">Sync loading</string>
-    <string name="activity_upcoming_events_btn_async_loading">Async loading</string>
+    <string name="activity_upcoming_events_text_view_hello_user">Привет, %1$s</string>
+    <string name="activity_upcoming_events_button_text">В избранные</string>
+    <string name="activity_upcoming_events_text_view_next_event">Следующий доклад</string>
 </resources>
