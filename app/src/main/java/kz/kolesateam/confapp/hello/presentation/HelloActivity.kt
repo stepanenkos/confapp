@@ -30,6 +30,11 @@ class HelloActivity : AppCompatActivity() {
         continueButton = findViewById(R.id.activity_hello_continue_button)
         nameEditText.addTextChangedListener(object : AbstractTextWatcher() {
             override fun afterTextChanged(s: Editable?) {
+                if(s.toString().isNotBlank()) {
+                    nameEditText.setBackgroundResource(R.drawable.bg_edit_text_with_text)
+                } else {
+                    nameEditText.setBackgroundResource(R.drawable.bg_edit_text_empty)
+                }
                 continueButton.isEnabled = s.toString().isNotBlank()
             }
         })

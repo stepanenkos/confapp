@@ -7,7 +7,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/bg_events_card"
+    android:background="@drawable/bg_current_event_card"
     android:paddingStart="@dimen/padding_16x"
     android:paddingTop="@dimen/padding_8x"
     android:paddingEnd="@dimen/padding_16x"

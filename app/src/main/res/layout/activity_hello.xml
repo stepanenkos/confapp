@@ -60,7 +60,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_16x"
-            android:background="@drawable/bg_edit_text"
+            android:background="@drawable/bg_edit_text_empty"
             android:hint="@string/activity_hello_hint_enter_your_name"
             android:inputType="text"
             android:paddingHorizontal="@dimen/padding_16x"
