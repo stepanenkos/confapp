@@ -1,20 +1,30 @@
 package kz.kolesateam.confapp.events.presentation.view
 
 import android.view.View
+import android.widget.HorizontalScrollView
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import kz.kolesateam.confapp.R
 import kz.kolesateam.confapp.events.data.models.BranchApiData
+import kz.kolesateam.confapp.events.data.models.EventApiData
+import kz.kolesateam.confapp.events.data.models.SpeakerApiData
 
 class BranchViewHolder(
     view: View,
     private val eventClickListener: EventClickListener,
 ) : RecyclerView.ViewHolder(view) {
+
+    private val horizontalScrollView: HorizontalScrollView =
+        view.findViewById(R.id.activity_upcoming_events_horizontal_scroll_view)
+    private val oldScrollX = horizontalScrollView.scrollX
+
     private val currentBranchEvent: View =
         view.findViewById(R.id.activity_upcoming_events_current_event)
+
     private val nextBranchEvent: View =
         view.findViewById(R.id.activity_upcoming_events_next_event)
+
     private val branchRow: View = view.findViewById(R.id.activity_upcoming_events_branch_row)
 
     private val branchNameTextView: TextView =
@@ -42,11 +52,28 @@ class BranchViewHolder(
     private val nextToFavoritesImageButton: ImageView =
         nextBranchEvent.findViewById(R.id.activity_upcoming_events_image_to_favorites)
 
+    private val currentBranchEventPaddingTop = currentBranchEvent.paddingTop
+    private val currentBranchEventPaddingBottom = currentBranchEvent.paddingBottom
+    private val currentBranchEventPaddingLeft = currentBranchEvent.paddingLeft
+    private val currentBranchEventPaddingRight = currentBranchEvent.paddingRight
+
+    private val nextBranchEventPaddingTop = nextBranchEvent.paddingTop
+    private val nextBranchEventPaddingBottom = nextBranchEvent.paddingBottom
+    private val nextBranchEventPaddingLeft = nextBranchEvent.paddingLeft
+    private val nextBranchEventPaddingRight = nextBranchEvent.paddingRight
+
     init {
         currentBranchEvent.findViewById<TextView>(
             R.id.activity_upcoming_events_text_view_next_event
         ).visibility = View.INVISIBLE
 
+        nextBranchEvent.setBackgroundResource(R.drawable.bg_unfocused_event_card)
+        nextBranchEvent.setPadding(
+            nextBranchEventPaddingLeft,
+            nextBranchEventPaddingTop,
+            nextBranchEventPaddingRight,
+            nextBranchEventPaddingBottom
+        )
     }
 
     fun onBind(branchApiData: BranchApiData) {
@@ -57,32 +84,50 @@ class BranchViewHolder(
         val currentSpeaker = currentEvent?.speaker
         val nextSpeaker = nextEvent?.speaker
 
-        val currentDateAndPlace = String.format(
-            "%s - %s • %s",
-            currentEvent?.startTime?.substringBeforeLast(":"),
-            currentEvent?.endTime?.substringBeforeLast(":"),
-            currentEvent?.place
-        )
-
-        val nextDateAndPlace = String.format(
-            "%s - %s • %s",
-            nextEvent?.startTime?.substringBeforeLast(":"),
-            nextEvent?.endTime?.substringBeforeLast(":"),
-            nextEvent?.place
-        )
+        val currentDateAndPlaceString = formatStringForDateAndPlace(currentEvent)
+        val nextDateAndPlaceString = formatStringForDateAndPlace(nextEvent)
 
         branchNameTextView.text = branchApiData.title
 
-        currentDateAndPlaceTextView.text = currentDateAndPlace
+        fillCurrentEvent(currentDateAndPlaceString, currentSpeaker, currentEvent)
+        fillNextEvent(nextDateAndPlaceString, nextSpeaker, nextEvent)
+
+        setOnClickListeners(currentEvent, nextEvent)
+
+    }
+
+    private fun formatStringForDateAndPlace(event: EventApiData?): String {
+        return String.format(
+            "%s - %s • %s",
+            event?.startTime?.substringBeforeLast(":"),
+            event?.endTime?.substringBeforeLast(":"),
+            event?.place
+        )
+    }
+
+    private fun fillCurrentEvent(
+        currentDateString: String,
+        currentSpeaker: SpeakerApiData?,
+        currentEvent: EventApiData?,
+    ) {
+        currentDateAndPlaceTextView.text = currentDateString
         currentSpeakerFullNameTextView.text = currentSpeaker?.fullName
         currentSpeakerJobTextView.text = currentSpeaker?.job
         currentEventTitleTextView.text = currentEvent?.title
+    }
 
-        nextDateAndPlaceTextView.text = nextDateAndPlace
+    private fun fillNextEvent(
+        nextDateString: String,
+        nextSpeaker: SpeakerApiData?,
+        nextEvent: EventApiData?,
+    ) {
+        nextDateAndPlaceTextView.text = nextDateString
         nextSpeakerFullNameTextView.text = nextSpeaker?.fullName
         nextSpeakerJobTextView.text = nextSpeaker?.job
         nextEventTitleTextView.text = nextEvent?.title
+    }
 
+    private fun setOnClickListeners(currentEvent: EventApiData?, nextEvent: EventApiData?) {
         branchRow.setOnClickListener {
             eventClickListener.onBranchClick(
                 it,
@@ -112,6 +157,32 @@ class BranchViewHolder(
 
         nextToFavoritesImageButton.setOnClickListener {
             eventClickListener.onFavoritesImageClick(it)
+        }
+
+        horizontalScrollView.viewTreeObserver.addOnScrollChangedListener {
+            if (oldScrollX != horizontalScrollView.scrollX) {
+                nextBranchEvent.setBackgroundResource(R.drawable.bg_focused_event_card)
+                nextBranchEvent.setPadding(nextBranchEventPaddingLeft,
+                    nextBranchEventPaddingTop,
+                    nextBranchEventPaddingRight,
+                    nextBranchEventPaddingBottom)
+                currentBranchEvent.setBackgroundResource(R.drawable.bg_unfocused_event_card)
+                currentBranchEvent.setPadding(currentBranchEventPaddingLeft,
+                    currentBranchEventPaddingTop,
+                    currentBranchEventPaddingRight,
+                    currentBranchEventPaddingBottom)
+            } else {
+                nextBranchEvent.setBackgroundResource(R.drawable.bg_unfocused_event_card)
+                nextBranchEvent.setPadding(nextBranchEventPaddingLeft,
+                    nextBranchEventPaddingTop,
+                    nextBranchEventPaddingRight,
+                    nextBranchEventPaddingBottom)
+                currentBranchEvent.setBackgroundResource(R.drawable.bg_focused_event_card)
+                currentBranchEvent.setPadding(currentBranchEventPaddingLeft,
+                    currentBranchEventPaddingTop,
+                    currentBranchEventPaddingRight,
+                    currentBranchEventPaddingBottom)
+            }
         }
     }
 }
