@@ -1,7 +1,7 @@
 package kz.kolesateam.confapp.events.data.models
 
-import java.text.SimpleDateFormat
-import java.util.*
+import kz.kolesateam.confapp.events.presentation.models.EventData
+import kz.kolesateam.confapp.events.presentation.models.SpeakerData
 
 class EventApiDataMapper : Mapper<List<EventApiData>, List<EventData>> {
     private val speakerMapper: Mapper<SpeakerApiData, SpeakerData> = SpeakerApiDataMapper()

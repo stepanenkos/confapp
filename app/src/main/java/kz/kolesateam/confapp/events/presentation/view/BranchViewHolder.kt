@@ -6,7 +6,9 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import kz.kolesateam.confapp.R
-import kz.kolesateam.confapp.events.data.models.*
+import kz.kolesateam.confapp.events.presentation.models.BranchData
+import kz.kolesateam.confapp.events.presentation.models.EventData
+import kz.kolesateam.confapp.events.presentation.models.SpeakerData
 
 class BranchViewHolder(
     view: View,

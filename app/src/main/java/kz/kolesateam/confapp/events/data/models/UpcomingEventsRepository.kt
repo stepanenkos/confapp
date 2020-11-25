@@ -3,6 +3,7 @@ package kz.kolesateam.confapp.events.data.models
 
 import kz.kolesateam.confapp.events.data.ApiClient
 import kz.kolesateam.confapp.events.data.ApiClientSingleton
+import kz.kolesateam.confapp.events.presentation.models.BranchData
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -18,12 +19,12 @@ class UpcomingEventsRepository {
     fun getUpcomingEvents(
         userName: String,
         result: (List<UpcomingEventsListItem>) -> Unit,
-        fail: (String) -> Unit
+        fail: (String) -> Unit,
     ) {
         apiClient.getUpcomingEvents().enqueue(object : Callback<List<BranchApiData>> {
             override fun onResponse(
                 call: Call<List<BranchApiData>>,
-                response: Response<List<BranchApiData>>
+                response: Response<List<BranchApiData>>,
             ) {
                 if (response.isSuccessful) {
                     val upcomingEventListItemList: MutableList<UpcomingEventsListItem> =
@@ -33,27 +34,17 @@ class UpcomingEventsRepository {
                         type = 1,
                         data = userName
                     )
-                    val list = response.body()!!
-                    val listBranchData: MutableList<BranchData> = mutableListOf()
-                    for (index in list.indices) {
-                        listBranchData.add(branchApiDataMapper.map(list[index]))
-                    }
-                    /*val branchListItemList: List<UpcomingEventsListItem> =
-                        response.body()!!.map { branchApiData ->
-                            UpcomingEventsListItem(
-                                type = 2,
-                                data = branchApiData
-                            )
-                        }*/
 
                     val branchListItemList: List<UpcomingEventsListItem> =
-                        listBranchData.map { branchApiData ->
+                        response.body()!!.map { branchApiData ->
+                            branchApiDataMapper.map(branchApiData)
+                        }.map { branchData ->
                             UpcomingEventsListItem(
                                 type = 2,
-                                data = branchApiData
+                                data = branchData
                             )
                         }
-
+                    
                     upcomingEventListItemList.add(headerListItem)
                     upcomingEventListItemList.addAll(branchListItemList)
 
