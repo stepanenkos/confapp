@@ -33,8 +33,10 @@ class UpcomingEventsRepository {
                         type = 1,
                         data = userName
                     )
-                    val list = response.body()!!.map {
-                        branchApiDataMapper.map(it)
+                    val list = response.body()!!
+                    val listBranchData: MutableList<BranchData> = mutableListOf()
+                    for (index in list.indices) {
+                        listBranchData.add(branchApiDataMapper.map(list[index]))
                     }
                     /*val branchListItemList: List<UpcomingEventsListItem> =
                         response.body()!!.map { branchApiData ->
@@ -45,7 +47,7 @@ class UpcomingEventsRepository {
                         }*/
 
                     val branchListItemList: List<UpcomingEventsListItem> =
-                        list.map { branchApiData ->
+                        listBranchData.map { branchApiData ->
                             UpcomingEventsListItem(
                                 type = 2,
                                 data = branchApiData

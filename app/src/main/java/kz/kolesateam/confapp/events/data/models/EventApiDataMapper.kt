@@ -12,6 +12,7 @@ class EventApiDataMapper : Mapper<List<EventApiData>, List<EventData>> {
     private val listEvents: MutableList<EventData> = mutableListOf()
 
     override fun map(data: List<EventApiData>?): List<EventData> {
+        listEvents.clear()
         for (index in data?.indices!!) {
             listEvents.add(EventData(
                 startTime = data[index].startTime ?: DEFAULT_START_TIME_TEXT,
