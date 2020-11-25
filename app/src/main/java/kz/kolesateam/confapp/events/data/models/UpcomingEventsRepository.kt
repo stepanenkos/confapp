@@ -3,9 +3,6 @@ package kz.kolesateam.confapp.events.data.models
 
 import kz.kolesateam.confapp.events.data.ApiClient
 import kz.kolesateam.confapp.events.data.ApiClientSingleton
-import kz.kolesateam.confapp.utils.model.ResponseData
-import org.json.JSONArray
-import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -17,7 +14,7 @@ class UpcomingEventsRepository {
         JacksonConverterFactory.create(),
         ApiClient::class.java
     )
-
+    private val branchApiDataMapper: Mapper<BranchApiData, BranchData> = BranchApiDataMapper()
     fun getUpcomingEvents(
         userName: String,
         result: (List<UpcomingEventsListItem>) -> Unit,
@@ -36,9 +33,19 @@ class UpcomingEventsRepository {
                         type = 1,
                         data = userName
                     )
+                    val list = response.body()!!.map {
+                        branchApiDataMapper.map(it)
+                    }
+                    /*val branchListItemList: List<UpcomingEventsListItem> =
+                        response.body()!!.map { branchApiData ->
+                            UpcomingEventsListItem(
+                                type = 2,
+                                data = branchApiData
+                            )
+                        }*/
 
                     val branchListItemList: List<UpcomingEventsListItem> =
-                        response.body()!!.map { branchApiData ->
+                        list.map { branchApiData ->
                             UpcomingEventsListItem(
                                 type = 2,
                                 data = branchApiData

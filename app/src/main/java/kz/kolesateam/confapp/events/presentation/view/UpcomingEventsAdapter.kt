@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import kz.kolesateam.confapp.R
 import kz.kolesateam.confapp.events.data.models.BranchApiData
+import kz.kolesateam.confapp.events.data.models.BranchData
 import kz.kolesateam.confapp.events.data.models.UpcomingEventsListItem
 
 class UpcomingEventsAdapter(
@@ -34,7 +35,7 @@ class UpcomingEventsAdapter(
         }
 
         if (holder is BranchViewHolder) {
-            holder.onBind(branchDataList[position].data as BranchApiData)
+            holder.onBind(branchDataList[position].data as BranchData)
         }
     }
 

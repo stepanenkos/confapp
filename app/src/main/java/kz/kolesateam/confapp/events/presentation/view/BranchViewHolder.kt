@@ -6,9 +6,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import kz.kolesateam.confapp.R
-import kz.kolesateam.confapp.events.data.models.BranchApiData
-import kz.kolesateam.confapp.events.data.models.EventApiData
-import kz.kolesateam.confapp.events.data.models.SpeakerApiData
+import kz.kolesateam.confapp.events.data.models.*
 
 class BranchViewHolder(
     view: View,
@@ -76,10 +74,10 @@ class BranchViewHolder(
         )
     }
 
-    fun onBind(branchApiData: BranchApiData) {
+    fun onBind(branchData: BranchData) {
 
-        val currentEvent = branchApiData.events?.get(0)
-        val nextEvent = branchApiData.events?.get(1)
+        val currentEvent = branchData.events[0]
+        val nextEvent = branchData.events[1]
 
         val currentSpeaker = currentEvent?.speaker
         val nextSpeaker = nextEvent?.speaker
@@ -87,7 +85,7 @@ class BranchViewHolder(
         val currentDateAndPlaceString = formatStringForDateAndPlace(currentEvent)
         val nextDateAndPlaceString = formatStringForDateAndPlace(nextEvent)
 
-        branchNameTextView.text = branchApiData.title
+        branchNameTextView.text = branchData.title
 
         fillCurrentEvent(currentDateAndPlaceString, currentSpeaker, currentEvent)
         fillNextEvent(nextDateAndPlaceString, nextSpeaker, nextEvent)
@@ -96,38 +94,38 @@ class BranchViewHolder(
 
     }
 
-    private fun formatStringForDateAndPlace(event: EventApiData?): String {
+    private fun formatStringForDateAndPlace(event: EventData): String {
         return String.format(
             "%s - %s • %s",
-            event?.startTime?.substringBeforeLast(":"),
-            event?.endTime?.substringBeforeLast(":"),
-            event?.place
+            event.startTime.substringBeforeLast(":"),
+            event.endTime.substringBeforeLast(":"),
+            event.place
         )
     }
 
     private fun fillCurrentEvent(
         currentDateString: String,
-        currentSpeaker: SpeakerApiData?,
-        currentEvent: EventApiData?,
+        currentSpeaker: SpeakerData,
+        currentEvent: EventData,
     ) {
         currentDateAndPlaceTextView.text = currentDateString
-        currentSpeakerFullNameTextView.text = currentSpeaker?.fullName
-        currentSpeakerJobTextView.text = currentSpeaker?.job
-        currentEventTitleTextView.text = currentEvent?.title
+        currentSpeakerFullNameTextView.text = currentSpeaker.fullName
+        currentSpeakerJobTextView.text = currentSpeaker.job
+        currentEventTitleTextView.text = currentEvent.title
     }
 
     private fun fillNextEvent(
         nextDateString: String,
-        nextSpeaker: SpeakerApiData?,
-        nextEvent: EventApiData?,
+        nextSpeaker: SpeakerData,
+        nextEvent: EventData,
     ) {
         nextDateAndPlaceTextView.text = nextDateString
-        nextSpeakerFullNameTextView.text = nextSpeaker?.fullName
-        nextSpeakerJobTextView.text = nextSpeaker?.job
-        nextEventTitleTextView.text = nextEvent?.title
+        nextSpeakerFullNameTextView.text = nextSpeaker.fullName
+        nextSpeakerJobTextView.text = nextSpeaker.job
+        nextEventTitleTextView.text = nextEvent.title
     }
 
-    private fun setOnClickListeners(currentEvent: EventApiData?, nextEvent: EventApiData?) {
+    private fun setOnClickListeners(currentEvent: EventData, nextEvent: EventData) {
         branchRow.setOnClickListener {
             eventClickListener.onBranchClick(
                 it,
@@ -139,7 +137,7 @@ class BranchViewHolder(
             eventClickListener.onEventClick(
                 it,
                 branchNameTextView.text.toString(),
-                currentEvent?.title.toString()
+                currentEvent.title
             )
         }
 
@@ -147,7 +145,7 @@ class BranchViewHolder(
             eventClickListener.onEventClick(
                 it,
                 branchNameTextView.text.toString(),
-                nextEvent?.title.toString()
+                nextEvent.title
             )
         }
 
