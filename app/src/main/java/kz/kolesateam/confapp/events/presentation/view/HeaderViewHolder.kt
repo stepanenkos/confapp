@@ -10,6 +10,9 @@ class HeaderViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         view.findViewById(R.id.activity_upcoming_events_text_view_hello_user)
 
     fun onBind(userName: String) {
-        helloUserTextView.text = userName
+        helloUserTextView.text = helloUserTextView.resources.getString(
+            R.string.activity_upcoming_events_text_view_hello_user,
+            userName
+        )
     }
 }

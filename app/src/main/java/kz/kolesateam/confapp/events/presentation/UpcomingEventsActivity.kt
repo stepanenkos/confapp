@@ -1,52 +1,45 @@
 package kz.kolesateam.confapp.events.presentation
 
-import android.content.Context
-import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.*
 import androidx.core.content.ContextCompat
-import androidx.lifecycle.asLiveData
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import kz.kolesateam.confapp.R
-import kz.kolesateam.confapp.events.data.ApiClient
-import kz.kolesateam.confapp.events.data.ApiClientSingleton
-import kz.kolesateam.confapp.events.data.JetpackDataStore
-import kz.kolesateam.confapp.events.data.models.BranchApiData
+import kz.kolesateam.confapp.di.SHARED_PREFS_DATA_SOURCE
+import kz.kolesateam.confapp.events.data.datasource.UserNameDataSource
 import kz.kolesateam.confapp.events.data.models.UpcomingEventsListItem
-import kz.kolesateam.confapp.events.data.models.UpcomingEventsRepository
+import kz.kolesateam.confapp.events.domain.UpcomingEventsRepository
 import kz.kolesateam.confapp.events.presentation.view.EventClickListener
 import kz.kolesateam.confapp.events.presentation.view.UpcomingEventsAdapter
 import kz.kolesateam.confapp.extensions.gone
 import kz.kolesateam.confapp.extensions.show
-import kz.kolesateam.confapp.hello.presentation.SHARED_PREFERENCES_NAME_KEY
-import kz.kolesateam.confapp.hello.presentation.USER_NAME
-import retrofit2.converter.jackson.JacksonConverterFactory
+import kz.kolesateam.confapp.utils.model.ResponseData
+import org.koin.android.ext.android.inject
+import org.koin.core.qualifier.named
+import java.lang.Exception
 
 private const val DEFAULT_USER_NAME = "Гость"
 
 class UpcomingEventsActivity : AppCompatActivity(), EventClickListener {
 
-    private lateinit var upcomingEventsProgressBar: ProgressBar
+    private val upcomingEventsRepository: UpcomingEventsRepository by inject()
+    private val userNameDataSource: UserNameDataSource by inject(named(
+        SHARED_PREFS_DATA_SOURCE))
 
-    private lateinit var recyclerView: RecyclerView
     private val adapter = UpcomingEventsAdapter(this)
 
-    private val upcomingEventsRepository = UpcomingEventsRepository()
+    private lateinit var upcomingEventsProgressBar: ProgressBar
+    private lateinit var recyclerView: RecyclerView
 
-    private lateinit var sharedPreferences: SharedPreferences
     private lateinit var userName: String
     private var isPressedToFavoritesButton = true
-    private val apiClient: ApiClient = ApiClientSingleton.getApiClient(
-        "http://37.143.8.68:2020",
-        JacksonConverterFactory.create(),
-        ApiClient::class.java
-    )
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -64,8 +57,7 @@ class UpcomingEventsActivity : AppCompatActivity(), EventClickListener {
             this
         )
 
-        sharedPreferences = getSharedPreferences(SHARED_PREFERENCES_NAME_KEY, Context.MODE_PRIVATE)
-        userName = sharedPreferences.getString(USER_NAME, DEFAULT_USER_NAME)!!
+        userName = userNameDataSource.getUserName() ?: DEFAULT_USER_NAME
     }
 
     override fun onFavoritesImageClick(view: View) {
@@ -73,9 +65,11 @@ class UpcomingEventsActivity : AppCompatActivity(), EventClickListener {
             R.id.activity_upcoming_events_image_to_favorites -> {
                 view as ImageButton
                 if (isPressedToFavoritesButton) {
-                    view.setImageDrawable(ContextCompat.getDrawable(view.context, R.drawable.ic_to_favorites_fill))
+                    view.setImageDrawable(ContextCompat.getDrawable(view.context,
+                        R.drawable.ic_to_favorites_fill))
                 } else {
-                    view.setImageDrawable(ContextCompat.getDrawable(view.context, R.drawable.ic_to_favorites_border))
+                    view.setImageDrawable(ContextCompat.getDrawable(view.context,
+                        R.drawable.ic_to_favorites_border))
                 }
                 isPressedToFavoritesButton = !isPressedToFavoritesButton
             }
@@ -103,25 +97,24 @@ class UpcomingEventsActivity : AppCompatActivity(), EventClickListener {
 
     private fun getUpcomingEvents() {
         upcomingEventsProgressBar.show()
-        upcomingEventsRepository.getUpcomingEvents(
-            getString(
-                R.string.activity_upcoming_events_text_view_hello_user,
-                userName
-            ),
-            result = { listBranchApiData ->
-                showResult(listBranchApiData)
-            },
-            fail = { errorMessage ->
-                showError(errorMessage)
-            })
-        upcomingEventsProgressBar.gone()
+        GlobalScope.launch(Dispatchers.IO) {
+            val upcomingEventsResponse = upcomingEventsRepository.getUpcomingEvents()
+            withContext(Dispatchers.Main) {
+                when (upcomingEventsResponse) {
+                    is ResponseData.Success -> showResult(upcomingEventsResponse.result)
+                    is ResponseData.Error -> showError(upcomingEventsResponse.error)
+                }
+            }
+        }
     }
 
-    private fun showError(errorMessage: String) {
-        Toast.makeText(this, errorMessage, Toast.LENGTH_SHORT).show()
+    private fun showError(errorMessage: Exception) {
+        upcomingEventsProgressBar.gone()
+        Toast.makeText(this, errorMessage.localizedMessage, Toast.LENGTH_SHORT).show()
     }
 
     private fun showResult(listBranchApiData: List<UpcomingEventsListItem>) {
+        upcomingEventsProgressBar.gone()
         adapter.setList(listBranchApiData)
     }
 
