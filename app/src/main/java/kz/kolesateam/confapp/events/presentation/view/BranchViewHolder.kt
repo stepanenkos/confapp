@@ -4,8 +4,8 @@ import android.view.View
 import android.widget.HorizontalScrollView
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.recyclerview.widget.RecyclerView
 import kz.kolesateam.confapp.R
+import kz.kolesateam.confapp.events.data.models.UpcomingEventsListItem
 import kz.kolesateam.confapp.events.presentation.models.BranchData
 import kz.kolesateam.confapp.events.presentation.models.EventData
 import kz.kolesateam.confapp.events.presentation.models.SpeakerData
@@ -13,7 +13,7 @@ import kz.kolesateam.confapp.events.presentation.models.SpeakerData
 class BranchViewHolder(
     view: View,
     private val eventClickListener: EventClickListener,
-) : RecyclerView.ViewHolder(view) {
+) : BaseViewHolder<UpcomingEventsListItem>(view) {
 
     private val horizontalScrollView: HorizontalScrollView =
         view.findViewById(R.id.activity_upcoming_events_horizontal_scroll_view)
@@ -76,13 +76,13 @@ class BranchViewHolder(
         )
     }
 
-    fun onBind(branchData: BranchData) {
-
+    override fun onBind(data: UpcomingEventsListItem) {
+        val branchData: BranchData = (data as? UpcomingEventsListItem.BranchListItem)?.data ?: return
         val currentEvent = branchData.events[0]
         val nextEvent = branchData.events[1]
 
-        val currentSpeaker = currentEvent?.speaker
-        val nextSpeaker = nextEvent?.speaker
+        val currentSpeaker = currentEvent.speaker
+        val nextSpeaker = nextEvent.speaker
 
         val currentDateAndPlaceString = formatStringForDateAndPlace(currentEvent)
         val nextDateAndPlaceString = formatStringForDateAndPlace(nextEvent)

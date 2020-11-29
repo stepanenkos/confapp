@@ -7,17 +7,15 @@ import android.text.Editable
 import android.widget.Button
 import android.widget.EditText
 import kz.kolesateam.confapp.R
-import kz.kolesateam.confapp.di.SHARED_PREFS_DATA_SOURCE
 import kz.kolesateam.confapp.events.data.datasource.UserNameDataSource
 import kz.kolesateam.confapp.events.presentation.UpcomingEventsRouter
 import kz.kolesateam.confapp.presentation.common.AbstractTextWatcher
 import org.koin.android.ext.android.inject
-import org.koin.core.qualifier.named
 
 private const val USER_NAME = "user_name"
 
 class HelloActivity : AppCompatActivity() {
-    private val userNameDataSource: UserNameDataSource by inject(named(SHARED_PREFS_DATA_SOURCE))
+    private val userNameDataSource: UserNameDataSource by inject()
 
     private lateinit var nameEditText: EditText
     private lateinit var continueButton: Button

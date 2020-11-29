@@ -4,12 +4,15 @@ import android.view.View
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import kz.kolesateam.confapp.R
+import kz.kolesateam.confapp.events.data.models.UpcomingEventsListItem
 
-class HeaderViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+class HeaderViewHolder(view: View) : BaseViewHolder<UpcomingEventsListItem>(view) {
     private val helloUserTextView: TextView =
         view.findViewById(R.id.activity_upcoming_events_text_view_hello_user)
 
-    fun onBind(userName: String) {
+    override fun onBind(data: UpcomingEventsListItem) {
+        val userName: String = (data as? UpcomingEventsListItem.HeaderItem)?.userName ?: return
+
         helloUserTextView.text = helloUserTextView.resources.getString(
             R.string.activity_upcoming_events_text_view_hello_user,
             userName

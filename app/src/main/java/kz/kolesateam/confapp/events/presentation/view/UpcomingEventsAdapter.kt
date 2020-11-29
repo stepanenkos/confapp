@@ -4,17 +4,18 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import kz.kolesateam.confapp.R
+import kz.kolesateam.confapp.events.data.models.HEADER_TYPE
 import kz.kolesateam.confapp.events.presentation.models.BranchData
 import kz.kolesateam.confapp.events.data.models.UpcomingEventsListItem
 
 class UpcomingEventsAdapter(
     private val eventClickListener: EventClickListener
-) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+) : RecyclerView.Adapter<BaseViewHolder<UpcomingEventsListItem>>() {
     private val branchDataList: MutableList<UpcomingEventsListItem> = mutableListOf()
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int):BaseViewHolder<UpcomingEventsListItem> {
         return when (viewType) {
-            1 -> HeaderViewHolder(
+            HEADER_TYPE -> HeaderViewHolder(
                 view = LayoutInflater.from(parent.context)
                     .inflate(R.layout.header_layout, parent, false)
             )
@@ -27,14 +28,8 @@ class UpcomingEventsAdapter(
         }
     }
 
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        if (holder is HeaderViewHolder) {
-            holder.onBind(branchDataList[position].data as String)
-        }
-
-        if (holder is BranchViewHolder) {
-            holder.onBind(branchDataList[position].data as BranchData)
-        }
+    override fun onBindViewHolder(holder: BaseViewHolder<UpcomingEventsListItem>, position: Int) {
+        holder.onBind(branchDataList[position])
     }
 
     override fun getItemCount(): Int = branchDataList.size

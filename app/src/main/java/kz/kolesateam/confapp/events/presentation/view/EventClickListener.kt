@@ -5,13 +5,13 @@ import android.view.View
 interface EventClickListener {
     fun onEventClick(
         view: View,
-        branchTitle: String? = "",
-        eventTitle: String? = ""
+        branchTitle: String,
+        eventTitle: String
     )
 
     fun onBranchClick(
         view: View,
-        branchTitle: String? = "",
+        branchTitle: String,
     )
 
     fun onFavoritesImageClick(
