@@ -32,8 +32,8 @@
 
         <ImageView
             android:id="@+id/activity_upcoming_events_image_view_branch"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:padding="@dimen/padding_4x"
             app:srcCompat="@drawable/ic_arrow_forward"
@@ -58,7 +58,7 @@
             <include
                 android:id="@+id/activity_upcoming_events_current_event"
                 layout="@layout/events_card_layout"
-                android:layout_width="280dp"
+                android:layout_width="@dimen/events_card_width"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/margin_24x"
                 android:layout_marginEnd="@dimen/margin_8x"
@@ -67,7 +67,7 @@
             <include
                 android:id="@+id/activity_upcoming_events_next_event"
                 layout="@layout/events_card_layout"
-                android:layout_width="280dp"
+                android:layout_width="@dimen/events_card_width"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/margin_16x"
                 />
