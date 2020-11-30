@@ -79,7 +79,7 @@ class BranchViewHolder(
         val branchData: BranchData = (data as? UpcomingEventsListItem.BranchListItem)?.data ?: return
         val currentEvent = branchData.events[0]
         val nextEvent = branchData.events[1]
-
+        val branchId = branchData.id
         val currentSpeaker = currentEvent.speaker
         val nextSpeaker = nextEvent.speaker
 
@@ -91,7 +91,7 @@ class BranchViewHolder(
         fillCurrentEvent(currentDateAndPlaceString, currentSpeaker, currentEvent)
         fillNextEvent(nextDateAndPlaceString, nextSpeaker, nextEvent)
 
-        setOnClickListeners(currentEvent, nextEvent)
+        setOnClickListeners(currentEvent, nextEvent, branchId, branchData.title)
 
     }
 
@@ -126,11 +126,12 @@ class BranchViewHolder(
         nextEventTitleTextView.text = nextEvent.title
     }
 
-    private fun setOnClickListeners(currentEvent: EventData, nextEvent: EventData) {
+    private fun setOnClickListeners(currentEvent: EventData, nextEvent: EventData, branchId: Int, branchTitle: String) {
         branchRow.setOnClickListener {
             eventClickListener.onBranchClick(
                 it,
-                branchNameTextView.text.toString(),
+                branchId,
+                branchTitle
             )
         }
 
