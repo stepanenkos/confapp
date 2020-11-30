@@ -14,16 +14,27 @@ class EventApiDataMapper : Mapper<List<EventApiData>, List<EventData>> {
 
     override fun map(data: List<EventApiData>?): List<EventData> {
         listEvents.clear()
-        for (index in data?.indices!!) {
-            listEvents.add(EventData(
-                startTime = data[index].startTime ?: DEFAULT_START_TIME_TEXT,
-                endTime = data[index].endTime ?: DEFAULT_END_TIME_TEXT,
-                title = data[index].title ?: DEFAULT_EVENT_NAME,
-                place = data[index].place ?: DEFAULT_PLACE_TEXT,
-                speaker = speakerMapper.map(data[index].speaker)
-            ))
-        }
+
+            for (index in data?.indices!!) {
+                listEvents.add(EventData(
+                    startTime = data?.get(index)?.startTime ?: DEFAULT_START_TIME_TEXT,
+                    endTime = data?.get(index)?.endTime ?: DEFAULT_END_TIME_TEXT,
+                    title = data?.get(index)?.title ?: DEFAULT_EVENT_NAME,
+                    place = data?.get(index)?.place ?: DEFAULT_PLACE_TEXT,
+                    speaker = speakerMapper.map(data?.get(index)?.speaker)
+                ))
+            }
+
         return listEvents.toList()
     }
 
+    fun map(data: EventApiData?): EventData {
+            return EventData(
+                startTime = data?.startTime ?: DEFAULT_START_TIME_TEXT,
+                endTime = data?.endTime ?: DEFAULT_END_TIME_TEXT,
+                title = data?.title ?: DEFAULT_EVENT_NAME,
+                place = data?.place ?: DEFAULT_PLACE_TEXT,
+                speaker = speakerMapper.map(data?.speaker)
+            )
+        }
 }
