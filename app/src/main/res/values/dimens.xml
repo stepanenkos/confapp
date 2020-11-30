@@ -26,4 +26,6 @@
     <dimen name="padding_80x">80dp</dimen>
     <dimen name="margin_32x">32dp</dimen>
     <dimen name="events_card_width">280dp</dimen>
+    <dimen name="activity_upcoming_events_button_heart_to_favorite_width">16dp</dimen>
+    <dimen name="activity_upcoming_events_button_heart_to_favorite_height">16dp</dimen>
 </resources>
