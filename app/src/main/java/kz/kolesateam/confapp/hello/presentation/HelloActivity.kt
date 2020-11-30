@@ -21,6 +21,7 @@ class HelloActivity : AppCompatActivity() {
     private lateinit var continueButton: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        setTheme(R.style.Theme_ConfApp)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_hello)
         initViews()

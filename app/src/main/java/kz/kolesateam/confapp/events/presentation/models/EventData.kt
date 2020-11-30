@@ -1,6 +1,5 @@
 package kz.kolesateam.confapp.events.presentation.models
 
-
 data class EventData(
     val startTime: String,
     val endTime: String,

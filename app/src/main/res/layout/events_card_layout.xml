@@ -43,21 +43,22 @@
         tools:text="15:00 - 16:00 • Зал номер 5"
         />
 
-    <ImageButton
+
+    <ToggleButton
         android:id="@+id/activity_upcoming_events_image_to_favorites"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/margin_60x"
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        android:background="@drawable/bg_button_heart_to_favorites"
+        android:textOff=" "
+        android:textOn=" "
         app:layout_constraintBottom_toBottomOf="@+id/activity_upcoming_events_text_view_time_place"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toEndOf="@+id/activity_upcoming_events_text_view_time_place"
         app:layout_constraintTop_toTopOf="@+id/activity_upcoming_events_text_view_time_place"
         app:layout_constraintVertical_bias="1.0"
-        android:background="@drawable/ic_to_favorites_border"
-        android:clickable="true"
-        android:focusable="true"
         />
+
 
     <TextView
         android:id="@+id/activity_upcoming_events_text_view_speaker_full_name"

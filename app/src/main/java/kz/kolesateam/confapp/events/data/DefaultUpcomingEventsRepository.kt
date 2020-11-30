@@ -1,17 +1,18 @@
 package kz.kolesateam.confapp.events.data
 
-
 import kz.kolesateam.confapp.events.data.datasource.UpcomingEventsDataSource
 import kz.kolesateam.confapp.events.data.datasource.UserNameDataSource
-import kz.kolesateam.confapp.events.data.models.*
+import kz.kolesateam.confapp.events.data.models.BranchApiData
+import kz.kolesateam.confapp.events.data.models.BranchApiDataMapper
+import kz.kolesateam.confapp.events.data.models.Mapper
+import kz.kolesateam.confapp.events.data.models.UpcomingEventsListItem
 import kz.kolesateam.confapp.events.domain.UpcomingEventsRepository
 import kz.kolesateam.confapp.events.presentation.models.BranchData
 import kz.kolesateam.confapp.utils.model.ResponseData
 
-
 class DefaultUpcomingEventsRepository(
     private val upcomingEventsDataSource: UpcomingEventsDataSource,
-    private val userNameDataSource: UserNameDataSource
+    private val userNameDataSource: UserNameDataSource,
 ) : UpcomingEventsRepository {
     private val branchApiDataMapper: Mapper<BranchApiData, BranchData> = BranchApiDataMapper()
 
@@ -24,7 +25,8 @@ class DefaultUpcomingEventsRepository(
                 val upcomingEventListItemList: MutableList<UpcomingEventsListItem> =
                     mutableListOf()
 
-                val headerListItem: UpcomingEventsListItem = UpcomingEventsListItem.HeaderItem(userName)
+                val headerListItem: UpcomingEventsListItem =
+                    UpcomingEventsListItem.HeaderItem(userName)
 
                 val branchListItemList: List<UpcomingEventsListItem> =
                     response.body()!!.map { branchApiData ->
@@ -45,4 +47,3 @@ class DefaultUpcomingEventsRepository(
         }
     }
 }
-

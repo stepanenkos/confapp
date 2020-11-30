@@ -1,9 +1,7 @@
 package kz.kolesateam.confapp.events.presentation.view
 
 import android.view.View
-import android.widget.HorizontalScrollView
-import android.widget.ImageView
-import android.widget.TextView
+import android.widget.*
 import kz.kolesateam.confapp.R
 import kz.kolesateam.confapp.events.data.models.UpcomingEventsListItem
 import kz.kolesateam.confapp.events.presentation.models.BranchData
@@ -38,7 +36,7 @@ class BranchViewHolder(
         currentBranchEvent.findViewById(R.id.activity_upcoming_events_text_view_job)
     private val currentEventTitleTextView: TextView =
         currentBranchEvent.findViewById(R.id.activity_upcoming_events_text_view_event_title)
-    private val currentToFavoritesImageButton: ImageView =
+    private val currentToFavoritesImageButton: ToggleButton =
         currentBranchEvent.findViewById(R.id.activity_upcoming_events_image_to_favorites)
 
     private val nextDateAndPlaceTextView: TextView =
@@ -49,7 +47,7 @@ class BranchViewHolder(
         nextBranchEvent.findViewById(R.id.activity_upcoming_events_text_view_job)
     private val nextEventTitleTextView: TextView =
         nextBranchEvent.findViewById(R.id.activity_upcoming_events_text_view_event_title)
-    private val nextToFavoritesImageButton: ImageView =
+    private val nextToFavoritesImageButton: ToggleButton =
         nextBranchEvent.findViewById(R.id.activity_upcoming_events_image_to_favorites)
 
     private val currentBranchEventPaddingTop = currentBranchEvent.paddingTop
@@ -66,6 +64,7 @@ class BranchViewHolder(
         currentBranchEvent.findViewById<TextView>(
             R.id.activity_upcoming_events_text_view_next_event
         ).visibility = View.INVISIBLE
+
 
         nextBranchEvent.setBackgroundResource(R.drawable.bg_unfocused_event_card)
         nextBranchEvent.setPadding(
@@ -138,7 +137,6 @@ class BranchViewHolder(
         currentBranchEvent.setOnClickListener {
             eventClickListener.onEventClick(
                 it,
-                branchNameTextView.text.toString(),
                 currentEvent.title
             )
         }
@@ -146,17 +144,26 @@ class BranchViewHolder(
         nextBranchEvent.setOnClickListener {
             eventClickListener.onEventClick(
                 it,
-                branchNameTextView.text.toString(),
                 nextEvent.title
             )
         }
 
-        currentToFavoritesImageButton.setOnClickListener {
-            eventClickListener.onFavoritesImageClick(it)
+        currentToFavoritesImageButton.setOnCheckedChangeListener { button, isChecked ->
+            if (isChecked) {
+                Toast.makeText(button.context, "CHECKED", Toast.LENGTH_SHORT).show()
+            } else {
+                Toast.makeText(button.context, "UNCHECKED", Toast.LENGTH_SHORT).show()
+
+            }
         }
 
-        nextToFavoritesImageButton.setOnClickListener {
-            eventClickListener.onFavoritesImageClick(it)
+        nextToFavoritesImageButton.setOnCheckedChangeListener { button, isChecked ->
+            if (isChecked) {
+                Toast.makeText(button.context, "CHECKED", Toast.LENGTH_SHORT).show()
+            } else {
+                Toast.makeText(button.context, "UNCHECKED", Toast.LENGTH_SHORT).show()
+
+            }
         }
 
         horizontalScrollView.viewTreeObserver.addOnScrollChangedListener {

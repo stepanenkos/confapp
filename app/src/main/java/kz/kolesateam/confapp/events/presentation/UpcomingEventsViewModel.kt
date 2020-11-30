@@ -7,18 +7,13 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import kz.kolesateam.confapp.events.data.datasource.UserNameDataSource
 import kz.kolesateam.confapp.events.data.models.UpcomingEventsListItem
 import kz.kolesateam.confapp.events.domain.UpcomingEventsRepository
-import kz.kolesateam.confapp.extensions.show
 import kz.kolesateam.confapp.models.ProgressState
 import kz.kolesateam.confapp.utils.model.ResponseData
-import org.koin.android.ext.android.inject
-import org.koin.core.qualifier.named
 
 class UpcomingEventsViewModel(
     private val upcomingEventsRepository: UpcomingEventsRepository,
-    private val userNameDataSource: UserNameDataSource,
 ) : ViewModel() {
 
     private val progressLiveData: MutableLiveData<ProgressState> = MutableLiveData()
@@ -27,7 +22,6 @@ class UpcomingEventsViewModel(
     private val errorLiveData: MutableLiveData<Exception> = MutableLiveData()
 
     fun getProgressLiveData(): LiveData<ProgressState> = progressLiveData
-
 
     fun getUpcomingEventsLiveData(): LiveData<List<UpcomingEventsListItem>> = upcomingEventsLiveData
 
@@ -55,5 +49,4 @@ class UpcomingEventsViewModel(
             progressLiveData.value = ProgressState.Done
         }
     }
-
 }
