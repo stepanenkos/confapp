@@ -24,6 +24,8 @@ class UpcomingEventsActivity : AppCompatActivity(), EventClickListener {
     private lateinit var upcomingEventsProgressBar: ProgressBar
     private lateinit var recyclerView: RecyclerView
 
+    private lateinit var buttonToFavorites: Button
+
     private var isPressedToFavoritesButton = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -47,6 +49,13 @@ class UpcomingEventsActivity : AppCompatActivity(), EventClickListener {
         recyclerView.apply {
             this.adapter = this@UpcomingEventsActivity.adapter
             this.layoutManager = LinearLayoutManager(this@UpcomingEventsActivity)
+        }
+
+        buttonToFavorites = findViewById(R.id.button_to_favorites)
+
+        buttonToFavorites.setOnClickListener {
+            Toast.makeText(this, "Нажата кнопка ${"В избранные"}", Toast.LENGTH_SHORT).show()
+
         }
     }
 
