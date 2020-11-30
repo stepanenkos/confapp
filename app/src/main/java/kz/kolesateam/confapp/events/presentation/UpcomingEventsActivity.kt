@@ -4,29 +4,32 @@ import android.os.Bundle
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import kz.kolesateam.confapp.R
+import kz.kolesateam.confapp.di.UPCOMING_EVENTS_VIEW_MODEL
 import kz.kolesateam.confapp.events.data.models.UpcomingEventsListItem
 import kz.kolesateam.confapp.events.presentation.view.EventClickListener
-import kz.kolesateam.confapp.events.presentation.view.UpcomingEventsAdapter
+import kz.kolesateam.confapp.events.presentation.view.EventsAdapter
 import kz.kolesateam.confapp.models.ProgressState
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.core.qualifier.named
+
+const val BRANCH_ID = "branch_id"
+const val BRANCH_TITLE = "branch_title"
 
 class UpcomingEventsActivity : AppCompatActivity(), EventClickListener {
 
-    private val upcomingEventsViewModel: UpcomingEventsViewModel by viewModel()
+    private val upcomingEventsViewModel: UpcomingEventsViewModel by viewModel(named(
+        UPCOMING_EVENTS_VIEW_MODEL))
 
-    private val adapter = UpcomingEventsAdapter(this)
+    private val adapter = EventsAdapter(this)
 
     private lateinit var upcomingEventsProgressBar: ProgressBar
     private lateinit var recyclerView: RecyclerView
 
     private lateinit var buttonToFavorites: Button
-
-    private var isPressedToFavoritesButton = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -59,10 +62,15 @@ class UpcomingEventsActivity : AppCompatActivity(), EventClickListener {
         }
     }
 
-    override fun onBranchClick(view: View, branchTitle: String) {
+    override fun onBranchClick(view: View, branchId: Int, branchTitle: String) {
         when (view.id) {
-            R.id.activity_upcoming_events_branch_row ->
-                Toast.makeText(this, "Branch: $branchTitle", Toast.LENGTH_SHORT).show()
+            R.id.activity_upcoming_events_branch_row -> {
+                val intent = AllEventsRouter().createIntent(this@UpcomingEventsActivity)
+                intent.putExtra(BRANCH_ID, branchId)
+                intent.putExtra(BRANCH_TITLE, branchTitle)
+                startActivity(intent)
+            }
+
         }
     }
 
