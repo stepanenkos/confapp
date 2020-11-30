@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:padding="@dimen/padding_16x"
+    android:layout_marginBottom="@dimen/margin_32x"
+    android:clickable="true"
+    android:orientation="horizontal"
+    android:focusable="true"
+    >
+
+<TextView
+    android:id="@+id/activity_all_events_text_view_branch_name"
+    android:layout_width="0dp"
+    android:layout_height="wrap_content"
+    android:layout_weight="1"
+    android:textColor="@color/white"
+    android:textSize="@dimen/text_size_24"
+    android:textAlignment="center"
+    tools:text="Android"
+    />
+
+</LinearLayout>
