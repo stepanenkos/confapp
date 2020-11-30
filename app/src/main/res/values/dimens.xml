@@ -24,4 +24,6 @@
     <dimen name="margin_60x">60dp</dimen>
     <dimen name="margin_42x">42dp</dimen>
     <dimen name="padding_80x">80dp</dimen>
+    <dimen name="margin_32x">32dp</dimen>
+    <dimen name="events_card_width">280dp</dimen>
 </resources>
