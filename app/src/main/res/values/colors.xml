@@ -23,4 +23,5 @@
     <color name="activity_upcoming_events_hello_text_view">#FAFAFA</color>
     <color name="activity_upcoming_events_time_place_job_text_view">#888B94</color>
     <color name="app_primary_color_blue">#2A81DD</color>
+    <color name="bg_text_view_end_event">#F31717</color>
 </resources>

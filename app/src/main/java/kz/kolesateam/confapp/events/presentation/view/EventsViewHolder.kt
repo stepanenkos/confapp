@@ -5,6 +5,8 @@ import android.widget.*
 import kz.kolesateam.confapp.R
 import kz.kolesateam.confapp.events.data.models.UpcomingEventsListItem
 import kz.kolesateam.confapp.events.presentation.models.EventData
+import java.text.SimpleDateFormat
+import java.util.*
 
 class EventsViewHolder(
     view: View,
@@ -13,6 +15,14 @@ class EventsViewHolder(
 
     private val branchEvent: View =
         view.findViewById(R.id.activity_all_events_event_card)
+    private val textViewStateEvent: TextView = branchEvent.findViewById<TextView>(
+    R.id.activity_upcoming_events_text_view_next_event
+    )
+    private val eventPaddingLeft = branchEvent.paddingLeft
+    private val eventPaddingTop = branchEvent.paddingTop
+    private val eventPaddingRight = branchEvent.paddingRight
+    private val eventPaddingBottom = branchEvent.paddingBottom
+
 
     private val dateAndPlaceTextView: TextView =
         branchEvent.findViewById(R.id.activity_upcoming_events_text_view_time_place)
@@ -24,12 +34,6 @@ class EventsViewHolder(
         branchEvent.findViewById(R.id.activity_upcoming_events_text_view_event_title)
     private val toFavoritesImageButton: ToggleButton =
         branchEvent.findViewById(R.id.activity_upcoming_events_image_to_favorites)
-
-
-    private val eventPaddingTop = branchEvent.paddingTop
-    private val eventPaddingBottom = branchEvent.paddingBottom
-    private val eventPaddingLeft = branchEvent.paddingLeft
-    private val eventPaddingRight = branchEvent.paddingRight
 
     init {
         branchEvent.findViewById<TextView>(
@@ -45,19 +49,49 @@ class EventsViewHolder(
 
     private fun fillEvent(
         eventData: EventData,
-    ) {
-            dateAndPlaceTextView.text = formatStringForDateAndPlace(eventData)
+    ) {     val simpleDateFormat = SimpleDateFormat("HH:mm", Locale.ROOT)
+        val dateNowFormat = simpleDateFormat.format(Date())
+        val dateNow = simpleDateFormat.parse(dateNowFormat)!!
+        dateAndPlaceTextView.text = formatStringForDateAndPlace(eventData)
             speakerFullNameTextView.text = eventData.speaker.fullName
             speakerJobTextView.text = eventData.speaker.job
             eventTitleTextView.text = eventData.title
+            setBackgroundEvent(dateNow.after(eventData.endTime))
+    }
 
+    private fun setBackgroundEvent(isEndEvent: Boolean) {
+        if (isEndEvent) {
+            textViewStateEvent.visibility = View.VISIBLE
+            textViewStateEvent.setBackgroundResource(R.drawable.bg_text_view_end_event)
+            textViewStateEvent.text = "Доклад закончился"
+
+            branchEvent.setBackgroundResource(R.drawable.bg_unfocused_event_card)
+            branchEvent.setPadding(
+                eventPaddingLeft,
+                eventPaddingTop,
+                eventPaddingRight,
+                eventPaddingBottom
+            )
+        } else {
+            textViewStateEvent.visibility = View.INVISIBLE
+            branchEvent.setBackgroundResource(R.drawable.bg_focused_event_card)
+            branchEvent.setPadding(
+                eventPaddingLeft,
+                eventPaddingTop,
+                eventPaddingRight,
+                eventPaddingBottom
+            )
+        }
     }
 
     private fun formatStringForDateAndPlace(event: EventData): String {
+        val simpleDateFormat = SimpleDateFormat("HH:mm", Locale.ROOT)
+        val startTime = simpleDateFormat.format(event.startTime)
+        val endTime = simpleDateFormat.format(event.endTime)
         return String.format(
             "%s - %s • %s",
-            event.startTime.substringBeforeLast(":"),
-            event.endTime.substringBeforeLast(":"),
+            startTime,
+            endTime,
             event.place
         )
     }

@@ -7,6 +7,8 @@ import kz.kolesateam.confapp.events.data.models.UpcomingEventsListItem
 import kz.kolesateam.confapp.events.presentation.models.BranchData
 import kz.kolesateam.confapp.events.presentation.models.EventData
 import kz.kolesateam.confapp.events.presentation.models.SpeakerData
+import java.text.SimpleDateFormat
+import java.util.*
 
 class BranchViewHolder(
     view: View,
@@ -96,10 +98,13 @@ class BranchViewHolder(
     }
 
     private fun formatStringForDateAndPlace(event: EventData): String {
+        val simpleDateFormat = SimpleDateFormat("HH:mm", Locale.ROOT)
+        val startTime = simpleDateFormat.format(event.startTime)
+        val endTime = simpleDateFormat.format(event.endTime)
         return String.format(
             "%s - %s • %s",
-            event.startTime.substringBeforeLast(":"),
-            event.endTime.substringBeforeLast(":"),
+            startTime,
+            endTime,
             event.place
         )
     }
