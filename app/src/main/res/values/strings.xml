@@ -6,4 +6,5 @@
     <string name="activity_upcoming_events_text_view_hello_user">Привет, %1$s</string>
     <string name="activity_upcoming_events_button_text">В избранные</string>
     <string name="activity_upcoming_events_text_view_next_event">Следующий доклад</string>
+    <string name="activity_all_events_end_event_text">Доклад закончился</string>
 </resources>

@@ -63,7 +63,7 @@ class EventsViewHolder(
         if (isEndEvent) {
             textViewStateEvent.visibility = View.VISIBLE
             textViewStateEvent.setBackgroundResource(R.drawable.bg_text_view_end_event)
-            textViewStateEvent.text = "Доклад закончился"
+            textViewStateEvent.text = textViewStateEvent.context.getString(R.string.activity_all_events_end_event_text)
 
             branchEvent.setBackgroundResource(R.drawable.bg_unfocused_event_card)
             branchEvent.setPadding(
