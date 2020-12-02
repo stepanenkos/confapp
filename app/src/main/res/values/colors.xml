@@ -10,7 +10,7 @@
 
     <color name="background_color">#051021</color>
     <!-- Hello activity -->
-    <color name="hello_activity_black_text">#1C1819</color>
+    <color name="black_text">#1C1819</color>
     <color name="hello_activity_btn_enabled">#2A81DD</color>
     <color name="hello_activity_btn_disabled">#1C1819</color>
 
@@ -20,4 +20,7 @@
     <color name="activity_upcoming_events_sync_text_view">#2196F3</color>
     <color name="activity_upcoming_events_async_text_view">#4CAF50</color>
     <color name="activity_upcoming_events_error_text_view">#F44336</color>
+    <color name="activity_upcoming_events_hello_text_view">#FAFAFA</color>
+    <color name="activity_upcoming_events_time_place_job_text_view">#888B94</color>
+    <color name="app_primary_color_blue">#2A81DD</color>
 </resources>

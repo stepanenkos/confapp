@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:id="@+id/event_card"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_focused_event_card"
+    android:paddingStart="@dimen/padding_16x"
+    android:paddingTop="@dimen/padding_8x"
+    android:paddingEnd="@dimen/padding_16x"
+    android:paddingBottom="@dimen/padding_16x"
+    android:clickable="true"
+    android:focusable="true"
+    >
+
+    <TextView
+        android:id="@+id/activity_upcoming_events_text_view_next_event"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_text_view_next_event"
+        android:paddingHorizontal="@dimen/padding_8x"
+        android:textColor="@color/white"
+        android:textSize="@dimen/text_size_13"
+        app:layout_constraintBottom_toTopOf="@id/activity_upcoming_events_text_view_time_place"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:text="@string/activity_upcoming_events_text_view_next_event"
+        />
+
+    <TextView
+        android:id="@+id/activity_upcoming_events_text_view_time_place"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_8x"
+        android:textColor="@color/activity_upcoming_events_time_place_job_text_view"
+        android:textSize="@dimen/text_size_13"
+        app:layout_constraintEnd_toStartOf="@id/activity_upcoming_events_image_to_favorites"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/activity_upcoming_events_text_view_next_event"
+        tools:text="15:00 - 16:00 • Зал номер 5"
+        />
+
+
+    <ToggleButton
+        android:id="@+id/activity_upcoming_events_image_to_favorites"
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        android:background="@drawable/bg_button_heart_to_favorites"
+        android:textOff=" "
+        android:textOn=" "
+        app:layout_constraintBottom_toBottomOf="@+id/activity_upcoming_events_text_view_time_place"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/activity_upcoming_events_text_view_time_place"
+        app:layout_constraintTop_toTopOf="@+id/activity_upcoming_events_text_view_time_place"
+        app:layout_constraintVertical_bias="1.0"
+        />
+
+
+    <TextView
+        android:id="@+id/activity_upcoming_events_text_view_speaker_full_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_8x"
+        android:textColor="@color/black_text"
+        android:textSize="@dimen/text_size_14"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/activity_upcoming_events_text_view_time_place"
+        tools:text="Жалгас Бакин"
+        />
+
+    <TextView
+        android:id="@+id/activity_upcoming_events_text_view_job"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:maxLines="3"
+        android:minLines="3"
+        android:textColor="@color/activity_upcoming_events_time_place_job_text_view"
+        android:textSize="@dimen/text_size_13"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/activity_upcoming_events_text_view_speaker_full_name"
+        tools:text="Android-разработчик в Альфа Банке"
+        />
+
+    <TextView
+        android:id="@+id/activity_upcoming_events_text_view_event_title"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_8x"
+        android:ellipsize="end"
+        android:maxLines="3"
+        android:minLines="3"
+        android:textColor="@color/black_text"
+        android:textSize="@dimen/text_size_14"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/activity_upcoming_events_text_view_job"
+        tools:text="Борьба за независимость  в многомодульных приложениях"
+        />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
