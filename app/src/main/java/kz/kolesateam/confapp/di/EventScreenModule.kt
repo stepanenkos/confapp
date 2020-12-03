@@ -1,12 +1,12 @@
 package kz.kolesateam.confapp.di
 
-import kz.kolesateam.confapp.events.data.DefaultAllEventsRepository
+import kz.kolesateam.confapp.allevents.data.DefaultAllEventsRepository
 import kz.kolesateam.confapp.events.data.datasource.UpcomingEventsDataSource
 import kz.kolesateam.confapp.events.data.DefaultUpcomingEventsRepository
-import kz.kolesateam.confapp.events.data.datasource.AllEventsDataSource
-import kz.kolesateam.confapp.events.domain.AllEventsRepository
+import kz.kolesateam.confapp.allevents.data.datasource.AllEventsDataSource
+import kz.kolesateam.confapp.allevents.domain.AllEventsRepository
 import kz.kolesateam.confapp.events.domain.UpcomingEventsRepository
-import kz.kolesateam.confapp.events.presentation.AllEventsViewModel
+import kz.kolesateam.confapp.allevents.presentation.AllEventsViewModel
 import kz.kolesateam.confapp.events.presentation.UpcomingEventsViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.core.module.Module

@@ -30,7 +30,7 @@
         </activity>
 
         <activity android:name=".events.presentation.UpcomingEventsActivity" />
-        <activity android:name=".events.presentation.AllEventsActivity" />
+        <activity android:name=".allevents.presentation.AllEventsActivity" />
 
     </application>
 

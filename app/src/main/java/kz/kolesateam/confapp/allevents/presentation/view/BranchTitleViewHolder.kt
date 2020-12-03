@@ -1,9 +1,10 @@
-package kz.kolesateam.confapp.events.presentation.view
+package kz.kolesateam.confapp.allevents.presentation.view
 
 import android.view.View
 import android.widget.*
 import kz.kolesateam.confapp.R
 import kz.kolesateam.confapp.events.data.models.UpcomingEventsListItem
+import kz.kolesateam.confapp.events.presentation.view.BaseViewHolder
 
 class BranchTitleViewHolder(view: View) : BaseViewHolder<UpcomingEventsListItem>(view) {
 

@@ -1,4 +1,4 @@
-package kz.kolesateam.confapp.events.presentation
+package kz.kolesateam.confapp.allevents.presentation
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -13,6 +13,9 @@ import androidx.recyclerview.widget.RecyclerView
 import kz.kolesateam.confapp.R
 import kz.kolesateam.confapp.di.ALL_EVENTS_VIEW_MODEL
 import kz.kolesateam.confapp.events.data.models.UpcomingEventsListItem
+import kz.kolesateam.confapp.events.presentation.BRANCH_ID
+import kz.kolesateam.confapp.events.presentation.BRANCH_TITLE
+import kz.kolesateam.confapp.events.presentation.UpcomingEventsRouter
 import kz.kolesateam.confapp.events.presentation.view.EventsAdapter
 import kz.kolesateam.confapp.events.presentation.view.EventClickListener
 import kz.kolesateam.confapp.models.ProgressState

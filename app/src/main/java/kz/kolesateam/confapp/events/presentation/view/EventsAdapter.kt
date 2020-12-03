@@ -4,6 +4,8 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import kz.kolesateam.confapp.R
+import kz.kolesateam.confapp.allevents.presentation.view.BranchTitleViewHolder
+import kz.kolesateam.confapp.allevents.presentation.view.EventsViewHolder
 import kz.kolesateam.confapp.events.data.models.BRANCH_TITLE_TYPE
 import kz.kolesateam.confapp.events.data.models.EVENT_TYPE
 import kz.kolesateam.confapp.events.data.models.HEADER_TYPE

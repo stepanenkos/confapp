@@ -1,10 +1,12 @@
-package kz.kolesateam.confapp.events.presentation.view
+package kz.kolesateam.confapp.allevents.presentation.view
 
 import android.view.View
 import android.widget.*
 import kz.kolesateam.confapp.R
 import kz.kolesateam.confapp.events.data.models.UpcomingEventsListItem
 import kz.kolesateam.confapp.events.presentation.models.EventData
+import kz.kolesateam.confapp.events.presentation.view.BaseViewHolder
+import kz.kolesateam.confapp.events.presentation.view.EventClickListener
 import java.text.SimpleDateFormat
 import java.util.*
 
