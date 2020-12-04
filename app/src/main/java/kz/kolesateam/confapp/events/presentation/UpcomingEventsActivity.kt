@@ -9,21 +9,18 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import kz.kolesateam.confapp.R
 import kz.kolesateam.confapp.allevents.presentation.AllEventsRouter
-import kz.kolesateam.confapp.di.UPCOMING_EVENTS_VIEW_MODEL
 import kz.kolesateam.confapp.events.data.models.UpcomingEventsListItem
 import kz.kolesateam.confapp.events.presentation.view.EventClickListener
 import kz.kolesateam.confapp.events.presentation.view.EventsAdapter
 import kz.kolesateam.confapp.models.ProgressState
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import org.koin.core.qualifier.named
 
 const val BRANCH_ID = "branch_id"
 const val BRANCH_TITLE = "branch_title"
 
 class UpcomingEventsActivity : AppCompatActivity(), EventClickListener {
 
-    private val upcomingEventsViewModel: UpcomingEventsViewModel by viewModel(named(
-        UPCOMING_EVENTS_VIEW_MODEL))
+    private val upcomingEventsViewModel: UpcomingEventsViewModel by viewModel()
 
     private val adapter = EventsAdapter(this)
 

@@ -11,7 +11,6 @@ import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import kz.kolesateam.confapp.R
-import kz.kolesateam.confapp.di.ALL_EVENTS_VIEW_MODEL
 import kz.kolesateam.confapp.events.data.models.UpcomingEventsListItem
 import kz.kolesateam.confapp.events.presentation.BRANCH_ID
 import kz.kolesateam.confapp.events.presentation.BRANCH_TITLE
@@ -20,13 +19,9 @@ import kz.kolesateam.confapp.events.presentation.view.EventsAdapter
 import kz.kolesateam.confapp.events.presentation.view.EventClickListener
 import kz.kolesateam.confapp.models.ProgressState
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import org.koin.core.qualifier.named
 
 class AllEventsActivity() : AppCompatActivity(), EventClickListener {
-
-
-    private val allEventsViewModel: AllEventsViewModel by viewModel(named(
-        ALL_EVENTS_VIEW_MODEL))
+    private val allEventsViewModel: AllEventsViewModel by viewModel()
 
     private lateinit var allEventsProgressBar: ProgressBar
     private lateinit var recyclerView: RecyclerView
@@ -34,8 +29,10 @@ class AllEventsActivity() : AppCompatActivity(), EventClickListener {
     private lateinit var buttonToFavorites: Button
 
     private val adapter = EventsAdapter(this)
+
     private var branchId: Int = 0
     private var branchTitle: String = ""
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_all_events)
@@ -62,7 +59,6 @@ class AllEventsActivity() : AppCompatActivity(), EventClickListener {
 
     private fun setOnClickListeners() {
         buttonGoBack.setOnClickListener {
-            intent = UpcomingEventsRouter().createIntent(this)
             finish()
         }
 
@@ -92,10 +88,7 @@ class AllEventsActivity() : AppCompatActivity(), EventClickListener {
     }
 
     override fun onEventClick(view: View, eventTitle: String) {
-//        when (view.id) {
-//            R.id.activity_all_events_event_card ->
         Toast.makeText(this, "Event: $eventTitle", Toast.LENGTH_SHORT).show()
-//        }
     }
 
     override fun onBranchClick(view: View, branchId: Int, branchTitle: String) {
