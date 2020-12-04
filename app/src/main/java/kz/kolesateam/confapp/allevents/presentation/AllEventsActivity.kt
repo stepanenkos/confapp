@@ -11,11 +11,10 @@ import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import kz.kolesateam.confapp.R
+import kz.kolesateam.confapp.allevents.presentation.view.AllEventsAdapter
 import kz.kolesateam.confapp.events.data.models.UpcomingEventsListItem
 import kz.kolesateam.confapp.events.presentation.BRANCH_ID
 import kz.kolesateam.confapp.events.presentation.BRANCH_TITLE
-import kz.kolesateam.confapp.events.presentation.UpcomingEventsRouter
-import kz.kolesateam.confapp.events.presentation.view.EventsAdapter
 import kz.kolesateam.confapp.events.presentation.view.EventClickListener
 import kz.kolesateam.confapp.models.ProgressState
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -28,7 +27,7 @@ class AllEventsActivity() : AppCompatActivity(), EventClickListener {
     private lateinit var buttonGoBack: ImageButton
     private lateinit var buttonToFavorites: Button
 
-    private val adapter = EventsAdapter(this)
+    private val adapter = AllEventsAdapter(this)
 
     private var branchId: Int = 0
     private var branchTitle: String = ""
