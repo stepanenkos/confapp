@@ -17,9 +17,9 @@ class EventsViewHolder(
 
     private val branchEvent: View =
         view.findViewById(R.id.activity_all_events_event_card)
-    private val stateEventTextView: TextView = branchEvent.findViewById<TextView>(
-    R.id.event_text_view_next_event
-    )
+    private val stateEventTextView: TextView =
+        branchEvent.findViewById(R.id.event_text_view_next_event)
+    
     private val eventPaddingLeft = branchEvent.paddingLeft
     private val eventPaddingTop = branchEvent.paddingTop
     private val eventPaddingRight = branchEvent.paddingRight
@@ -51,21 +51,23 @@ class EventsViewHolder(
 
     private fun fillEvent(
         eventData: EventData,
-    ) {     val simpleDateFormat = SimpleDateFormat("HH:mm", Locale.ROOT)
+    ) {
+        val simpleDateFormat = SimpleDateFormat("HH:mm", Locale.ROOT)
         val dateNowFormat = simpleDateFormat.format(Date())
         val dateNow = simpleDateFormat.parse(dateNowFormat)!!
         dateAndPlaceTextView.text = formatStringForDateAndPlace(eventData)
-            speakerFullNameTextView.text = eventData.speaker.fullName
-            speakerJobTextView.text = eventData.speaker.job
-            eventTitleTextView.text = eventData.title
-            setBackgroundEvent(dateNow.after(eventData.endTime))
+        speakerFullNameTextView.text = eventData.speaker.fullName
+        speakerJobTextView.text = eventData.speaker.job
+        eventTitleTextView.text = eventData.title
+        setBackgroundEvent(dateNow.after(eventData.endTime))
     }
 
     private fun setBackgroundEvent(isEndEvent: Boolean) {
         if (isEndEvent) {
             stateEventTextView.visibility = View.VISIBLE
             stateEventTextView.setBackgroundResource(R.drawable.bg_text_view_end_event)
-            stateEventTextView.text = stateEventTextView.context.getString(R.string.activity_all_events_end_event_text)
+            stateEventTextView.text =
+                stateEventTextView.context.getString(R.string.activity_all_events_end_event_text)
 
             branchEvent.setBackgroundResource(R.drawable.bg_unfocused_event_card)
             branchEvent.setPadding(
