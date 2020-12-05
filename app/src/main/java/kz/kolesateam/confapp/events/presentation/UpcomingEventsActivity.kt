@@ -47,13 +47,12 @@ class UpcomingEventsActivity : AppCompatActivity(), EventClickListener {
         recyclerView = findViewById(R.id.activity_upcoming_events_recycler_view)
         recyclerView.apply {
             this.adapter = this@UpcomingEventsActivity.adapter
-            this.layoutManager = LinearLayoutManager(this@UpcomingEventsActivity)
         }
 
         buttonToFavorites = findViewById(R.id.button_to_favorites)
 
         buttonToFavorites.setOnClickListener {
-            Toast.makeText(this, "Нажата кнопка ${"В избранные"}", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Нажата кнопка ${"В избранные"} UpcomingEventsActivity", Toast.LENGTH_SHORT).show()
 
         }
     }

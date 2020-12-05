@@ -50,7 +50,6 @@ class AllEventsActivity() : AppCompatActivity(), EventClickListener {
         recyclerView = findViewById(R.id.activity_all_events_recycler_view)
         recyclerView.apply {
             this.adapter = this@AllEventsActivity.adapter
-            this.layoutManager = LinearLayoutManager(this@AllEventsActivity)
         }
         setOnClickListeners()
     }
@@ -61,7 +60,7 @@ class AllEventsActivity() : AppCompatActivity(), EventClickListener {
         }
 
         buttonToFavorites.setOnClickListener{
-            Toast.makeText(this, "Нажата кнопка ${"В избранные"}", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Нажата кнопка ${"В избранные"} AllEventsActivity", Toast.LENGTH_SHORT).show()
         }
     }
 
