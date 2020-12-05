@@ -34,7 +34,7 @@ class EventsViewHolder(
         branchEvent.findViewById(R.id.events_card_layout_job_text_view)
     private val eventTitleTextView: TextView =
         branchEvent.findViewById(R.id.events_card_layout_event_title_text_view)
-    private val toFavoritesImageButton: ToggleButton =
+    private val toFavoritesImageButton: ImageView =
         branchEvent.findViewById(R.id.events_card_layout_to_favorites_toggle_button)
 
     init {
@@ -109,13 +109,8 @@ class EventsViewHolder(
             )
         }
 
-        toFavoritesImageButton.setOnCheckedChangeListener { button, isChecked ->
-            if (isChecked) {
-                Toast.makeText(button.context, "CHECKED", Toast.LENGTH_SHORT).show()
-            } else {
-                Toast.makeText(button.context, "UNCHECKED", Toast.LENGTH_SHORT).show()
+        toFavoritesImageButton.setOnClickListener {
 
-            }
         }
 
     }

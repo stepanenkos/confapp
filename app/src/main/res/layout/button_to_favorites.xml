@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<merge xmlns:android="http://schemas.android.com/apk/res/android">
+<merge
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    >
     <Button
         android:id="@+id/button_to_favorites"
         android:layout_width="155dp"
@@ -7,7 +10,7 @@
         android:layout_gravity="center|bottom"
         android:layout_marginBottom="@dimen/margin_16x"
         android:background="@drawable/bg_button_to_favorites"
-        android:drawableLeft="@drawable/ic_to_favorites_border"
+        app:drawableLeftCompat="@drawable/ic_to_favorites_border"
         android:drawablePadding="@dimen/padding_4x"
         android:padding="@dimen/padding_8x"
         android:text="@string/activity_upcoming_events_button_text"

@@ -44,6 +44,9 @@ dependencies {
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
 
     //Retrofit
+    implementation("com.squareup.okhttp3:okhttp:3.12.12") {
+        force = true
+    }
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
     implementation 'com.squareup.retrofit2:converter-jackson:2.9.0'
 

@@ -38,7 +38,7 @@ class BranchViewHolder(
         currentBranchEvent.findViewById(R.id.events_card_layout_job_text_view)
     private val currentEventTitleTextView: TextView =
         currentBranchEvent.findViewById(R.id.events_card_layout_event_title_text_view)
-    private val currentToFavoritesImageButton: ToggleButton =
+    private val currentToFavoritesImageButton: ImageView =
         currentBranchEvent.findViewById(R.id.events_card_layout_to_favorites_toggle_button)
 
     private val nextDateAndPlaceTextView: TextView =
@@ -49,7 +49,7 @@ class BranchViewHolder(
         nextBranchEvent.findViewById(R.id.events_card_layout_job_text_view)
     private val nextEventTitleTextView: TextView =
         nextBranchEvent.findViewById(R.id.events_card_layout_event_title_text_view)
-    private val nextToFavoritesImageButton: ToggleButton =
+    private val nextToFavoritesImageButton: ImageView =
         nextBranchEvent.findViewById(R.id.events_card_layout_to_favorites_toggle_button)
 
     private val currentBranchEventPaddingTop = currentBranchEvent.paddingTop
@@ -154,22 +154,13 @@ class BranchViewHolder(
             )
         }
 
-        currentToFavoritesImageButton.setOnCheckedChangeListener { button, isChecked ->
-            if (isChecked) {
-                Toast.makeText(button.context, "CHECKED", Toast.LENGTH_SHORT).show()
-            } else {
-                Toast.makeText(button.context, "UNCHECKED", Toast.LENGTH_SHORT).show()
+        currentToFavoritesImageButton.setOnClickListener {
 
-            }
         }
 
-        nextToFavoritesImageButton.setOnCheckedChangeListener { button, isChecked ->
-            if (isChecked) {
-                Toast.makeText(button.context, "CHECKED", Toast.LENGTH_SHORT).show()
-            } else {
-                Toast.makeText(button.context, "UNCHECKED", Toast.LENGTH_SHORT).show()
 
-            }
+        nextToFavoritesImageButton.setOnClickListener {
+
         }
 
         horizontalScrollView.viewTreeObserver.addOnScrollChangedListener {
