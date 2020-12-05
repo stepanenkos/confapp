@@ -11,8 +11,8 @@ import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import kz.kolesateam.confapp.R
+import kz.kolesateam.confapp.allevents.data.AllEventsListItem
 import kz.kolesateam.confapp.allevents.presentation.view.AllEventsAdapter
-import kz.kolesateam.confapp.events.data.models.UpcomingEventsListItem
 import kz.kolesateam.confapp.events.presentation.BRANCH_ID
 import kz.kolesateam.confapp.events.presentation.BRANCH_TITLE
 import kz.kolesateam.confapp.events.presentation.view.EventClickListener
@@ -21,13 +21,12 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class AllEventsActivity() : AppCompatActivity(), EventClickListener {
     private val allEventsViewModel: AllEventsViewModel by viewModel()
+    private val adapter = AllEventsAdapter(this)
 
     private lateinit var allEventsProgressBar: ProgressBar
     private lateinit var recyclerView: RecyclerView
     private lateinit var buttonGoBack: ImageButton
     private lateinit var buttonToFavorites: Button
-
-    private val adapter = AllEventsAdapter(this)
 
     private var branchId: Int = 0
     private var branchTitle: String = ""
@@ -36,7 +35,7 @@ class AllEventsActivity() : AppCompatActivity(), EventClickListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_all_events)
         initViews()
-        observeUpcomingEventsViewModel()
+        observeAllEventsViewModel()
         allEventsViewModel.onStart(branchId, branchTitle)
     }
 
@@ -66,7 +65,7 @@ class AllEventsActivity() : AppCompatActivity(), EventClickListener {
         }
     }
 
-    private fun observeUpcomingEventsViewModel() {
+    private fun observeAllEventsViewModel() {
         allEventsViewModel.getProgressLiveData().observe(this, ::handleProgressBarState)
         allEventsViewModel.getAllEventsLiveData().observe(this, ::showResult)
         allEventsViewModel.getErrorLiveData().observe(this, ::showError)
@@ -82,8 +81,8 @@ class AllEventsActivity() : AppCompatActivity(), EventClickListener {
         Toast.makeText(this, errorMessage.localizedMessage, Toast.LENGTH_SHORT).show()
     }
 
-    private fun showResult(upcomingEventsList: List<UpcomingEventsListItem>) {
-        adapter.setList(upcomingEventsList)
+    private fun showResult(allEventsList: List<AllEventsListItem>) {
+        adapter.setList(allEventsList)
     }
 
     override fun onEventClick(view: View, eventTitle: String) {

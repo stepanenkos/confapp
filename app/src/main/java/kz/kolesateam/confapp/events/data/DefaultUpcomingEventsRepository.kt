@@ -22,7 +22,7 @@ class DefaultUpcomingEventsRepository(
             val userName = userNameDataSource.getUserName()
 
             if (response.isSuccessful) {
-                val upcomingEventListItemList: MutableList<UpcomingEventsListItem> =
+                val upcomingEventListItem: MutableList<UpcomingEventsListItem> =
                     mutableListOf()
 
                 val headerListItem: UpcomingEventsListItem =
@@ -30,15 +30,13 @@ class DefaultUpcomingEventsRepository(
 
                 val branchListItemList: List<UpcomingEventsListItem> =
                     response.body()!!.map { branchApiData ->
-                        branchApiDataMapper.map(branchApiData)
-                    }.map { branchData ->
-                        UpcomingEventsListItem.BranchListItem(branchData)
+                        UpcomingEventsListItem.BranchListItem(branchApiDataMapper.map(branchApiData))
                     }
 
-                upcomingEventListItemList.add(headerListItem)
-                upcomingEventListItemList.addAll(branchListItemList)
+                upcomingEventListItem.add(headerListItem)
+                upcomingEventListItem.addAll(branchListItemList)
 
-                return ResponseData.Success(upcomingEventListItemList)
+                return ResponseData.Success(upcomingEventListItem)
             } else {
                 return ResponseData.Error(Exception(response.errorBody().toString()))
             }

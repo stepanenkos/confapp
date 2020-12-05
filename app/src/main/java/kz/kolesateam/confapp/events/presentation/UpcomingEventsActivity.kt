@@ -21,12 +21,10 @@ const val BRANCH_TITLE = "branch_title"
 class UpcomingEventsActivity : AppCompatActivity(), EventClickListener {
 
     private val upcomingEventsViewModel: UpcomingEventsViewModel by viewModel()
-
     private val adapter = EventsAdapter(this)
 
     private lateinit var upcomingEventsProgressBar: ProgressBar
     private lateinit var recyclerView: RecyclerView
-
     private lateinit var buttonToFavorites: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {

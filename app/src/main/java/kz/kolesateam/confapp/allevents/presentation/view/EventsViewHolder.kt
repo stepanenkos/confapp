@@ -3,7 +3,7 @@ package kz.kolesateam.confapp.allevents.presentation.view
 import android.view.View
 import android.widget.*
 import kz.kolesateam.confapp.R
-import kz.kolesateam.confapp.events.data.models.UpcomingEventsListItem
+import kz.kolesateam.confapp.allevents.data.AllEventsListItem
 import kz.kolesateam.confapp.events.presentation.models.EventData
 import kz.kolesateam.confapp.events.presentation.view.BaseViewHolder
 import kz.kolesateam.confapp.events.presentation.view.EventClickListener
@@ -13,12 +13,12 @@ import java.util.*
 class EventsViewHolder(
     view: View,
     private val eventClickListener: EventClickListener,
-) : BaseViewHolder<UpcomingEventsListItem>(view) {
+) : BaseViewHolder<AllEventsListItem>(view) {
 
     private val branchEvent: View =
         view.findViewById(R.id.activity_all_events_event_card)
-    private val textViewStateEvent: TextView = branchEvent.findViewById<TextView>(
-    R.id.activity_upcoming_events_text_view_next_event
+    private val stateEventTextView: TextView = branchEvent.findViewById<TextView>(
+    R.id.event_text_view_next_event
     )
     private val eventPaddingLeft = branchEvent.paddingLeft
     private val eventPaddingTop = branchEvent.paddingTop
@@ -27,24 +27,24 @@ class EventsViewHolder(
 
 
     private val dateAndPlaceTextView: TextView =
-        branchEvent.findViewById(R.id.activity_upcoming_events_text_view_time_place)
+        branchEvent.findViewById(R.id.event_text_view_time_place)
     private val speakerFullNameTextView: TextView =
-        branchEvent.findViewById(R.id.activity_upcoming_events_text_view_speaker_full_name)
+        branchEvent.findViewById(R.id.event_text_view_speaker_full_name)
     private val speakerJobTextView: TextView =
-        branchEvent.findViewById(R.id.activity_upcoming_events_text_view_job)
+        branchEvent.findViewById(R.id.event_text_view_job)
     private val eventTitleTextView: TextView =
-        branchEvent.findViewById(R.id.activity_upcoming_events_text_view_event_title)
+        branchEvent.findViewById(R.id.event_text_view_event_title)
     private val toFavoritesImageButton: ToggleButton =
-        branchEvent.findViewById(R.id.activity_upcoming_events_image_to_favorites)
+        branchEvent.findViewById(R.id.event_image_to_favorites)
 
     init {
         branchEvent.findViewById<TextView>(
-            R.id.activity_upcoming_events_text_view_next_event
+            R.id.event_text_view_next_event
         ).visibility = View.INVISIBLE
     }
 
-    override fun onBind(data: UpcomingEventsListItem) {
-        val event = (data as? UpcomingEventsListItem.EventListItem)?.data ?: return
+    override fun onBind(data: AllEventsListItem) {
+        val event = (data as? AllEventsListItem.EventListItem)?.data ?: return
         fillEvent(event)
         setOnClickListeners(event)
     }
@@ -63,9 +63,9 @@ class EventsViewHolder(
 
     private fun setBackgroundEvent(isEndEvent: Boolean) {
         if (isEndEvent) {
-            textViewStateEvent.visibility = View.VISIBLE
-            textViewStateEvent.setBackgroundResource(R.drawable.bg_text_view_end_event)
-            textViewStateEvent.text = textViewStateEvent.context.getString(R.string.activity_all_events_end_event_text)
+            stateEventTextView.visibility = View.VISIBLE
+            stateEventTextView.setBackgroundResource(R.drawable.bg_text_view_end_event)
+            stateEventTextView.text = stateEventTextView.context.getString(R.string.activity_all_events_end_event_text)
 
             branchEvent.setBackgroundResource(R.drawable.bg_unfocused_event_card)
             branchEvent.setPadding(
@@ -75,7 +75,7 @@ class EventsViewHolder(
                 eventPaddingBottom
             )
         } else {
-            textViewStateEvent.visibility = View.INVISIBLE
+            stateEventTextView.visibility = View.INVISIBLE
             branchEvent.setBackgroundResource(R.drawable.bg_focused_event_card)
             branchEvent.setPadding(
                 eventPaddingLeft,

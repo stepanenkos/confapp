@@ -9,27 +9,26 @@ class DefaultAllEventsRepository(
     private val allEventsDataSource: AllEventsDataSource,
 ) : AllEventsRepository {
 
-    override fun getAllEvents(branchId: Int, branchTitle: String): ResponseData<List<UpcomingEventsListItem>, Exception> {
+    override fun getAllEvents(branchId: Int, branchTitle: String): ResponseData<List<AllEventsListItem>, Exception> {
         try {
             val response = allEventsDataSource.getAllEvents(branchId).execute()
 
             if (response.isSuccessful) {
-                val allEventListItemList: MutableList<UpcomingEventsListItem> =
+                val allEventsListItem: MutableList<AllEventsListItem> =
                     mutableListOf()
 
-                val branchTitleListItem: UpcomingEventsListItem =
-                    UpcomingEventsListItem.BranchTitleItem(branchTitle)
+                val branchTitleListItem: AllEventsListItem =
+                    AllEventsListItem.BranchTitleItem(branchTitle)
 
-                val eventListItemList: List<UpcomingEventsListItem> =
+                val eventListItemList: List<AllEventsListItem> =
                     response.body()!!.map { eventApiData ->
-                        EventApiDataMapper().map(eventApiData)
-                    }.map {eventData ->
-                        UpcomingEventsListItem.EventListItem(eventData)
+                        AllEventsListItem.EventListItem(EventApiDataMapper().map(eventApiData))
                     }
-                allEventListItemList.add(branchTitleListItem)
-                allEventListItemList.addAll(eventListItemList)
 
-                return ResponseData.Success(allEventListItemList)
+                allEventsListItem.add(branchTitleListItem)
+                allEventsListItem.addAll(eventListItemList)
+
+                return ResponseData.Success(allEventsListItem)
             } else {
                 return ResponseData.Error(Exception(response.errorBody().toString()))
             }

@@ -17,41 +17,41 @@
     >
 
     <TextView
-        android:id="@+id/activity_upcoming_events_text_view_next_event"
+        android:id="@+id/event_text_view_next_event"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/bg_text_view_next_event"
         android:paddingHorizontal="@dimen/padding_8x"
         android:textColor="@color/white"
         android:textSize="@dimen/text_size_13"
-        app:layout_constraintBottom_toTopOf="@id/activity_upcoming_events_text_view_time_place"
+        app:layout_constraintBottom_toTopOf="@id/event_text_view_time_place"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:text="@string/activity_upcoming_events_text_view_next_event"
         />
 
     <TextView
-        android:id="@+id/activity_upcoming_events_text_view_time_place"
+        android:id="@+id/event_text_view_time_place"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/margin_8x"
         android:textColor="@color/activity_upcoming_events_time_place_job_text_view"
         android:textSize="@dimen/text_size_13"
-        app:layout_constraintEnd_toStartOf="@id/activity_upcoming_events_image_to_favorites"
+        app:layout_constraintEnd_toStartOf="@id/event_image_to_favorites"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/activity_upcoming_events_text_view_next_event"
+        app:layout_constraintTop_toBottomOf="@id/event_text_view_next_event"
         tools:text="15:00 - 16:00 • Зал номер 5"
         />
 
     <ToggleButton
-        android:id="@+id/activity_upcoming_events_image_to_favorites"
+        android:id="@+id/event_image_to_favorites"
         android:layout_width="@dimen/activity_upcoming_events_button_heart_to_favorite_width"
         android:layout_height="@dimen/activity_upcoming_events_button_heart_to_favorite_height"
-        app:layout_constraintBottom_toBottomOf="@+id/activity_upcoming_events_text_view_time_place"
+        app:layout_constraintBottom_toBottomOf="@+id/event_text_view_time_place"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toEndOf="@+id/activity_upcoming_events_text_view_time_place"
-        app:layout_constraintTop_toTopOf="@+id/activity_upcoming_events_text_view_time_place"
+        app:layout_constraintStart_toEndOf="@+id/event_text_view_time_place"
+        app:layout_constraintTop_toTopOf="@+id/event_text_view_time_place"
         app:layout_constraintVertical_bias="1.0"
         android:background="@drawable/bg_button_heart_to_favorites"
         android:textOn=" "
@@ -59,7 +59,7 @@
         />
 
     <TextView
-        android:id="@+id/activity_upcoming_events_text_view_speaker_full_name"
+        android:id="@+id/event_text_view_speaker_full_name"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/margin_8x"
@@ -68,12 +68,12 @@
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/activity_upcoming_events_text_view_time_place"
+        app:layout_constraintTop_toBottomOf="@id/event_text_view_time_place"
         tools:text="Жалгас Бакин"
         />
 
     <TextView
-        android:id="@+id/activity_upcoming_events_text_view_job"
+        android:id="@+id/event_text_view_job"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:ellipsize="end"
@@ -83,12 +83,12 @@
         android:textSize="@dimen/text_size_13"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/activity_upcoming_events_text_view_speaker_full_name"
+        app:layout_constraintTop_toBottomOf="@id/event_text_view_speaker_full_name"
         tools:text="Android-разработчик в Альфа Банке"
         />
 
     <TextView
-        android:id="@+id/activity_upcoming_events_text_view_event_title"
+        android:id="@+id/event_text_view_event_title"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/margin_8x"
@@ -99,7 +99,7 @@
         android:textSize="@dimen/text_size_14"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/activity_upcoming_events_text_view_job"
+        app:layout_constraintTop_toBottomOf="@id/event_text_view_job"
         tools:text="Борьба за независимость  в многомодульных приложениях"
         />
 

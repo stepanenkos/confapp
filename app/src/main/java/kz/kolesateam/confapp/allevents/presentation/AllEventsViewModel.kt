@@ -7,6 +7,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import kz.kolesateam.confapp.allevents.data.AllEventsListItem
 import kz.kolesateam.confapp.events.data.models.UpcomingEventsListItem
 import kz.kolesateam.confapp.allevents.domain.AllEventsRepository
 import kz.kolesateam.confapp.models.ProgressState
@@ -17,13 +18,13 @@ class AllEventsViewModel(
 ) : ViewModel() {
 
     private val progressLiveData: MutableLiveData<ProgressState> = MutableLiveData()
-    private val allEventsLiveData: MutableLiveData<List<UpcomingEventsListItem>> =
+    private val allEventsLiveData: MutableLiveData<List<AllEventsListItem>> =
         MutableLiveData()
     private val errorLiveData: MutableLiveData<Exception> = MutableLiveData()
 
     fun getProgressLiveData(): LiveData<ProgressState> = progressLiveData
 
-    fun getAllEventsLiveData(): LiveData<List<UpcomingEventsListItem>> = allEventsLiveData
+    fun getAllEventsLiveData(): LiveData<List<AllEventsListItem>> = allEventsLiveData
 
     fun getErrorLiveData(): LiveData<Exception> = errorLiveData
 
@@ -35,7 +36,7 @@ class AllEventsViewModel(
         GlobalScope.launch(Dispatchers.Main) {
             progressLiveData.value = ProgressState.Loading
 
-            val allEventsResponse: ResponseData<List<UpcomingEventsListItem>, Exception> =
+            val allEventsResponse: ResponseData<List<AllEventsListItem>, Exception> =
                 withContext(Dispatchers.IO) {
                     allEventsRepository.getAllEvents(branchId, branchTitle)
                 }
