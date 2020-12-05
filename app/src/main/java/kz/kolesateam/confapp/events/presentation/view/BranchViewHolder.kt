@@ -31,26 +31,26 @@ class BranchViewHolder(
         view.findViewById(R.id.activity_upcoming_events_text_view_branch_name)
 
     private val currentDateAndPlaceTextView: TextView =
-        currentBranchEvent.findViewById(R.id.event_text_view_time_place)
+        currentBranchEvent.findViewById(R.id.events_card_layout_time_place_text_view)
     private val currentSpeakerFullNameTextView: TextView =
-        currentBranchEvent.findViewById(R.id.event_text_view_speaker_full_name)
+        currentBranchEvent.findViewById(R.id.events_card_layout_speaker_full_name_text_view)
     private val currentSpeakerJobTextView: TextView =
-        currentBranchEvent.findViewById(R.id.event_text_view_job)
+        currentBranchEvent.findViewById(R.id.events_card_layout_job_text_view)
     private val currentEventTitleTextView: TextView =
-        currentBranchEvent.findViewById(R.id.event_text_view_event_title)
+        currentBranchEvent.findViewById(R.id.events_card_layout_event_title_text_view)
     private val currentToFavoritesImageButton: ToggleButton =
-        currentBranchEvent.findViewById(R.id.event_image_to_favorites)
+        currentBranchEvent.findViewById(R.id.events_card_layout_to_favorites_toggle_button)
 
     private val nextDateAndPlaceTextView: TextView =
-        nextBranchEvent.findViewById(R.id.event_text_view_time_place)
+        nextBranchEvent.findViewById(R.id.events_card_layout_time_place_text_view)
     private val nextSpeakerFullNameTextView: TextView =
-        nextBranchEvent.findViewById(R.id.event_text_view_speaker_full_name)
+        nextBranchEvent.findViewById(R.id.events_card_layout_speaker_full_name_text_view)
     private val nextSpeakerJobTextView: TextView =
-        nextBranchEvent.findViewById(R.id.event_text_view_job)
+        nextBranchEvent.findViewById(R.id.events_card_layout_job_text_view)
     private val nextEventTitleTextView: TextView =
-        nextBranchEvent.findViewById(R.id.event_text_view_event_title)
+        nextBranchEvent.findViewById(R.id.events_card_layout_event_title_text_view)
     private val nextToFavoritesImageButton: ToggleButton =
-        nextBranchEvent.findViewById(R.id.event_image_to_favorites)
+        nextBranchEvent.findViewById(R.id.events_card_layout_to_favorites_toggle_button)
 
     private val currentBranchEventPaddingTop = currentBranchEvent.paddingTop
     private val currentBranchEventPaddingBottom = currentBranchEvent.paddingBottom
@@ -64,7 +64,7 @@ class BranchViewHolder(
 
     init {
         currentBranchEvent.findViewById<TextView>(
-            R.id.event_text_view_next_event
+            R.id.events_card_layout_next_event_text_view
         ).visibility = View.INVISIBLE
 
 

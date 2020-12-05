@@ -1,9 +1,7 @@
 package kz.kolesateam.confapp.events.data.models
-import android.icu.util.GregorianCalendar
 import kz.kolesateam.confapp.events.presentation.models.EventData
 import kz.kolesateam.confapp.events.presentation.models.SpeakerData
 import java.text.SimpleDateFormat
-import java.time.LocalDateTime
 import java.util.*
 
 private const val DEFAULT_EVENT_NAME = "Название события не указано"
@@ -13,16 +11,16 @@ private const val DEFAULT_PLACE_TEXT = "Место проведения не у�
 
 class EventApiDataMapper : Mapper<List<EventApiData>, List<EventData>> {
     private val speakerMapper: Mapper<SpeakerApiData, SpeakerData> = SpeakerApiDataMapper()
-    private val listEvents: MutableList<EventData> = mutableListOf()
+    private val eventsList: MutableList<EventData> = mutableListOf()
 
     override fun map(data: List<EventApiData>?): List<EventData> {
-        listEvents.clear()
+        eventsList.clear()
 
             for (index in data?.indices!!) {
                 val simpleDateFormat = SimpleDateFormat("HH:mm", Locale.ROOT)
                 val startTime = simpleDateFormat.parse(data[index].startTime ?: DEFAULT_START_TIME_TEXT)
                 val endTime = simpleDateFormat.parse(data[index].endTime ?: DEFAULT_END_TIME_TEXT)
-                listEvents.add(EventData(
+                eventsList.add(EventData(
                     startTime = startTime,
                     endTime = endTime,
                     title = data?.get(index)?.title ?: DEFAULT_EVENT_NAME,
@@ -31,7 +29,7 @@ class EventApiDataMapper : Mapper<List<EventApiData>, List<EventData>> {
                 ))
             }
 
-        return listEvents.toList()
+        return eventsList.toList()
     }
 
     fun map(data: EventApiData?): EventData {

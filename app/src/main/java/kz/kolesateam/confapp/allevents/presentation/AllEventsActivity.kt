@@ -91,5 +91,4 @@ class AllEventsActivity() : AppCompatActivity(), EventClickListener {
 
     override fun onBranchClick(view: View, branchId: Int, branchTitle: String) {
     }
-
 }

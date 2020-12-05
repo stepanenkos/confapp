@@ -5,7 +5,6 @@ import retrofit2.Call
 import retrofit2.http.GET
 
 interface UpcomingEventsDataSource {
-
     @GET("/upcoming_events")
     fun getUpcomingEvents(): Call<List<BranchApiData>>
 }

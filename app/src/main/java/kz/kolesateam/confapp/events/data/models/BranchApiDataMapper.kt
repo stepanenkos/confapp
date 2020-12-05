@@ -27,7 +27,6 @@ class BranchApiDataMapper : Mapper<BranchApiData, BranchData> {
                 )
             )
         }
-
         return listBranchData
     }
 }

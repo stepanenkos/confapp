@@ -8,7 +8,6 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import kz.kolesateam.confapp.allevents.data.AllEventsListItem
-import kz.kolesateam.confapp.events.data.models.UpcomingEventsListItem
 import kz.kolesateam.confapp.allevents.domain.AllEventsRepository
 import kz.kolesateam.confapp.models.ProgressState
 import kz.kolesateam.confapp.utils.model.ResponseData
@@ -50,5 +49,4 @@ class AllEventsViewModel(
             progressLiveData.value = ProgressState.Done
         }
     }
-
 }

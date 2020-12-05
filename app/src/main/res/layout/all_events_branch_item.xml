@@ -24,9 +24,6 @@
                 android:layout_marginBottom="@dimen/margin_16x"
                 />
 
-
         </LinearLayout>
-
-
 
 </LinearLayout>

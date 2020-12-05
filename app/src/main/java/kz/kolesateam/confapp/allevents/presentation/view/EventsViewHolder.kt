@@ -18,8 +18,8 @@ class EventsViewHolder(
     private val branchEvent: View =
         view.findViewById(R.id.activity_all_events_event_card)
     private val stateEventTextView: TextView =
-        branchEvent.findViewById(R.id.event_text_view_next_event)
-    
+        branchEvent.findViewById(R.id.events_card_layout_next_event_text_view)
+
     private val eventPaddingLeft = branchEvent.paddingLeft
     private val eventPaddingTop = branchEvent.paddingTop
     private val eventPaddingRight = branchEvent.paddingRight
@@ -27,19 +27,19 @@ class EventsViewHolder(
 
 
     private val dateAndPlaceTextView: TextView =
-        branchEvent.findViewById(R.id.event_text_view_time_place)
+        branchEvent.findViewById(R.id.events_card_layout_time_place_text_view)
     private val speakerFullNameTextView: TextView =
-        branchEvent.findViewById(R.id.event_text_view_speaker_full_name)
+        branchEvent.findViewById(R.id.events_card_layout_speaker_full_name_text_view)
     private val speakerJobTextView: TextView =
-        branchEvent.findViewById(R.id.event_text_view_job)
+        branchEvent.findViewById(R.id.events_card_layout_job_text_view)
     private val eventTitleTextView: TextView =
-        branchEvent.findViewById(R.id.event_text_view_event_title)
+        branchEvent.findViewById(R.id.events_card_layout_event_title_text_view)
     private val toFavoritesImageButton: ToggleButton =
-        branchEvent.findViewById(R.id.event_image_to_favorites)
+        branchEvent.findViewById(R.id.events_card_layout_to_favorites_toggle_button)
 
     init {
         branchEvent.findViewById<TextView>(
-            R.id.event_text_view_next_event
+            R.id.events_card_layout_next_event_text_view
         ).visibility = View.INVISIBLE
     }
 
