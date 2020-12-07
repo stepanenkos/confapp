@@ -3,8 +3,8 @@ package kz.kolesateam.confapp.allevents.presentation
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import kz.kolesateam.confapp.allevents.data.AllEventsListItem
@@ -32,7 +32,7 @@ class AllEventsViewModel(
     }
 
     private fun getAllEvents(branchId: Int, branchTitle: String) {
-        GlobalScope.launch(Dispatchers.Main) {
+        viewModelScope.launch(Dispatchers.Main) {
             progressLiveData.value = ProgressState.Loading
 
             val allEventsResponse: ResponseData<List<AllEventsListItem>, Exception> =
