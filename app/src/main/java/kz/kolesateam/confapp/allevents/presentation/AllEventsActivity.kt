@@ -2,24 +2,23 @@ package kz.kolesateam.confapp.allevents.presentation
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
 import android.widget.Button
 import android.widget.ImageButton
 import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.core.view.isVisible
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import kz.kolesateam.confapp.R
 import kz.kolesateam.confapp.allevents.data.AllEventsListItem
 import kz.kolesateam.confapp.allevents.presentation.view.AllEventsAdapter
 import kz.kolesateam.confapp.events.presentation.BRANCH_ID
 import kz.kolesateam.confapp.events.presentation.BRANCH_TITLE
-import kz.kolesateam.confapp.events.presentation.view.EventClickListener
+import kz.kolesateam.confapp.models.EventData
 import kz.kolesateam.confapp.models.ProgressState
+import kz.kolesateam.confapp.presentation.listeners.AllEventsClickListener
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class AllEventsActivity() : AppCompatActivity(), EventClickListener {
+class AllEventsActivity() : AppCompatActivity(), AllEventsClickListener {
     private val allEventsViewModel: AllEventsViewModel by viewModel()
     private val adapter = AllEventsAdapter(this)
 
@@ -84,10 +83,13 @@ class AllEventsActivity() : AppCompatActivity(), EventClickListener {
         adapter.setList(allEventsList)
     }
 
-    override fun onEventClick(view: View, eventTitle: String) {
-        Toast.makeText(this, "Event: $eventTitle", Toast.LENGTH_SHORT).show()
+    override fun onEventClick(eventData: EventData) {
+        Toast.makeText(this, "Event: ${eventData.title}", Toast.LENGTH_SHORT).show()
+
     }
 
-    override fun onBranchClick(view: View, branchId: Int, branchTitle: String) {
+    override fun onFavoritesClicked(eventData: EventData) {
+        Toast.makeText(this, "Event: ${eventData.title}", Toast.LENGTH_SHORT).show()
+
     }
 }

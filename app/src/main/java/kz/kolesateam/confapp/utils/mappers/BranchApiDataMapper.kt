@@ -1,7 +1,9 @@
-package kz.kolesateam.confapp.events.data.models
+package kz.kolesateam.confapp.utils.mappers
 
-import kz.kolesateam.confapp.events.presentation.models.BranchData
-import kz.kolesateam.confapp.events.presentation.models.EventData
+import kz.kolesateam.confapp.events.data.models.BranchApiData
+import kz.kolesateam.confapp.events.data.models.EventApiData
+import kz.kolesateam.confapp.models.BranchData
+import kz.kolesateam.confapp.models.EventData
 
 private const val DEFAULT_BRANCH_NAME = "Название потока"
 

@@ -1,8 +1,8 @@
 package kz.kolesateam.confapp.allevents.data
 
 import kz.kolesateam.confapp.allevents.data.datasource.AllEventsDataSource
-import kz.kolesateam.confapp.events.data.models.*
 import kz.kolesateam.confapp.allevents.domain.AllEventsRepository
+import kz.kolesateam.confapp.utils.mappers.EventApiDataMapper
 import kz.kolesateam.confapp.utils.model.ResponseData
 
 class DefaultAllEventsRepository(

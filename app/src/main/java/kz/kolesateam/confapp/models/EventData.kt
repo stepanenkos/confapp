@@ -1,4 +1,4 @@
-package kz.kolesateam.confapp.events.presentation.models
+package kz.kolesateam.confapp.models
 
 import java.util.*
 
@@ -9,4 +9,6 @@ data class EventData(
     val title: String,
     val place: String,
     val speaker: SpeakerData
-)
+) {
+    var isFavorite: Boolean = false
+}

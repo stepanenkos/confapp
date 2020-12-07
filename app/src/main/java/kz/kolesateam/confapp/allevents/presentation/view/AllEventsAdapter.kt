@@ -6,11 +6,11 @@ import androidx.recyclerview.widget.RecyclerView
 import kz.kolesateam.confapp.R
 import kz.kolesateam.confapp.allevents.data.AllEventsListItem
 import kz.kolesateam.confapp.allevents.data.BRANCH_TITLE_TYPE
-import kz.kolesateam.confapp.events.presentation.view.BaseViewHolder
-import kz.kolesateam.confapp.events.presentation.view.EventClickListener
+import kz.kolesateam.confapp.presentation.listeners.AllEventsClickListener
+import kz.kolesateam.confapp.presentation.view.BaseViewHolder
 
 class AllEventsAdapter(
-    private val eventClickListener: EventClickListener,
+    private val allEventsClickListener: AllEventsClickListener,
 ) : RecyclerView.Adapter<BaseViewHolder<AllEventsListItem>>() {
     private val eventsDataList: MutableList<AllEventsListItem> = mutableListOf()
 
@@ -27,7 +27,7 @@ class AllEventsAdapter(
             else -> EventsViewHolder(
                 view = LayoutInflater.from(parent.context)
                     .inflate(R.layout.all_events_branch_item, parent, false),
-                eventClickListener = eventClickListener
+                allEventsClickListener = allEventsClickListener
             )
         }
     }

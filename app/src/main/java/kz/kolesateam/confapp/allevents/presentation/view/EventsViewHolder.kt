@@ -4,15 +4,15 @@ import android.view.View
 import android.widget.*
 import kz.kolesateam.confapp.R
 import kz.kolesateam.confapp.allevents.data.AllEventsListItem
-import kz.kolesateam.confapp.events.presentation.models.EventData
-import kz.kolesateam.confapp.events.presentation.view.BaseViewHolder
-import kz.kolesateam.confapp.events.presentation.view.EventClickListener
+import kz.kolesateam.confapp.models.EventData
+import kz.kolesateam.confapp.presentation.view.BaseViewHolder
+import kz.kolesateam.confapp.presentation.listeners.AllEventsClickListener
 import java.text.SimpleDateFormat
 import java.util.*
 
 class EventsViewHolder(
     view: View,
-    private val eventClickListener: EventClickListener,
+    private val allEventsClickListener: AllEventsClickListener,
 ) : BaseViewHolder<AllEventsListItem>(view) {
 
     private val branchEvent: View =
@@ -35,7 +35,7 @@ class EventsViewHolder(
     private val eventTitleTextView: TextView =
         branchEvent.findViewById(R.id.events_card_layout_event_title_text_view)
     private val toFavoritesImageButton: ImageView =
-        branchEvent.findViewById(R.id.events_card_layout_to_favorites_toggle_button)
+        branchEvent.findViewById(R.id.events_card_layout_to_favorites_image_view)
 
     init {
         branchEvent.findViewById<TextView>(
@@ -103,15 +103,23 @@ class EventsViewHolder(
     private fun setOnClickListeners(event: EventData) {
 
         branchEvent.setOnClickListener {
-            eventClickListener.onEventClick(
-                it,
-                event.title
+            allEventsClickListener.onEventClick(
+                event
             )
         }
 
         toFavoritesImageButton.setOnClickListener {
-
+            event.isFavorite = !event.isFavorite
+            val favoriteImageResource = getFavoriteImageResource(event.isFavorite)
+            toFavoritesImageButton.setImageResource(favoriteImageResource)
+            allEventsClickListener.onFavoritesClicked(event)
         }
 
+    }
+    private fun getFavoriteImageResource(
+        isFavorite: Boolean
+    ): Int = when (isFavorite) {
+        true -> R.drawable.ic_to_favorites_fill
+        else -> R.drawable.ic_to_favorites_border
     }
 }

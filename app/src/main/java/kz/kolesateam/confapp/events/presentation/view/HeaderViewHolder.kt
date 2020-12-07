@@ -2,9 +2,9 @@ package kz.kolesateam.confapp.events.presentation.view
 
 import android.view.View
 import android.widget.TextView
-import androidx.recyclerview.widget.RecyclerView
 import kz.kolesateam.confapp.R
 import kz.kolesateam.confapp.events.data.models.UpcomingEventsListItem
+import kz.kolesateam.confapp.presentation.view.BaseViewHolder
 
 class HeaderViewHolder(view: View) : BaseViewHolder<UpcomingEventsListItem>(view) {
     private val helloUserTextView: TextView =

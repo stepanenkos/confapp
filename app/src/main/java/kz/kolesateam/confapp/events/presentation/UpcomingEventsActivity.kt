@@ -1,24 +1,24 @@
 package kz.kolesateam.confapp.events.presentation
 
 import android.os.Bundle
-import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import kz.kolesateam.confapp.R
 import kz.kolesateam.confapp.allevents.presentation.AllEventsRouter
 import kz.kolesateam.confapp.events.data.models.UpcomingEventsListItem
-import kz.kolesateam.confapp.events.presentation.view.EventClickListener
+import kz.kolesateam.confapp.models.BranchData
+import kz.kolesateam.confapp.models.EventData
 import kz.kolesateam.confapp.events.presentation.view.EventsAdapter
+import kz.kolesateam.confapp.presentation.listeners.UpcomingItemsClickListener
 import kz.kolesateam.confapp.models.ProgressState
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 const val BRANCH_ID = "branch_id"
 const val BRANCH_TITLE = "branch_title"
 
-class UpcomingEventsActivity : AppCompatActivity(), EventClickListener {
+class UpcomingEventsActivity : AppCompatActivity(), UpcomingItemsClickListener {
 
     private val upcomingEventsViewModel: UpcomingEventsViewModel by viewModel()
     private val adapter = EventsAdapter(this)
@@ -57,30 +57,6 @@ class UpcomingEventsActivity : AppCompatActivity(), EventClickListener {
         }
     }
 
-    override fun onBranchClick(view: View, branchId: Int, branchTitle: String) {
-        when (view.id) {
-            R.id.activity_upcoming_events_branch_row -> {
-                val intent = AllEventsRouter().createIntent(this@UpcomingEventsActivity)
-                intent.putExtra(BRANCH_ID, branchId)
-                intent.putExtra(BRANCH_TITLE, branchTitle)
-                startActivity(intent)
-            }
-
-        }
-    }
-
-    override fun onEventClick(view: View, eventTitle: String) {
-        when (view.id) {
-            R.id.activity_upcoming_events_current_event ->
-                Toast.makeText(this, "Event: $eventTitle", Toast.LENGTH_SHORT)
-                    .show()
-
-            R.id.activity_upcoming_events_next_event ->
-                Toast.makeText(this, "Event: $eventTitle", Toast.LENGTH_SHORT)
-                    .show()
-        }
-    }
-
     private fun handleProgressBarState(
         progressState: ProgressState
     ) {
@@ -93,5 +69,22 @@ class UpcomingEventsActivity : AppCompatActivity(), EventClickListener {
 
     private fun showResult(upcomingEventsList: List<UpcomingEventsListItem>) {
         adapter.setList(upcomingEventsList)
+    }
+
+    override fun onBranchClick(branchData: BranchData) {
+        val intent = AllEventsRouter().createIntent(this@UpcomingEventsActivity)
+        intent.putExtra(BRANCH_ID, branchData.id)
+        intent.putExtra(BRANCH_TITLE, branchData.title)
+        startActivity(intent)
+    }
+
+    override fun onEventClick(eventData: EventData) {
+        Toast.makeText(this, "Event: ${eventData.title}", Toast.LENGTH_SHORT)
+            .show()
+    }
+
+    override fun onFavoritesClicked(event: EventData) {
+
+
     }
 }

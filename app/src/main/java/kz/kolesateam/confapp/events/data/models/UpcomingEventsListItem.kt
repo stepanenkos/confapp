@@ -1,6 +1,6 @@
 package kz.kolesateam.confapp.events.data.models
 
-import kz.kolesateam.confapp.events.presentation.models.BranchData
+import kz.kolesateam.confapp.models.BranchData
 
 const val HEADER_TYPE: Int = 0
 const val BRANCH_TYPE: Int = 1

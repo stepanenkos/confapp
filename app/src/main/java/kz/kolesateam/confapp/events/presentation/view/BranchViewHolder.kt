@@ -4,15 +4,19 @@ import android.view.View
 import android.widget.*
 import kz.kolesateam.confapp.R
 import kz.kolesateam.confapp.events.data.models.UpcomingEventsListItem
-import kz.kolesateam.confapp.events.presentation.models.BranchData
-import kz.kolesateam.confapp.events.presentation.models.EventData
-import kz.kolesateam.confapp.events.presentation.models.SpeakerData
+import kz.kolesateam.confapp.models.BranchData
+import kz.kolesateam.confapp.models.EventData
+import kz.kolesateam.confapp.models.SpeakerData
+import kz.kolesateam.confapp.presentation.listeners.UpcomingItemsClickListener
+import kz.kolesateam.confapp.presentation.view.BaseViewHolder
 import java.text.SimpleDateFormat
 import java.util.*
 
+private const val FORMAT_STRING_FOR_DATE_AND_PLACE = "%s - %s • %s"
+
 class BranchViewHolder(
     view: View,
-    private val eventClickListener: EventClickListener,
+    private val upcomingItemsClickListener: UpcomingItemsClickListener,
 ) : BaseViewHolder<UpcomingEventsListItem>(view) {
 
     private val horizontalScrollView: HorizontalScrollView =
@@ -39,7 +43,7 @@ class BranchViewHolder(
     private val currentEventTitleTextView: TextView =
         currentBranchEvent.findViewById(R.id.events_card_layout_event_title_text_view)
     private val currentToFavoritesImageButton: ImageView =
-        currentBranchEvent.findViewById(R.id.events_card_layout_to_favorites_toggle_button)
+        currentBranchEvent.findViewById(R.id.events_card_layout_to_favorites_image_view)
 
     private val nextDateAndPlaceTextView: TextView =
         nextBranchEvent.findViewById(R.id.events_card_layout_time_place_text_view)
@@ -50,7 +54,7 @@ class BranchViewHolder(
     private val nextEventTitleTextView: TextView =
         nextBranchEvent.findViewById(R.id.events_card_layout_event_title_text_view)
     private val nextToFavoritesImageButton: ImageView =
-        nextBranchEvent.findViewById(R.id.events_card_layout_to_favorites_toggle_button)
+        nextBranchEvent.findViewById(R.id.events_card_layout_to_favorites_image_view)
 
     private val currentBranchEventPaddingTop = currentBranchEvent.paddingTop
     private val currentBranchEventPaddingBottom = currentBranchEvent.paddingBottom
@@ -78,7 +82,8 @@ class BranchViewHolder(
     }
 
     override fun onBind(data: UpcomingEventsListItem) {
-        val branchData: BranchData = (data as? UpcomingEventsListItem.BranchListItem)?.data ?: return
+        val branchData: BranchData =
+            (data as? UpcomingEventsListItem.BranchListItem)?.data ?: return
         val currentEvent = branchData.events[0]
         val nextEvent = branchData.events[1]
         val branchId = branchData.id
@@ -93,7 +98,7 @@ class BranchViewHolder(
         fillCurrentEvent(currentDateAndPlaceString, currentSpeaker, currentEvent)
         fillNextEvent(nextDateAndPlaceString, nextSpeaker, nextEvent)
 
-        setOnClickListeners(currentEvent, nextEvent, branchId, branchData.title)
+        setOnClickListeners(currentEvent, nextEvent, branchData)
 
     }
 
@@ -102,7 +107,7 @@ class BranchViewHolder(
         val startTime = simpleDateFormat.format(event.startTime)
         val endTime = simpleDateFormat.format(event.endTime)
         return String.format(
-            "%s - %s • %s",
+            FORMAT_STRING_FOR_DATE_AND_PLACE,
             startTime,
             endTime,
             event.place
@@ -131,36 +136,41 @@ class BranchViewHolder(
         nextEventTitleTextView.text = nextEvent.title
     }
 
-    private fun setOnClickListeners(currentEvent: EventData, nextEvent: EventData, branchId: Int, branchTitle: String) {
+    private fun setOnClickListeners(
+        currentEvent: EventData,
+        nextEvent: EventData,
+        branchData: BranchData,
+    ) {
         branchRow.setOnClickListener {
-            eventClickListener.onBranchClick(
-                it,
-                branchId,
-                branchTitle
+            upcomingItemsClickListener.onBranchClick(
+                branchData
             )
         }
 
         currentBranchEvent.setOnClickListener {
-            eventClickListener.onEventClick(
-                it,
-                currentEvent.title
+            upcomingItemsClickListener.onEventClick(
+                currentEvent
             )
         }
 
         nextBranchEvent.setOnClickListener {
-            eventClickListener.onEventClick(
-                it,
-                nextEvent.title
+            upcomingItemsClickListener.onEventClick(
+                nextEvent
             )
         }
 
         currentToFavoritesImageButton.setOnClickListener {
-
+            currentEvent.isFavorite = !currentEvent.isFavorite
+            val favoriteImageResource = getFavoriteImageResource(currentEvent.isFavorite)
+            currentToFavoritesImageButton.setImageResource(favoriteImageResource)
+            upcomingItemsClickListener.onFavoritesClicked(eventData = currentEvent)
         }
 
-
         nextToFavoritesImageButton.setOnClickListener {
-
+            nextEvent.isFavorite = !nextEvent.isFavorite
+            val favoriteImageResource = getFavoriteImageResource(nextEvent.isFavorite)
+            nextToFavoritesImageButton.setImageResource(favoriteImageResource)
+            upcomingItemsClickListener.onFavoritesClicked(eventData = nextEvent)
         }
 
         horizontalScrollView.viewTreeObserver.addOnScrollChangedListener {
@@ -188,5 +198,11 @@ class BranchViewHolder(
                     currentBranchEventPaddingBottom)
             }
         }
+    }
+    private fun getFavoriteImageResource(
+        isFavorite: Boolean
+    ): Int = when (isFavorite) {
+        true -> R.drawable.ic_to_favorites_fill
+        else -> R.drawable.ic_to_favorites_border
     }
 }

@@ -1,6 +1,7 @@
-package kz.kolesateam.confapp.events.data.models
+package kz.kolesateam.confapp.utils.mappers
 
-import kz.kolesateam.confapp.events.presentation.models.SpeakerData
+import kz.kolesateam.confapp.events.data.models.SpeakerApiData
+import kz.kolesateam.confapp.models.SpeakerData
 
 private const val DEFAULT_SPEAKER_NAME = "Имя Спикера не указано"
 private const val DEFAULT_JOB_SPEAKER = "Работа Спикера не указана"

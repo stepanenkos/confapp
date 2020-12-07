@@ -1,4 +1,4 @@
-package kz.kolesateam.confapp.events.presentation.models
+package kz.kolesateam.confapp.models
 
 
 data class SpeakerData(
