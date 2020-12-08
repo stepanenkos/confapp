@@ -5,7 +5,7 @@
     >
     <Button
         android:id="@+id/button_to_favorites"
-        android:layout_width="155dp"
+        android:layout_width="@dimen/button_to_favorites_width_155x"
         android:layout_height="wrap_content"
         android:layout_gravity="center|bottom"
         android:layout_marginBottom="@dimen/margin_16x"

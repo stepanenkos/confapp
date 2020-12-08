@@ -28,4 +28,5 @@
     <dimen name="events_card_width">280dp</dimen>
     <dimen name="activity_upcoming_events_button_heart_to_favorite_width">16dp</dimen>
     <dimen name="activity_upcoming_events_button_heart_to_favorite_height">16dp</dimen>
+    <dimen name="button_to_favorites_width_155x">155dp</dimen>
 </resources>
