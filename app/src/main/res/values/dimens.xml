@@ -29,4 +29,6 @@
     <dimen name="activity_upcoming_events_button_heart_to_favorite_width">16dp</dimen>
     <dimen name="activity_upcoming_events_button_heart_to_favorite_height">16dp</dimen>
     <dimen name="button_to_favorites_width_155x">155dp</dimen>
+    <dimen name="activity_favorite_events_width_image_view_austronavt">240dp</dimen>
+    <dimen name="activity_favorite_events_height_image_view_austronavt">240dp</dimen>
 </resources>

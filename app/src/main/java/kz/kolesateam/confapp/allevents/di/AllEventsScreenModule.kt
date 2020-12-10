@@ -12,7 +12,8 @@ import retrofit2.Retrofit
 val allEventsScreenModule: Module = module {
     viewModel {
         AllEventsViewModel(
-            allEventsRepository = get()
+            allEventsRepository = get(),
+            favoriteEventsRepository = get()
         )
     }
 
@@ -22,9 +23,9 @@ val allEventsScreenModule: Module = module {
         retrofit.create(AllEventsDataSource::class.java)
     }
 
-    factory {
+    factory<AllEventsRepository> {
         DefaultAllEventsRepository(
             allEventsDataSource = get()
-        ) as AllEventsRepository
+        )
     }
 }

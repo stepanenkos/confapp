@@ -1,6 +1,7 @@
 package kz.kolesateam.confapp.di
 
 import android.content.Context
+import com.fasterxml.jackson.databind.ObjectMapper
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.module.Module
 import org.koin.dsl.module
@@ -12,5 +13,9 @@ val applicationModule: Module = module {
         val context = androidContext()
 
         context.getSharedPreferences(APPLICATION_SHARED_PREFS, Context.MODE_PRIVATE)
+    }
+
+    single {
+        ObjectMapper()
     }
 }

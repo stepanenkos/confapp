@@ -7,4 +7,6 @@ interface UserNameDataSource {
     fun saveUserName(
         userName: String
     )
+
+    fun isSavedUserName(): Boolean
 }

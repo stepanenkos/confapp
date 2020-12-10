@@ -59,7 +59,7 @@ class AllEventsActivity() : AppCompatActivity(), AllEventsClickListener {
         }
 
         buttonToFavorites.setOnClickListener{
-            Toast.makeText(this, "Нажата кнопка ${"В избранные"} AllEventsActivity", Toast.LENGTH_SHORT).show()
+
         }
     }
 
@@ -89,7 +89,6 @@ class AllEventsActivity() : AppCompatActivity(), AllEventsClickListener {
     }
 
     override fun onFavoritesClicked(eventData: EventData) {
-        Toast.makeText(this, "Event: ${eventData.title}", Toast.LENGTH_SHORT).show()
-
+        allEventsViewModel.onFavoriteClick(eventData)
     }
 }

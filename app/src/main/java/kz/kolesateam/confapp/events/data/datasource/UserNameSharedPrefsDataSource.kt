@@ -16,4 +16,6 @@ class UserNameSharedPrefsDataSource(
     ) {
         sharedPreferences.edit().putString(USER_NAME, userName).apply()
     }
+
+    override fun isSavedUserName(): Boolean = sharedPreferences.contains(USER_NAME)
 }

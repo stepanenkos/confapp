@@ -119,10 +119,12 @@ class BranchViewHolder(
         currentSpeaker: SpeakerData,
         currentEvent: EventData,
     ) {
+        val favoriteImageResource = getFavoriteImageResource(currentEvent.isFavorite)
         currentDateAndPlaceTextView.text = currentDateString
         currentSpeakerFullNameTextView.text = currentSpeaker.fullName
         currentSpeakerJobTextView.text = currentSpeaker.job
         currentEventTitleTextView.text = currentEvent.title
+        currentToFavoritesImageButton.setImageResource(favoriteImageResource)
     }
 
     private fun fillNextEvent(
@@ -130,10 +132,12 @@ class BranchViewHolder(
         nextSpeaker: SpeakerData,
         nextEvent: EventData,
     ) {
+        val favoriteImageResource = getFavoriteImageResource(nextEvent.isFavorite)
         nextDateAndPlaceTextView.text = nextDateString
         nextSpeakerFullNameTextView.text = nextSpeaker.fullName
         nextSpeakerJobTextView.text = nextSpeaker.job
         nextEventTitleTextView.text = nextEvent.title
+        nextToFavoritesImageButton.setImageResource(favoriteImageResource)
     }
 
     private fun setOnClickListeners(

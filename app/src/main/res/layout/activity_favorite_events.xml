@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background"
+    android:orientation="vertical"
+    tools:context=".favorite_events.presentation.FavoriteEventsActivity"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center|top"
+            android:layout_marginTop="@dimen/margin_16x"
+            app:srcCompat="@drawable/ic_logo_white"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/activity_favorite_events_content_for_empty_activity"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:orientation="vertical"
+        >
+
+        <ImageView
+            android:layout_width="@dimen/activity_favorite_events_width_image_view_austronavt"
+            android:layout_height="@dimen/activity_favorite_events_height_image_view_austronavt"
+            android:layout_gravity="center_horizontal|center_vertical"
+            android:src="@drawable/favorite_events_astronaut"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center|bottom"
+            android:layout_marginTop="@dimen/margin_24x"
+            android:text="@string/activity_favorite_events_inscription_when_empty_activity"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_size_16"
+            android:textStyle="bold"
+            tools:text="Здесь пока тихо"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/margin_40x"
+        android:orientation="vertical"
+        >
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/activity_favorite_events_recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clipToPadding="false"
+            android:overScrollMode="never"
+            android:paddingBottom="@dimen/padding_80x"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            />
+    </LinearLayout>
+
+    <FrameLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center|bottom"
+        >
+
+        <Button
+            android:id="@+id/activity_favorite_events_button_to_home"
+            android:layout_width="145dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal|bottom"
+            android:layout_marginBottom="@dimen/margin_16x"
+            android:background="@drawable/bg_button"
+            android:drawablePadding="@dimen/padding_8x"
+            android:padding="@dimen/padding_8x"
+            android:text="@string/button_to_home"
+            android:textAllCaps="false"
+            android:textColor="@color/app_primary_color_blue"
+            android:textSize="@dimen/text_size_16"
+            app:drawableLeftCompat="@drawable/ic_home_button"
+            tools:text="На главную"
+            />
+    </FrameLayout>
+</FrameLayout>

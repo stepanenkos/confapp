@@ -16,7 +16,7 @@
         android:theme="@style/Theme.ConfApp"
         android:usesCleartextTraffic="true"
         >
-
+        <activity android:name=".favorite_events.presentation.FavoriteEventsActivity"></activity>
         <activity
             android:name=".hello.presentation.HelloActivity"
             android:theme="@style/SplashScreenTheme"
@@ -28,10 +28,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity android:name=".events.presentation.UpcomingEventsActivity" />
         <activity android:name=".allevents.presentation.AllEventsActivity" />
-
     </application>
 
 </manifest>

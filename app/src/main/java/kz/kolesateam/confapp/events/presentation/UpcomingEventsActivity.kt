@@ -1,5 +1,6 @@
 package kz.kolesateam.confapp.events.presentation
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
@@ -11,6 +12,7 @@ import kz.kolesateam.confapp.events.data.models.UpcomingEventsListItem
 import kz.kolesateam.confapp.models.BranchData
 import kz.kolesateam.confapp.models.EventData
 import kz.kolesateam.confapp.events.presentation.view.EventsAdapter
+import kz.kolesateam.confapp.favorite_events.presentation.FavoriteEventsActivity
 import kz.kolesateam.confapp.presentation.listeners.UpcomingItemsClickListener
 import kz.kolesateam.confapp.models.ProgressState
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -51,9 +53,12 @@ class UpcomingEventsActivity : AppCompatActivity(), UpcomingItemsClickListener {
 
         buttonToFavorites = findViewById(R.id.button_to_favorites)
 
+        setOnClickListeners()
+    }
+    private fun setOnClickListeners() {
         buttonToFavorites.setOnClickListener {
-            Toast.makeText(this, "Нажата кнопка ${"В избранные"} UpcomingEventsActivity", Toast.LENGTH_SHORT).show()
-
+            val intent = Intent(this, FavoriteEventsActivity::class.java)
+            startActivity(intent)
         }
     }
 
@@ -83,8 +88,8 @@ class UpcomingEventsActivity : AppCompatActivity(), UpcomingItemsClickListener {
             .show()
     }
 
-    override fun onFavoritesClicked(event: EventData) {
-
+    override fun onFavoritesClicked(eventData: EventData) {
+        upcomingEventsViewModel.onFavoriteClick(eventData)
 
     }
 }

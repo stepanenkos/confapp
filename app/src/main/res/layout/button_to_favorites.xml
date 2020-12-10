@@ -9,7 +9,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center|bottom"
         android:layout_marginBottom="@dimen/margin_16x"
-        android:background="@drawable/bg_button_to_favorites"
+        android:background="@drawable/bg_button"
         app:drawableLeftCompat="@drawable/ic_to_favorites_border"
         android:drawablePadding="@dimen/padding_4x"
         android:padding="@dimen/padding_8x"
