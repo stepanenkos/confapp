@@ -90,6 +90,5 @@ class UpcomingEventsActivity : AppCompatActivity(), UpcomingItemsClickListener {
 
     override fun onFavoritesClicked(eventData: EventData) {
         upcomingEventsViewModel.onFavoriteClick(eventData)
-
     }
 }

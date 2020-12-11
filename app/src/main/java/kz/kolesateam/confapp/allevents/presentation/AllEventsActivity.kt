@@ -1,5 +1,6 @@
 package kz.kolesateam.confapp.allevents.presentation
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
@@ -13,6 +14,7 @@ import kz.kolesateam.confapp.allevents.data.AllEventsListItem
 import kz.kolesateam.confapp.allevents.presentation.view.AllEventsAdapter
 import kz.kolesateam.confapp.events.presentation.BRANCH_ID
 import kz.kolesateam.confapp.events.presentation.BRANCH_TITLE
+import kz.kolesateam.confapp.favorite_events.presentation.FavoriteEventsActivity
 import kz.kolesateam.confapp.models.EventData
 import kz.kolesateam.confapp.models.ProgressState
 import kz.kolesateam.confapp.presentation.listeners.AllEventsClickListener
@@ -59,7 +61,8 @@ class AllEventsActivity() : AppCompatActivity(), AllEventsClickListener {
         }
 
         buttonToFavorites.setOnClickListener{
-
+            val intent = Intent(this, FavoriteEventsActivity::class.java)
+            startActivity(intent)
         }
     }
 

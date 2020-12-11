@@ -23,6 +23,12 @@ class EventApiDataMapper : Mapper<List<EventApiData>, List<EventData>> {
             for (index in data?.indices!!) {
                 val simpleDateFormat = SimpleDateFormat("HH:mm", Locale.ROOT)
                 val startTime = simpleDateFormat.parse(data[index].startTime ?: DEFAULT_START_TIME_TEXT)
+                startTime.time = Date().time
+                startTime.hours = 22
+                startTime.minutes = 43
+                startTime.year = 2020 - 1900
+                startTime.month = 11
+                startTime.seconds = 0
                 val endTime = simpleDateFormat.parse(data[index].endTime ?: DEFAULT_END_TIME_TEXT)
                 eventsList.add(EventData(
                     id = data?.get(index)?.id ?: DEFAULT_EVENT_ID,
@@ -41,6 +47,12 @@ class EventApiDataMapper : Mapper<List<EventApiData>, List<EventData>> {
     fun map(data: EventApiData?): EventData {
         val simpleDateFormat = SimpleDateFormat("hh:mm", Locale.ROOT)
         val startTime = simpleDateFormat.parse(data?.startTime ?: DEFAULT_START_TIME_TEXT)
+        startTime.time = Date().time
+        startTime.hours = 22
+        startTime.minutes = 43
+        startTime.year = 2020 - 1900
+        startTime.month = 11
+        startTime.seconds = 0
         val endTime = simpleDateFormat.parse(data?.endTime ?: DEFAULT_END_TIME_TEXT)
             return EventData(
                 id = data?.id ?: DEFAULT_EVENT_ID,

@@ -86,7 +86,6 @@ class BranchViewHolder(
             (data as? UpcomingEventsListItem.BranchListItem)?.data ?: return
         val currentEvent = branchData.events[0]
         val nextEvent = branchData.events[1]
-        val branchId = branchData.id
         val currentSpeaker = currentEvent.speaker
         val nextSpeaker = nextEvent.speaker
 
@@ -203,6 +202,7 @@ class BranchViewHolder(
             }
         }
     }
+
     private fun getFavoriteImageResource(
         isFavorite: Boolean
     ): Int = when (isFavorite) {

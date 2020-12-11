@@ -27,6 +27,7 @@ class HelloActivity : AppCompatActivity() {
         initViews()
         if (userNameDataSource.isSavedUserName()) {
             startActivity(UpcomingEventsRouter().createIntent(this))
+            finish()
         }
     }
 
