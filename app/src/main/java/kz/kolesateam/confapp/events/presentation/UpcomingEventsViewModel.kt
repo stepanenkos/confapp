@@ -10,15 +10,16 @@ import kotlinx.coroutines.withContext
 import kz.kolesateam.confapp.events.data.models.BRANCH_TYPE
 import kz.kolesateam.confapp.events.data.models.UpcomingEventsListItem
 import kz.kolesateam.confapp.events.domain.UpcomingEventsRepository
-import kz.kolesateam.confapp.favorite_events.domain.FavoriteEventsRepository
-import kz.kolesateam.confapp.models.BranchData
+import kz.kolesateam.confapp.favorite_events.domain.FavoritesRepository
 import kz.kolesateam.confapp.models.EventData
 import kz.kolesateam.confapp.models.ProgressState
+import kz.kolesateam.confapp.notifications.NotificationAlarmHelper
 import kz.kolesateam.confapp.utils.model.ResponseData
 
 class UpcomingEventsViewModel(
     private val upcomingEventsRepository: UpcomingEventsRepository,
-    private val favoriteEventsRepository: FavoriteEventsRepository,
+    private val favoritesRepository: FavoritesRepository,
+    private val notificationAlarmHelper: NotificationAlarmHelper,
 ) : ViewModel() {
 
     private val progressLiveData: MutableLiveData<ProgressState> = MutableLiveData()
@@ -38,9 +39,24 @@ class UpcomingEventsViewModel(
 
     fun onFavoriteClick(eventData: EventData) {
         when(eventData.isFavorite) {
-            true -> favoriteEventsRepository.saveFavoriteEvent(eventData)
-            else -> favoriteEventsRepository.removeFavoriteEvent(eventData.id)
+            true -> {
+                favoritesRepository.saveFavoriteEvent(eventData)
+                scheduleEvent(eventData)
+            }
+
+            else -> {
+                favoritesRepository.removeFavoriteEvent(eventData.id)
+                cancelNotificationEvent(eventData)
+            }
         }
+    }
+
+    private fun scheduleEvent(eventData: EventData) {
+        notificationAlarmHelper.createNotificationAlarm(eventData)
+    }
+
+    private fun cancelNotificationEvent(eventData: EventData) {
+        notificationAlarmHelper.cancelNotificationAlarm(eventData)
     }
 
     private fun getUpcomingEvents() {
@@ -58,7 +74,7 @@ class UpcomingEventsViewModel(
                         if(it.type == BRANCH_TYPE) {
                             it as UpcomingEventsListItem.BranchListItem
                             it.data.events.forEach { data ->
-                                data.isFavorite = favoriteEventsRepository.isFavorite(data.id)
+                                data.isFavorite = favoritesRepository.isFavorite(data.id)
                             }
                         }
                     }
