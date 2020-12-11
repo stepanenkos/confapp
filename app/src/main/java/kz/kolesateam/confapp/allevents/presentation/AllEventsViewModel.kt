@@ -9,14 +9,16 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import kz.kolesateam.confapp.allevents.data.AllEventsListItem
 import kz.kolesateam.confapp.allevents.domain.AllEventsRepository
-import kz.kolesateam.confapp.favorite_events.domain.FavoriteEventsRepository
+import kz.kolesateam.confapp.favorite_events.domain.FavoritesRepository
 import kz.kolesateam.confapp.models.EventData
 import kz.kolesateam.confapp.models.ProgressState
+import kz.kolesateam.confapp.notifications.NotificationAlarmHelper
 import kz.kolesateam.confapp.utils.model.ResponseData
 
 class AllEventsViewModel(
     private val allEventsRepository: AllEventsRepository,
-    private val favoriteEventsRepository: FavoriteEventsRepository,
+    private val favoritesRepository: FavoritesRepository,
+    private val notificationAlarmHelper: NotificationAlarmHelper,
 ) : ViewModel() {
 
     private val progressLiveData: MutableLiveData<ProgressState> = MutableLiveData()
@@ -36,9 +38,24 @@ class AllEventsViewModel(
 
     fun onFavoriteClick(eventData: EventData) {
         when(eventData.isFavorite) {
-            true -> favoriteEventsRepository.saveFavoriteEvent(eventData)
-            else -> favoriteEventsRepository.removeFavoriteEvent(eventData.id)
+            true -> {
+                favoritesRepository.saveFavoriteEvent(eventData)
+                scheduleEvent(eventData)
+            }
+
+            else -> {
+                favoritesRepository.removeFavoriteEvent(eventData.id)
+                cancelNotificationEvent(eventData)
+            }
         }
+    }
+
+    private fun scheduleEvent(eventData: EventData) {
+        notificationAlarmHelper.createNotificationAlarm(eventData)
+    }
+
+    private fun cancelNotificationEvent(eventData: EventData) {
+        notificationAlarmHelper.cancelNotificationAlarm(eventData)
     }
 
     private fun getAllEvents(branchId: Int, branchTitle: String) {

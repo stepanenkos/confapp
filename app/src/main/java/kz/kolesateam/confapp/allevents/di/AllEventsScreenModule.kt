@@ -13,7 +13,8 @@ val allEventsScreenModule: Module = module {
     viewModel {
         AllEventsViewModel(
             allEventsRepository = get(),
-            favoriteEventsRepository = get()
+            favoritesRepository = get(),
+            notificationAlarmHelper = get()
         )
     }
 
