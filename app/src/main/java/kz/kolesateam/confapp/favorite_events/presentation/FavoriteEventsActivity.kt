@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import kz.kolesateam.confapp.R
 import kz.kolesateam.confapp.events.presentation.UpcomingEventsRouter
@@ -26,7 +27,6 @@ class FavoriteEventsActivity : AppCompatActivity(), AllEventsClickListener {
         observeFavoriteEventsViewModel()
         favoriteEventsViewModel.onStart()
     }
-
 
     private fun initViews() {
         recyclerView = findViewById(R.id.activity_favorite_events_recycler_view)
@@ -59,7 +59,8 @@ class FavoriteEventsActivity : AppCompatActivity(), AllEventsClickListener {
     }
 
     override fun onEventClick(eventData: EventData) {
-
+        Toast.makeText(this, "Event: ${eventData.title}", Toast.LENGTH_SHORT)
+            .show()
     }
 
     override fun onFavoritesClicked(eventData: EventData) {

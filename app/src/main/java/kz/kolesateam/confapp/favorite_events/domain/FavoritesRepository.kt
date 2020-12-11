@@ -2,7 +2,7 @@ package kz.kolesateam.confapp.favorite_events.domain
 
 import kz.kolesateam.confapp.models.EventData
 
-interface FavoriteEventsRepository {
+interface FavoritesRepository {
     fun saveFavoriteEvent(
         eventData: EventData
     )

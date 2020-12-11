@@ -3,17 +3,17 @@ package kz.kolesateam.confapp.favorite_events.data
 import android.content.Context
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.databind.type.MapType
-import kz.kolesateam.confapp.favorite_events.domain.FavoriteEventsRepository
+import kz.kolesateam.confapp.favorite_events.domain.FavoritesRepository
 import kz.kolesateam.confapp.models.EventData
 import java.io.FileInputStream
 import java.io.FileOutputStream
 
 private const val FAVORITE_EVENTS_FILE_NAME = "favorite_events.json"
 
-class DefaultFavoriteEventsRepository(
+class DefaultFavoritesRepository(
     private val context: Context,
     private val objectMapper: ObjectMapper,
-) : FavoriteEventsRepository {
+) : FavoritesRepository {
     private var favoriteEvents: MutableMap<Int, EventData> = mutableMapOf()
 
     init {
