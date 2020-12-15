@@ -1,7 +1,7 @@
 package kz.kolesateam.confapp.utils.mappers
 
-import kz.kolesateam.confapp.events.data.models.BranchApiData
-import kz.kolesateam.confapp.events.data.models.EventApiData
+import kz.kolesateam.confapp.upcomingevents.data.models.BranchApiData
+import kz.kolesateam.confapp.upcomingevents.data.models.EventApiData
 import kz.kolesateam.confapp.models.BranchData
 import kz.kolesateam.confapp.models.EventData
 

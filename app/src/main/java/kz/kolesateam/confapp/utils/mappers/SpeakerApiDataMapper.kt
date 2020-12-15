@@ -1,6 +1,6 @@
 package kz.kolesateam.confapp.utils.mappers
 
-import kz.kolesateam.confapp.events.data.models.SpeakerApiData
+import kz.kolesateam.confapp.upcomingevents.data.models.SpeakerApiData
 import kz.kolesateam.confapp.models.SpeakerData
 
 private const val DEFAULT_SPEAKER_ID = 0

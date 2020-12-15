@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/background"
     android:orientation="vertical"
-    tools:context=".favorite_events.presentation.FavoriteEventsActivity"
+    tools:context=".favoriteevents.presentation.FavoriteEventsActivity"
     >
 
     <LinearLayout

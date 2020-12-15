@@ -1,8 +1,8 @@
 package kz.kolesateam.confapp.allevents.domain
 
-import kz.kolesateam.confapp.allevents.data.AllEventsListItem
+import kz.kolesateam.confapp.models.EventData
 import kz.kolesateam.confapp.utils.model.ResponseData
 
 interface AllEventsRepository {
-    fun getAllEvents(branchId: Int, branchTitle: String) : ResponseData<List<AllEventsListItem>, Exception>
+    fun getAllEvents(branchId: Int) : ResponseData<List<EventData>, Exception>
 }

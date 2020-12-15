@@ -1,41 +1,42 @@
-package kz.kolesateam.confapp.allevents.presentation
+package kz.kolesateam.confapp.upcomingevents.presentation
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import java.text.SimpleDateFormat
-import java.util.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import kz.kolesateam.confapp.allevents.data.AllEventsListItem
-import kz.kolesateam.confapp.allevents.domain.AllEventsRepository
+import kz.kolesateam.confapp.upcomingevents.data.models.UpcomingEventsListItem
+import kz.kolesateam.confapp.upcomingevents.domain.UpcomingEventsRepository
 import kz.kolesateam.confapp.favoriteevents.domain.FavoritesRepository
+import kz.kolesateam.confapp.models.BranchData
 import kz.kolesateam.confapp.models.EventData
 import kz.kolesateam.confapp.models.ProgressState
 import kz.kolesateam.confapp.notifications.NotificationAlarmHelper
+import kz.kolesateam.confapp.upcomingevents.data.datasource.UserNameDataSource
 import kz.kolesateam.confapp.utils.model.ResponseData
 
-class AllEventsViewModel(
-    private val allEventsRepository: AllEventsRepository,
+class UpcomingEventsViewModel(
+    private val upcomingEventsRepository: UpcomingEventsRepository,
     private val favoritesRepository: FavoritesRepository,
     private val notificationAlarmHelper: NotificationAlarmHelper,
+    private val userNameDataSource: UserNameDataSource,
 ) : ViewModel() {
 
     private val progressLiveData: MutableLiveData<ProgressState> = MutableLiveData()
-    private val allEventsLiveData: MutableLiveData<List<AllEventsListItem>> =
+    private val upcomingEventsLiveData: MutableLiveData<List<UpcomingEventsListItem>> =
         MutableLiveData()
     private val errorLiveData: MutableLiveData<Exception> = MutableLiveData()
 
     fun getProgressLiveData(): LiveData<ProgressState> = progressLiveData
 
-    fun getAllEventsLiveData(): LiveData<List<AllEventsListItem>> = allEventsLiveData
+    fun getUpcomingEventsLiveData(): LiveData<List<UpcomingEventsListItem>> = upcomingEventsLiveData
 
     fun getErrorLiveData(): LiveData<Exception> = errorLiveData
 
-    fun onStart(branchId: Int, branchTitle: String) {
-        getAllEvents(branchId, branchTitle)
+    fun onStart() {
+        getUpcomingEvents()
     }
 
     fun onFavoriteClick(eventData: EventData) {
@@ -60,47 +61,46 @@ class AllEventsViewModel(
         notificationAlarmHelper.cancelNotificationAlarm(eventData)
     }
 
-    private fun getAllEvents(branchId: Int, branchTitle: String) {
+    private fun getUpcomingEvents() {
         viewModelScope.launch(Dispatchers.Main) {
             progressLiveData.value = ProgressState.Loading
 
-            val allEventsResponse: ResponseData<List<EventData>, Exception> =
+            val upcomingEventsResponse: ResponseData<List<BranchData>, Exception> =
                 withContext(Dispatchers.IO) {
-                    allEventsRepository.getAllEvents(branchId)
+                    upcomingEventsRepository.getUpcomingEvents()
                 }
 
-            when (allEventsResponse) {
+            when (upcomingEventsResponse) {
                 is ResponseData.Success -> {
-                    val eventDataList = allEventsResponse.result
-
-                    val allEventsListItem: MutableList<AllEventsListItem> =
+                    val userName = userNameDataSource.getUserName()
+                    val upcomingEventListItem: MutableList<UpcomingEventsListItem> =
                         mutableListOf()
 
-                    val branchTitleListItem: AllEventsListItem =
-                        AllEventsListItem.BranchTitleItem(branchTitle)
+                    val headerListItem: UpcomingEventsListItem =
+                        UpcomingEventsListItem.HeaderItem(userName)
 
+                    upcomingEventListItem.add(headerListItem)
 
-                    allEventsListItem.add(branchTitleListItem)
+                    val branchDataList = upcomingEventsResponse.result
 
-                    eventDataList.forEach { eventData ->
-                        eventData.isCompleted = isCompleted(eventData)
-                        allEventsListItem.add(AllEventsListItem.EventListItem(eventData))
+                    branchDataList.forEach {
+                        it.events.forEach { eventData ->
+                            eventData.isFavorite = favoritesRepository.isFavorite(eventData.id)
+                        }
                     }
 
-                    allEventsLiveData.value =
-                        allEventsListItem
+                    for (index in branchDataList.indices) {
+                        upcomingEventListItem.add(UpcomingEventsListItem.BranchListItem(
+                            branchDataList[index]))
+                    }
+
+                    upcomingEventsLiveData.value =
+                        upcomingEventListItem
                 }
-                is ResponseData.Error -> errorLiveData.value = allEventsResponse.error
+                is ResponseData.Error -> errorLiveData.value = upcomingEventsResponse.error
             }
 
             progressLiveData.value = ProgressState.Done
         }
-    }
-
-    private fun isCompleted(eventData: EventData): Boolean {
-        val simpleDateFormat = SimpleDateFormat("HH:mm", Locale.ROOT)
-        val dateNowFormat = simpleDateFormat.format(Date())
-        val dateNow = simpleDateFormat.parse(dateNowFormat)!!
-        return dateNow.after(eventData.endTime)
     }
 }

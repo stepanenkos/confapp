@@ -12,9 +12,9 @@ import androidx.recyclerview.widget.RecyclerView
 import kz.kolesateam.confapp.R
 import kz.kolesateam.confapp.allevents.data.AllEventsListItem
 import kz.kolesateam.confapp.allevents.presentation.view.AllEventsAdapter
-import kz.kolesateam.confapp.events.presentation.BRANCH_ID
-import kz.kolesateam.confapp.events.presentation.BRANCH_TITLE
-import kz.kolesateam.confapp.favorite_events.presentation.FavoriteEventsActivity
+import kz.kolesateam.confapp.upcomingevents.presentation.BRANCH_ID
+import kz.kolesateam.confapp.upcomingevents.presentation.BRANCH_TITLE
+import kz.kolesateam.confapp.favoriteevents.presentation.FavoriteEventsActivity
 import kz.kolesateam.confapp.models.EventData
 import kz.kolesateam.confapp.models.ProgressState
 import kz.kolesateam.confapp.presentation.listeners.AllEventsClickListener

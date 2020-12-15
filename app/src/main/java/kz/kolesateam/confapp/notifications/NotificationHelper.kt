@@ -7,7 +7,7 @@ import android.os.Build
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import kz.kolesateam.confapp.R
-import kz.kolesateam.confapp.eventdetails.EventDetailsRouter
+import kz.kolesateam.confapp.eventdetails.presentation.EventDetailsRouter
 
 object NotificationHelper {
     private const val CHANNEL_ID = "favorite_notification_channel"
