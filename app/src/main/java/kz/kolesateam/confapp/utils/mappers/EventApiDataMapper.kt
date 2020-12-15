@@ -18,9 +18,10 @@ class EventApiDataMapper : Mapper<List<EventApiData>, List<EventData>> {
     private val eventsList: MutableList<EventData> = mutableListOf()
 
     override fun map(data: List<EventApiData>?): List<EventData> {
+        data ?: return emptyList()
         eventsList.clear()
 
-            for (index in data?.indices!!) {
+            for (index in data.indices) {
                 val simpleDateFormat = SimpleDateFormat("HH:mm", Locale.ROOT)
                 val startTime = simpleDateFormat.parse(data[index].startTime ?: DEFAULT_START_TIME_TEXT)
                 startTime.time = Date().time
@@ -31,13 +32,13 @@ class EventApiDataMapper : Mapper<List<EventApiData>, List<EventData>> {
                 startTime.seconds = 0
                 val endTime = simpleDateFormat.parse(data[index].endTime ?: DEFAULT_END_TIME_TEXT)
                 eventsList.add(EventData(
-                    id = data?.get(index)?.id ?: DEFAULT_EVENT_ID,
+                    id = data[index].id ?: DEFAULT_EVENT_ID,
                     startTime = startTime,
                     endTime = endTime,
-                    title = data?.get(index)?.title ?: DEFAULT_EVENT_TITLE,
-                    description = data?.get(index)?.description ?: DEFAULT_EVENT_DESCRIPTION,
-                    place = data?.get(index)?.place ?: DEFAULT_PLACE_TEXT,
-                    speaker = speakerMapper.map(data?.get(index)?.speaker)
+                    title = data[index].title ?: DEFAULT_EVENT_TITLE,
+                    description = data[index].description ?: DEFAULT_EVENT_DESCRIPTION,
+                    place = data[index].place ?: DEFAULT_PLACE_TEXT,
+                    speaker = speakerMapper.map(data[index].speaker)
                 ))
             }
 
