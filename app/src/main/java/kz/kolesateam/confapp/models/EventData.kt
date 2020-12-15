@@ -21,5 +21,7 @@ data class EventData(
     @JsonProperty("speaker")
     val speaker: SpeakerData,
     @JsonProperty("isFavorite")
-    var isFavorite: Boolean = false
+    var isFavorite: Boolean = false,
+    @JsonProperty("isCompleted")
+    var isCompleted: Boolean = false,
 )

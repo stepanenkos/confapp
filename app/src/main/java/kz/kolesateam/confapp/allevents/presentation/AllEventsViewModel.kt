@@ -4,10 +4,13 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import java.text.SimpleDateFormat
+import java.util.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import kz.kolesateam.confapp.allevents.data.AllEventsListItem
+import kz.kolesateam.confapp.allevents.data.EVENT_TYPE
 import kz.kolesateam.confapp.allevents.domain.AllEventsRepository
 import kz.kolesateam.confapp.favorite_events.domain.FavoritesRepository
 import kz.kolesateam.confapp.models.EventData
@@ -37,7 +40,7 @@ class AllEventsViewModel(
     }
 
     fun onFavoriteClick(eventData: EventData) {
-        when(eventData.isFavorite) {
+        when (eventData.isFavorite) {
             true -> {
                 favoritesRepository.saveFavoriteEvent(eventData)
                 scheduleEvent(eventData)
@@ -68,12 +71,27 @@ class AllEventsViewModel(
                 }
 
             when (allEventsResponse) {
-                is ResponseData.Success -> allEventsLiveData.value =
-                    allEventsResponse.result
+                is ResponseData.Success -> {
+                    allEventsResponse.result.forEach { allEventsListItem ->
+                        if (allEventsListItem.type == EVENT_TYPE) {
+                            val eventData = allEventsListItem as AllEventsListItem.EventListItem
+                            eventData.data.isCompleted = isCompleted(eventData.data)
+                        }
+                    }
+                    allEventsLiveData.value =
+                        allEventsResponse.result
+                }
                 is ResponseData.Error -> errorLiveData.value = allEventsResponse.error
             }
 
             progressLiveData.value = ProgressState.Done
         }
+    }
+
+    private fun isCompleted(eventData: EventData): Boolean {
+        val simpleDateFormat = SimpleDateFormat("HH:mm", Locale.ROOT)
+        val dateNowFormat = simpleDateFormat.format(Date())
+        val dateNow = simpleDateFormat.parse(dateNowFormat)!!
+        return dateNow.after(eventData.endTime)
     }
 }

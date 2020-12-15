@@ -1,4 +1,4 @@
-package kz.kolesateam.confapp.di
+package kz.kolesateam.confapp.events.di
 
 import kz.kolesateam.confapp.events.data.datasource.UpcomingEventsDataSource
 import kz.kolesateam.confapp.events.data.DefaultUpcomingEventsRepository
@@ -8,9 +8,6 @@ import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.core.module.Module
 import org.koin.dsl.module
 import retrofit2.Retrofit
-import retrofit2.converter.jackson.JacksonConverterFactory
-
-private val BASE_URL = "http://37.143.8.68:2020"
 
 val eventScreenModule: Module = module {
 
@@ -20,13 +17,6 @@ val eventScreenModule: Module = module {
             favoritesRepository = get(),
             notificationAlarmHelper = get()
         )
-    }
-
-    single {
-        Retrofit.Builder()
-            .baseUrl(BASE_URL)
-            .addConverterFactory(JacksonConverterFactory.create())
-            .build()
     }
 
     single() {

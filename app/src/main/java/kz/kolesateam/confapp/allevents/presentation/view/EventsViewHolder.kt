@@ -52,14 +52,11 @@ class EventsViewHolder(
     private fun fillEvent(
         eventData: EventData,
     ) {
-        val simpleDateFormat = SimpleDateFormat("HH:mm", Locale.ROOT)
-        val dateNowFormat = simpleDateFormat.format(Date())
-        val dateNow = simpleDateFormat.parse(dateNowFormat)!!
         dateAndPlaceTextView.text = formatStringForDateAndPlace(eventData)
         speakerFullNameTextView.text = eventData.speaker.fullName
         speakerJobTextView.text = eventData.speaker.job
         eventTitleTextView.text = eventData.title
-        setBackgroundEvent(dateNow.after(eventData.endTime))
+        setBackgroundEvent(eventData.isCompleted)
     }
 
     private fun setBackgroundEvent(isEndEvent: Boolean) {
