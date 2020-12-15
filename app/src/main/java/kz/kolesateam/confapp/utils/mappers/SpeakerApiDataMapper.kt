@@ -4,9 +4,9 @@ import kz.kolesateam.confapp.upcomingevents.data.models.SpeakerApiData
 import kz.kolesateam.confapp.models.SpeakerData
 
 private const val DEFAULT_SPEAKER_ID = 0
-private const val DEFAULT_SPEAKER_NAME = "Имя Спикера не указано"
-private const val DEFAULT_JOB_SPEAKER = "Работа Спикера не указана"
-private const val DEFAULT_SPEAKER_PHOTO_URL = "https://static.tildacdn.com/tild3134-3733-4630-b663-373461333362/photo.png"
+private const val DEFAULT_SPEAKER_NAME = ""
+private const val DEFAULT_JOB_SPEAKER = ""
+private const val DEFAULT_SPEAKER_PHOTO_URL = ""
 
 class SpeakerApiDataMapper: Mapper<SpeakerApiData, SpeakerData> {
 

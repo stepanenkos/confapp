@@ -18,9 +18,8 @@ class DefaultAllEventsRepository(
 
             if (response.isSuccessful) {
                 val eventDataList: List<EventData> =
-                    response.body()!!.map { eventApiData ->
-                        EventApiDataMapper().map(eventApiData)
-                    }
+                    EventApiDataMapper().map(response.body()!!)
+
                 ResponseData.Success(eventDataList)
             } else {
                 ResponseData.Error(Exception(response.errorBody().toString()))
