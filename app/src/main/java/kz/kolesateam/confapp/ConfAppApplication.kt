@@ -5,6 +5,7 @@ import kz.kolesateam.confapp.allevents.di.allEventsScreenModule
 import kz.kolesateam.confapp.di.applicationModule
 import kz.kolesateam.confapp.upcomingevents.di.eventScreenModule
 import kz.kolesateam.confapp.di.userNameModule
+import kz.kolesateam.confapp.eventdetails.di.eventDetailsModule
 import kz.kolesateam.confapp.favoriteevents.di.favoriteEventsModule
 import kz.kolesateam.confapp.notifications.NotificationHelper
 import org.koin.android.ext.koin.androidContext
@@ -22,6 +23,7 @@ class ConfAppApplication : MultiDexApplication() {
                 userNameModule,
                 applicationModule,
                 allEventsScreenModule,
+                eventDetailsModule,
             )
         }
     }
