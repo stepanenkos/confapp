@@ -9,11 +9,25 @@ import kz.kolesateam.confapp.presentation.view.BaseViewHolder
 import kz.kolesateam.confapp.presentation.listeners.AllEventsClickListener
 import java.text.SimpleDateFormat
 import java.util.*
+import kz.kolesateam.confapp.favoriteevents.domain.FavoriteEventActionObservable
+import kz.kolesateam.confapp.favoriteevents.domain.model.FavoriteActionEvent
 
 class EventsViewHolder(
     view: View,
     private val allEventsClickListener: AllEventsClickListener,
+    private val favoriteEventActionObservable: FavoriteEventActionObservable,
 ) : BaseViewHolder<AllEventsListItem>(view) {
+    private val favoriteObserver: Observer = object : Observer {
+        override fun update(o: Observable?, favoriteActionEventObject: Any?) {
+            val favoriteEventAction = (favoriteActionEventObject as? FavoriteActionEvent) ?: return
+
+            if(eventData.id == favoriteEventAction.eventId) {
+                toFavoritesImageButton.setImageResource(
+                    getFavoriteImageResource(favoriteEventAction.isFavorite)
+                )
+            }
+        }
+    }
 
     private val branchEvent: View =
         view.findViewById(R.id.activity_all_events_event_card)
@@ -37,16 +51,23 @@ class EventsViewHolder(
     private val toFavoritesImageButton: ImageView =
         branchEvent.findViewById(R.id.events_card_layout_to_favorites_image_view)
 
+    private lateinit var eventData: EventData
+
     init {
         branchEvent.findViewById<TextView>(
             R.id.events_card_layout_next_event_text_view
         ).visibility = View.INVISIBLE
     }
 
+    fun onViewRecycled() {
+        favoriteEventActionObservable.unsubscribe(favoriteObserver)
+    }
+
     override fun onBind(data: AllEventsListItem) {
-        val event = (data as? AllEventsListItem.EventListItem)?.data ?: return
-        fillEvent(event)
-        setOnClickListeners(event)
+        eventData = (data as? AllEventsListItem.EventListItem)?.data ?: return
+        fillEvent(eventData)
+        setOnClickListeners(eventData)
+        favoriteEventActionObservable.subscribe(favoriteObserver)
     }
 
     private fun fillEvent(
@@ -57,6 +78,7 @@ class EventsViewHolder(
         speakerJobTextView.text = eventData.speaker.job
         eventTitleTextView.text = eventData.title
         setBackgroundEvent(eventData.isCompleted)
+        toFavoritesImageButton.setImageResource(getFavoriteImageResource(eventData.isFavorite))
     }
 
     private fun setBackgroundEvent(isEndEvent: Boolean) {

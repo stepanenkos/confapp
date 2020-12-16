@@ -7,12 +7,14 @@ import kz.kolesateam.confapp.favoriteevents.domain.FavoritesRepository
 import kz.kolesateam.confapp.models.EventData
 import java.io.FileInputStream
 import java.io.FileOutputStream
+import kz.kolesateam.confapp.favoriteevents.domain.FavoriteEventActionObservable
 
 private const val FAVORITE_EVENTS_FILE_NAME = "favorite_events.json"
 
 class DefaultFavoritesRepository(
     private val context: Context,
     private val objectMapper: ObjectMapper,
+    private val favoriteEventActionObservable: FavoriteEventActionObservable,
 ) : FavoritesRepository {
     private var favoriteEvents: MutableMap<Int, EventData> = mutableMapOf()
 
@@ -24,11 +26,19 @@ class DefaultFavoritesRepository(
     override fun saveFavoriteEvent(eventData: EventData) {
         favoriteEvents[eventData.id] = eventData
         saveFavoriteEventsToFile()
+        favoriteEventActionObservable.notifyChanged(
+            eventId = eventData.id,
+            isFavorite = true
+        )
     }
 
     override fun removeFavoriteEvent(eventId: Int) {
         favoriteEvents.remove(eventId)
         saveFavoriteEventsToFile()
+        favoriteEventActionObservable.notifyChanged(
+            eventId = eventId,
+            isFavorite = false
+        )
     }
 
     override fun getAllFavoriteEvents(): List<EventData> {

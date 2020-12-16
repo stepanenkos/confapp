@@ -41,7 +41,19 @@ class EventApiDataMapper : Mapper<List<EventApiData>?, List<EventData>> {
             )
         }
     }
-
+    fun map(eventApiData: EventApiData?) : EventData {
+        val startTime = getTimeByFormat(eventApiData?.startTime ?: DEFAULT_START_TIME_TEXT)
+        val endTime = getTimeByFormat(eventApiData?.endTime ?: DEFAULT_END_TIME_TEXT)
+        return EventData(
+            id = eventApiData?.id ?: DEFAULT_EVENT_ID,
+            startTime = startTime,
+            endTime = endTime,
+            title = eventApiData?.title ?: DEFAULT_EVENT_TITLE,
+            description = eventApiData?.description ?: DEFAULT_EVENT_DESCRIPTION,
+            place = eventApiData?.place ?: DEFAULT_PLACE_TEXT,
+            speaker = speakerMapper.map(eventApiData?.speaker)
+        )
+    }
     private fun getTimeByFormat(
         time: String
     ): Date = try {

@@ -23,10 +23,12 @@ object NotificationHelper {
     fun sendNotification(
         title: String,
         content: String,
+        eventId: Int,
     ) {
         val notification: Notification = getNotification(
             title = title,
-            content = content
+            content = content,
+            eventId = eventId
         )
 
         NotificationManagerCompat.from(application).notify(
@@ -36,6 +38,7 @@ object NotificationHelper {
     }
 
     private fun getNotification(
+        eventId: Int,
         title: String,
         content: String,
     ): Notification = NotificationCompat.Builder(
@@ -45,16 +48,16 @@ object NotificationHelper {
         .setContentText(content)
         .setSmallIcon(R.drawable.ic_notification)
         .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-        .setContentIntent(getPendingIntent(content))
+        .setContentIntent(getPendingIntent(eventId))
         .setAutoCancel(true)
         .build()
 
     private fun getPendingIntent(
-        content: String,
+        eventId: Int,
     ): PendingIntent {
-        val eventDetailsEvent = EventDetailsRouter().createIntentForNotification(
+        val eventDetailsEvent = EventDetailsRouter().createIntentForEventDetails(
             context = application,
-            messageFromPush = content,
+            eventId = eventId
         ).apply {
             flags = Intent.FLAG_ACTIVITY_SINGLE_TOP
         }

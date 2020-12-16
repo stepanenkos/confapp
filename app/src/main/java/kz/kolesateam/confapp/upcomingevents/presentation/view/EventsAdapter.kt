@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import kz.kolesateam.confapp.R
+import kz.kolesateam.confapp.favoriteevents.domain.FavoriteEventActionObservable
 import kz.kolesateam.confapp.upcomingevents.data.models.HEADER_TYPE
 import kz.kolesateam.confapp.upcomingevents.data.models.UpcomingEventsListItem
 import kz.kolesateam.confapp.presentation.listeners.UpcomingItemsClickListener
@@ -11,6 +12,7 @@ import kz.kolesateam.confapp.presentation.view.BaseViewHolder
 
 class EventsAdapter(
     private val upcomingItemsClickListener: UpcomingItemsClickListener,
+    private val favoriteEventActionObservable: FavoriteEventActionObservable,
 ) : RecyclerView.Adapter<BaseViewHolder<UpcomingEventsListItem>>() {
     private val branchDataList: MutableList<UpcomingEventsListItem> = mutableListOf()
 
@@ -27,7 +29,8 @@ class EventsAdapter(
             else -> BranchViewHolder(
                 view = LayoutInflater.from(parent.context)
                     .inflate(R.layout.branch_item, parent, false),
-                upcomingItemsClickListener = upcomingItemsClickListener
+                upcomingItemsClickListener = upcomingItemsClickListener,
+                favoriteEventActionObservable = favoriteEventActionObservable,
             )
         }
     }

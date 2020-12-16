@@ -8,12 +8,25 @@ import kz.kolesateam.confapp.presentation.view.BaseViewHolder
 import kz.kolesateam.confapp.presentation.listeners.AllEventsClickListener
 import java.text.SimpleDateFormat
 import java.util.*
+import kz.kolesateam.confapp.favoriteevents.domain.FavoriteEventActionObservable
+import kz.kolesateam.confapp.favoriteevents.domain.model.FavoriteActionEvent
 
 class FavoriteEventsViewHolder(
     view: View,
     private val allEventsClickListener: AllEventsClickListener,
+    private val favoriteEventActionObservable: FavoriteEventActionObservable
 ) : BaseViewHolder<EventData>(view) {
+    private val favoriteObserver: Observer = object : Observer {
+        override fun update(o: Observable?, favoriteActionEventObject: Any?) {
+            val favoriteEventAction = (favoriteActionEventObject as? FavoriteActionEvent) ?: return
 
+            if(eventData.id == favoriteEventAction.eventId) {
+                toFavoritesImageButton.setImageResource(
+                    getFavoriteImageResource(favoriteEventAction.isFavorite)
+                )
+            }
+        }
+    }
     private val favoriteEvent: View =
         view.findViewById(R.id.activity_all_events_event_card)
 
@@ -27,6 +40,7 @@ class FavoriteEventsViewHolder(
         favoriteEvent.findViewById(R.id.events_card_layout_event_title_text_view)
     private val toFavoritesImageButton: ImageView =
         favoriteEvent.findViewById(R.id.events_card_layout_to_favorites_image_view)
+    private lateinit var eventData: EventData
 
     init {
         favoriteEvent.findViewById<TextView>(
@@ -35,9 +49,14 @@ class FavoriteEventsViewHolder(
     }
 
     override fun onBind(eventData: EventData) {
+        this.eventData = eventData
         fillEvent(eventData)
         setOnClickListeners(eventData)
+        favoriteEventActionObservable.subscribe(favoriteObserver)
+    }
 
+    fun onViewRecycled() {
+        favoriteEventActionObservable.unsubscribe(favoriteObserver)
     }
 
     private fun fillEvent(

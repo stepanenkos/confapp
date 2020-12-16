@@ -22,7 +22,6 @@ class AllEventsViewModel(
     private val favoritesRepository: FavoritesRepository,
     private val notificationAlarmHelper: NotificationAlarmHelper,
 ) : ViewModel() {
-
     private val progressLiveData: MutableLiveData<ProgressState> = MutableLiveData()
     private val allEventsLiveData: MutableLiveData<List<AllEventsListItem>> =
         MutableLiveData()
@@ -84,6 +83,7 @@ class AllEventsViewModel(
 
                     eventDataList.forEach { eventData ->
                         eventData.isCompleted = isCompleted(eventData)
+                        eventData.isFavorite = favoritesRepository.isFavorite(eventData.id)
                         allEventsListItem.add(AllEventsListItem.EventListItem(eventData))
                     }
 

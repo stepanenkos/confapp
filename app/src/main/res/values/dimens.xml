@@ -31,4 +31,7 @@
     <dimen name="button_to_favorites_width_155x">155dp</dimen>
     <dimen name="activity_favorite_events_width_image_view_austronavt">240dp</dimen>
     <dimen name="activity_favorite_events_height_image_view_austronavt">240dp</dimen>
+    <dimen name="text_size_18">18sp</dimen>
+    <dimen name="padding_5x">5dp</dimen>
+    <dimen name="line_spacing_extra_8x">8sp</dimen>
 </resources>

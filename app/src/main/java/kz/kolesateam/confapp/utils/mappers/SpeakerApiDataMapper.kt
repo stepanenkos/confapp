@@ -7,6 +7,7 @@ private const val DEFAULT_SPEAKER_ID = 0
 private const val DEFAULT_SPEAKER_NAME = ""
 private const val DEFAULT_JOB_SPEAKER = ""
 private const val DEFAULT_SPEAKER_PHOTO_URL = ""
+private const val DEFAULT_SPEAKER_IS_INVITED = false
 
 class SpeakerApiDataMapper: Mapper<SpeakerApiData, SpeakerData> {
 
@@ -15,7 +16,8 @@ class SpeakerApiDataMapper: Mapper<SpeakerApiData, SpeakerData> {
             id = data?.id ?: DEFAULT_SPEAKER_ID,
             fullName = data?.fullName ?: DEFAULT_SPEAKER_NAME,
             job = data?.job ?: DEFAULT_JOB_SPEAKER,
-            photoUrl = data?.photoUrl ?: DEFAULT_SPEAKER_PHOTO_URL
+            photoUrl = data?.photoUrl ?: DEFAULT_SPEAKER_PHOTO_URL,
+            isInvited = data?.isInvited ?: DEFAULT_SPEAKER_IS_INVITED
         )
     }
 }

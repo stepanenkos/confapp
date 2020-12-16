@@ -4,9 +4,10 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
-import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import kz.kolesateam.confapp.R
+import kz.kolesateam.confapp.eventdetails.presentation.EventDetailsRouter
+import kz.kolesateam.confapp.favoriteevents.domain.FavoriteEventActionObservable
 import kz.kolesateam.confapp.upcomingevents.presentation.UpcomingEventsRouter
 import kz.kolesateam.confapp.favoriteevents.presentation.view.FavoriteEventsAdapter
 import kz.kolesateam.confapp.models.EventData
@@ -15,10 +16,14 @@ import org.koin.android.ext.android.inject
 
 class FavoriteEventsActivity : AppCompatActivity(), AllEventsClickListener {
     private val favoriteEventsViewModel: FavoriteEventsViewModel by inject()
+    private val favoriteEventActionObservable: FavoriteEventActionObservable by inject()
     private lateinit var recyclerView: RecyclerView
     private lateinit var toHomeButton: Button
     private lateinit var containerForEmptyActivity: View
-    private val adapter = FavoriteEventsAdapter(this)
+    private val adapter = FavoriteEventsAdapter(
+        allEventsClickListener = this,
+        favoriteEventActionObservable = favoriteEventActionObservable
+    )
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -59,8 +64,7 @@ class FavoriteEventsActivity : AppCompatActivity(), AllEventsClickListener {
     }
 
     override fun onEventClick(eventData: EventData) {
-        Toast.makeText(this, "Event: ${eventData.title}", Toast.LENGTH_SHORT)
-            .show()
+        startActivity(EventDetailsRouter().createIntentForEventDetails(this, eventData.id))
     }
 
     override fun onFavoritesClicked(eventData: EventData) {

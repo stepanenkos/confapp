@@ -9,6 +9,7 @@ import kz.kolesateam.confapp.models.EventData
 import java.util.*
 
 const val NOTIFICATION_CONTENT_KEY = "notification_title"
+const val NOTIFICATION_EVENT_ID_KEY = "event_id"
 
 class NotificationAlarmHelper(
     private val application: Application,
@@ -22,6 +23,7 @@ class NotificationAlarmHelper(
         pendingIntent =
             Intent(application, NotificationAlarmBroadcastReceiver::class.java).apply {
                 putExtra(NOTIFICATION_CONTENT_KEY, eventData.title)
+                putExtra(NOTIFICATION_EVENT_ID_KEY, eventData.id)
             }.let {
                 PendingIntent.getBroadcast(application, eventData.id, it, PendingIntent.FLAG_UPDATE_CURRENT)
             }
