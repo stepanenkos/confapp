@@ -22,6 +22,7 @@
         android:layout_height="wrap_content"
         android:textSize="@dimen/text_size_13"
         android:textColor="@color/activity_upcoming_events_hello_text_view"
+        android:layout_marginTop="@dimen/margin_8x"
         tools:text="Привет, Васян"
         />
 </LinearLayout>

@@ -18,6 +18,7 @@
         android:overScrollMode="never"
         android:clipToPadding="false"
         android:paddingBottom="@dimen/padding_80x"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         />
 
     <ProgressBar
@@ -28,19 +29,11 @@
         android:visibility="invisible"
         />
 
-    <Button
+    <include
         android:id="@+id/activity_upcoming_events_button_to_favorites"
-        android:layout_width="155dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center|bottom"
-        android:layout_marginBottom="@dimen/margin_16x"
-        android:background="@drawable/bg_button_to_favorites"
-        android:drawableLeft="@drawable/ic_to_favorites_border"
-        android:drawablePadding="@dimen/padding_4x"
-        android:padding="@dimen/padding_8x"
-        android:text="@string/activity_upcoming_events_button_text"
-        android:textAllCaps="false"
-        android:textColor="@color/app_primary_color_blue"
+        layout="@layout/button_to_favorites"
         />
 
 </FrameLayout>

@@ -17,6 +17,7 @@ val eventScreenModule: Module = module {
     viewModel {
         UpcomingEventsViewModel(
             upcomingEventsRepository = get(),
+            favoriteEventsRepository = get(),
         )
     }
 
@@ -27,17 +28,16 @@ val eventScreenModule: Module = module {
             .build()
     }
 
-    single {
+    single() {
         val retrofit: Retrofit = get()
 
         retrofit.create(UpcomingEventsDataSource::class.java)
     }
 
-    factory {
+    factory<UpcomingEventsRepository> {
         DefaultUpcomingEventsRepository(
             upcomingEventsDataSource = get(),
-            userNameDataSource = get()
-        ) as UpcomingEventsRepository
+            userNameDataSource = get(),
+        )
     }
-
 }

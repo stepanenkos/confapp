@@ -25,6 +25,9 @@ class HelloActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_hello)
         initViews()
+        if (userNameDataSource.isSavedUserName()) {
+            startActivity(UpcomingEventsRouter().createIntent(this))
+        }
     }
 
     private fun initViews() {

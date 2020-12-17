@@ -1,0 +1,21 @@
+package kz.kolesateam.confapp.utils.mappers
+
+import kz.kolesateam.confapp.events.data.models.SpeakerApiData
+import kz.kolesateam.confapp.models.SpeakerData
+
+private const val DEFAULT_SPEAKER_ID = 0
+private const val DEFAULT_SPEAKER_NAME = "Имя Спикера не указано"
+private const val DEFAULT_JOB_SPEAKER = "Работа Спикера не указана"
+private const val DEFAULT_SPEAKER_PHOTO_URL = "https://static.tildacdn.com/tild3134-3733-4630-b663-373461333362/photo.png"
+
+class SpeakerApiDataMapper: Mapper<SpeakerApiData, SpeakerData> {
+
+    override fun map(data: SpeakerApiData?): SpeakerData {
+        return SpeakerData(
+            id = data?.id ?: DEFAULT_SPEAKER_ID,
+            fullName = data?.fullName ?: DEFAULT_SPEAKER_NAME,
+            job = data?.job ?: DEFAULT_JOB_SPEAKER,
+            photoUrl = data?.photoUrl ?: DEFAULT_SPEAKER_PHOTO_URL
+        )
+    }
+}

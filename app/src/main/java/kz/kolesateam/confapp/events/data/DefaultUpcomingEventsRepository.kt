@@ -3,11 +3,11 @@ package kz.kolesateam.confapp.events.data
 import kz.kolesateam.confapp.events.data.datasource.UpcomingEventsDataSource
 import kz.kolesateam.confapp.events.data.datasource.UserNameDataSource
 import kz.kolesateam.confapp.events.data.models.BranchApiData
-import kz.kolesateam.confapp.events.data.models.BranchApiDataMapper
-import kz.kolesateam.confapp.events.data.models.Mapper
+import kz.kolesateam.confapp.utils.mappers.BranchApiDataMapper
+import kz.kolesateam.confapp.utils.mappers.Mapper
 import kz.kolesateam.confapp.events.data.models.UpcomingEventsListItem
 import kz.kolesateam.confapp.events.domain.UpcomingEventsRepository
-import kz.kolesateam.confapp.events.presentation.models.BranchData
+import kz.kolesateam.confapp.models.BranchData
 import kz.kolesateam.confapp.utils.model.ResponseData
 
 class DefaultUpcomingEventsRepository(
@@ -22,7 +22,7 @@ class DefaultUpcomingEventsRepository(
             val userName = userNameDataSource.getUserName()
 
             if (response.isSuccessful) {
-                val upcomingEventListItemList: MutableList<UpcomingEventsListItem> =
+                val upcomingEventListItem: MutableList<UpcomingEventsListItem> =
                     mutableListOf()
 
                 val headerListItem: UpcomingEventsListItem =
@@ -30,15 +30,13 @@ class DefaultUpcomingEventsRepository(
 
                 val branchListItemList: List<UpcomingEventsListItem> =
                     response.body()!!.map { branchApiData ->
-                        branchApiDataMapper.map(branchApiData)
-                    }.map { branchData ->
-                        UpcomingEventsListItem.BranchListItem(branchData)
+                        UpcomingEventsListItem.BranchListItem(branchApiDataMapper.map(branchApiData))
                     }
 
-                upcomingEventListItemList.add(headerListItem)
-                upcomingEventListItemList.addAll(branchListItemList)
+                upcomingEventListItem.add(headerListItem)
+                upcomingEventListItem.addAll(branchListItemList)
 
-                return ResponseData.Success(upcomingEventListItemList)
+                return ResponseData.Success(upcomingEventListItem)
             } else {
                 return ResponseData.Error(Exception(response.errorBody().toString()))
             }

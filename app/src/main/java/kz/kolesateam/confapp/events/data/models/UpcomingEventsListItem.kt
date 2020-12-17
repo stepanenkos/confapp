@@ -1,9 +1,9 @@
 package kz.kolesateam.confapp.events.data.models
 
-import kz.kolesateam.confapp.events.presentation.models.BranchData
+import kz.kolesateam.confapp.models.BranchData
 
 const val HEADER_TYPE: Int = 0
-const val EVENT_TYPE: Int = 1
+const val BRANCH_TYPE: Int = 1
 
 sealed class UpcomingEventsListItem(
     val type: Int,
@@ -14,5 +14,5 @@ sealed class UpcomingEventsListItem(
 
     data class BranchListItem(
         val data: BranchData,
-    ) : UpcomingEventsListItem(EVENT_TYPE)
+    ) : UpcomingEventsListItem(BRANCH_TYPE)
 }

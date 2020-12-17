@@ -5,26 +5,30 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import kz.kolesateam.confapp.R
 import kz.kolesateam.confapp.events.data.models.HEADER_TYPE
-import kz.kolesateam.confapp.events.presentation.models.BranchData
 import kz.kolesateam.confapp.events.data.models.UpcomingEventsListItem
+import kz.kolesateam.confapp.presentation.listeners.UpcomingItemsClickListener
+import kz.kolesateam.confapp.presentation.view.BaseViewHolder
 
-class UpcomingEventsAdapter(
-    private val eventClickListener: EventClickListener
+class EventsAdapter(
+    private val upcomingItemsClickListener: UpcomingItemsClickListener,
 ) : RecyclerView.Adapter<BaseViewHolder<UpcomingEventsListItem>>() {
     private val branchDataList: MutableList<UpcomingEventsListItem> = mutableListOf()
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int):BaseViewHolder<UpcomingEventsListItem> {
+    override fun onCreateViewHolder(
+        parent: ViewGroup,
+        viewType: Int,
+    ): BaseViewHolder<UpcomingEventsListItem> {
         return when (viewType) {
             HEADER_TYPE -> HeaderViewHolder(
                 view = LayoutInflater.from(parent.context)
                     .inflate(R.layout.header_layout, parent, false)
             )
+
             else -> BranchViewHolder(
                 view = LayoutInflater.from(parent.context)
                     .inflate(R.layout.branch_item, parent, false),
-                eventClickListener = eventClickListener
+                upcomingItemsClickListener = upcomingItemsClickListener
             )
-
         }
     }
 

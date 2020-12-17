@@ -5,13 +5,10 @@ import kz.kolesateam.confapp.events.data.datasource.UserNameSharedPrefsDataSourc
 import org.koin.core.module.Module
 import org.koin.dsl.module
 
-
 val userNameModule: Module = module {
-
-    factory {
+    factory<UserNameDataSource> {
         UserNameSharedPrefsDataSource(
             sharedPreferences = get()
-        ) as UserNameDataSource
+        )
     }
-
 }
