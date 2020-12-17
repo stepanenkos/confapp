@@ -24,12 +24,6 @@ class EventApiDataMapper : Mapper<List<EventApiData>?, List<EventData>> {
         return data.map {
             val startTime = getTimeByFormat(it.startTime ?: DEFAULT_START_TIME_TEXT)
             val endTime = getTimeByFormat(it.endTime ?: DEFAULT_END_TIME_TEXT)
-            startTime.time = Date().time
-            startTime.hours = 22
-            startTime.minutes = 43
-            startTime.year = 2020 - 1900
-            startTime.month = 11
-            startTime.seconds = 0
             EventData(
                 id = it.id ?: DEFAULT_EVENT_ID,
                 startTime = startTime,
