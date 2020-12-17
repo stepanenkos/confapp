@@ -68,6 +68,9 @@ class DefaultFavoritesRepository(
         }
         val favoriteEventsJsonString: String =
             fileInputStream?.bufferedReader()?.readLines()?.joinToString().orEmpty()
+
+        if (favoriteEventsJsonString.isEmpty() && favoriteEventsJsonString.isBlank()) return emptyMap()
+
         val mapType: MapType = objectMapper.typeFactory.constructMapType(
             Map::class.java,
             Int::class.java,
