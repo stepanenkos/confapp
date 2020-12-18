@@ -19,7 +19,8 @@ val favoriteEventsModule: Module = module {
     single<FavoritesRepository> {
         DefaultFavoritesRepository(
             context = androidContext(),
-            objectMapper = get()
+            objectMapper = get(),
+            eventApiDataMapper = get()
         )
     }
 }

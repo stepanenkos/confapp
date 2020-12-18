@@ -19,4 +19,9 @@ data class EventApiData(
     val place: String?,
     @JsonProperty("speaker")
     val speaker: SpeakerApiData?
-)
+) {
+    @JsonProperty("isFavorite")
+    var isFavorite: Boolean = false
+    @JsonProperty("isCompleted")
+    var isCompleted: Boolean = false
+}

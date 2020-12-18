@@ -16,6 +16,8 @@ import kz.kolesateam.confapp.models.EventData
 import kz.kolesateam.confapp.models.ProgressState
 import kz.kolesateam.confapp.notifications.NotificationAlarmHelper
 import kz.kolesateam.confapp.utils.model.ResponseData
+import org.threeten.bp.ZoneOffset
+import org.threeten.bp.ZonedDateTime
 
 class AllEventsViewModel(
     private val allEventsRepository: AllEventsRepository,
@@ -90,9 +92,8 @@ class AllEventsViewModel(
     }
 
     private fun isCompleted(eventData: EventData): Boolean {
-        val simpleDateFormat = SimpleDateFormat("HH:mm", Locale.ROOT)
-        val dateNowFormat = simpleDateFormat.format(Date())
-        val dateNow = simpleDateFormat.parse(dateNowFormat)!!
-        return dateNow.after(eventData.endTime)
+        val dateNow: ZonedDateTime = ZonedDateTime.now(ZoneOffset.ofHours(6))
+
+        return dateNow.isAfter(eventData.endTime)
     }
 }

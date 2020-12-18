@@ -6,8 +6,11 @@ import kz.kolesateam.confapp.R
 import kz.kolesateam.confapp.models.EventData
 import kz.kolesateam.confapp.presentation.view.BaseViewHolder
 import kz.kolesateam.confapp.presentation.listeners.AllEventsClickListener
-import java.text.SimpleDateFormat
-import java.util.*
+import kz.kolesateam.confapp.utils.extensions.ZonedDateTime.getEventFormattedDateTime
+import org.threeten.bp.format.DateTimeFormatter
+
+private const val FORMAT_STRING_FOR_DATE_AND_PLACE = "%s - %s • %s"
+private const val DATE_TIME_FORMAT = "HH:mm"
 
 class FavoriteEventsViewHolder(
     view: View,
@@ -53,11 +56,10 @@ class FavoriteEventsViewHolder(
     }
 
     private fun formatStringForDateAndPlace(event: EventData): String {
-        val simpleDateFormat = SimpleDateFormat("HH:mm", Locale.ROOT)
-        val startTime = simpleDateFormat.format(event.startTime)
-        val endTime = simpleDateFormat.format(event.endTime)
+        val startTime = event.startTime.getEventFormattedDateTime(DATE_TIME_FORMAT)
+        val endTime = event.endTime.getEventFormattedDateTime(DATE_TIME_FORMAT)
         return String.format(
-            "%s - %s • %s",
+            FORMAT_STRING_FOR_DATE_AND_PLACE,
             startTime,
             endTime,
             event.place

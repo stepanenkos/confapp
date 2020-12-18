@@ -23,15 +23,18 @@ class NotificationAlarmHelper(
             Intent(application, NotificationAlarmBroadcastReceiver::class.java).apply {
                 putExtra(NOTIFICATION_CONTENT_KEY, eventData.title)
             }.let {
-                PendingIntent.getBroadcast(application, eventData.id, it, PendingIntent.FLAG_UPDATE_CURRENT)
+                PendingIntent.getBroadcast(application,
+                    eventData.id,
+                    it,
+                    PendingIntent.FLAG_UPDATE_CURRENT)
             }
-        val calendar: Calendar = Calendar.getInstance()
-        calendar.time = eventData.startTime
-        calendar.add(Calendar.MINUTE, -5)
+        val fiveMinutesInSeconds = 300
+        val fiveMinutesBeforeTheStartOfTheEvent: Long =
+            (eventData.startTime.toEpochSecond() - fiveMinutesInSeconds) * 1000
 
         alarmManager?.setExact(
             AlarmManager.RTC_WAKEUP,
-            calendar.timeInMillis,
+            fiveMinutesBeforeTheStartOfTheEvent,
             pendingIntent
         )
     }
@@ -39,7 +42,10 @@ class NotificationAlarmHelper(
     fun cancelNotificationAlarm(eventData: EventData) {
         pendingIntent ?: return
         val intent = Intent(application, NotificationAlarmBroadcastReceiver::class.java)
-        val pendingIn = PendingIntent.getBroadcast(application, eventData.id, intent, PendingIntent.FLAG_UPDATE_CURRENT)
+        val pendingIn = PendingIntent.getBroadcast(application,
+            eventData.id,
+            intent,
+            PendingIntent.FLAG_UPDATE_CURRENT)
 
         alarmManager?.cancel(pendingIn)
     }
