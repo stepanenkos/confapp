@@ -21,7 +21,7 @@ class FavoriteEventsAdapter(
     ): BaseViewHolder<EventData> {
         return FavoriteEventsViewHolder(
             view = LayoutInflater.from(parent.context)
-                .inflate(R.layout.all_events_branch_item, parent, false),
+                .inflate(R.layout.event_item, parent, false),
             allEventsClickListener = allEventsClickListener,
             favoriteEventActionObservable = favoriteEventActionObservable
         )
