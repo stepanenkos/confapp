@@ -1,55 +1,89 @@
 package kz.kolesateam.confapp.utils.mappers
-import kz.kolesateam.confapp.events.data.models.EventApiData
-import kz.kolesateam.confapp.events.data.models.SpeakerApiData
+
+import android.net.ParseException
+import kz.kolesateam.confapp.upcomingevents.data.models.EventApiData
 import kz.kolesateam.confapp.models.EventData
-import kz.kolesateam.confapp.models.SpeakerData
-import java.text.SimpleDateFormat
-import java.util.*
+import org.threeten.bp.ZonedDateTime
 
-private const val DEFAULT_EVENT_TITLE = "Название события не указано"
-private const val DEFAULT_EVENT_DESCRIPTION = "Описание события не указано"
+private const val DEFAULT_EVENT_TITLE = ""
+private const val DEFAULT_EVENT_DESCRIPTION = ""
 private const val DEFAULT_EVENT_ID = 0
-private const val DEFAULT_START_TIME_TEXT = "00:00"
-private const val DEFAULT_END_TIME_TEXT = "Время завершения не указано"
-private const val DEFAULT_PLACE_TEXT = "Место проведения не указано"
+private const val DEFAULT_START_TIME_TEXT = ""
+private const val DEFAULT_END_TIME_TEXT = ""
+private const val DEFAULT_PLACE_TEXT = ""
 
-class EventApiDataMapper : Mapper<List<EventApiData>, List<EventData>> {
-    private val speakerMapper: Mapper<SpeakerApiData, SpeakerData> = SpeakerApiDataMapper()
-    private val eventsList: MutableList<EventData> = mutableListOf()
+class EventApiDataMapper {
+    private val speakerMapper: SpeakerApiDataMapper = SpeakerApiDataMapper()
 
-    override fun map(data: List<EventApiData>?): List<EventData> {
-        eventsList.clear()
+    fun mapToListEventData(eventApiData: List<EventApiData>?): List<EventData> {
+        eventApiData ?: return emptyList()
 
-            for (index in data?.indices!!) {
-                val simpleDateFormat = SimpleDateFormat("HH:mm", Locale.ROOT)
-                val startTime = simpleDateFormat.parse(data[index].startTime ?: DEFAULT_START_TIME_TEXT)
-                val endTime = simpleDateFormat.parse(data[index].endTime ?: DEFAULT_END_TIME_TEXT)
-                eventsList.add(EventData(
-                    id = data?.get(index)?.id ?: DEFAULT_EVENT_ID,
-                    startTime = startTime,
-                    endTime = endTime,
-                    title = data?.get(index)?.title ?: DEFAULT_EVENT_TITLE,
-                    description = data?.get(index)?.description ?: DEFAULT_EVENT_DESCRIPTION,
-                    place = data?.get(index)?.place ?: DEFAULT_PLACE_TEXT,
-                    speaker = speakerMapper.map(data?.get(index)?.speaker)
-                ))
-            }
-
-        return eventsList.toList()
-    }
-
-    fun map(data: EventApiData?): EventData {
-        val simpleDateFormat = SimpleDateFormat("hh:mm", Locale.ROOT)
-        val startTime = simpleDateFormat.parse(data?.startTime ?: DEFAULT_START_TIME_TEXT)
-        val endTime = simpleDateFormat.parse(data?.endTime ?: DEFAULT_END_TIME_TEXT)
-            return EventData(
-                id = data?.id ?: DEFAULT_EVENT_ID,
+        return eventApiData.map {
+            val startTime = getTimeByFormat(it.startTime ?: DEFAULT_START_TIME_TEXT)
+            val endTime = getTimeByFormat(it.endTime ?: DEFAULT_END_TIME_TEXT)
+            EventData(
+                id = it.id ?: DEFAULT_EVENT_ID,
                 startTime = startTime,
                 endTime = endTime,
-                title = data?.title ?: DEFAULT_EVENT_TITLE,
-                description = data?.description ?: DEFAULT_EVENT_DESCRIPTION,
-                place = data?.place ?: DEFAULT_PLACE_TEXT,
-                speaker = speakerMapper.map(data?.speaker)
+                title = it.title ?: DEFAULT_EVENT_TITLE,
+                description = it.description ?: DEFAULT_EVENT_DESCRIPTION,
+                place = it.place ?: DEFAULT_PLACE_TEXT,
+                speaker = speakerMapper.map(it.speaker)
             )
         }
+    }
+
+    fun mapToListEventApiData(eventData: List<EventData>?): List<EventApiData> {
+        eventData ?: return emptyList()
+
+        return eventData.map {
+            val startTime = it.startTime.toString()
+            val endTime = it.endTime.toString()
+            EventApiData(
+                id = it.id ?: DEFAULT_EVENT_ID,
+                startTime = startTime,
+                endTime = endTime,
+                title = it.title ?: DEFAULT_EVENT_TITLE,
+                description = it.description ?: DEFAULT_EVENT_DESCRIPTION,
+                place = it.place ?: DEFAULT_PLACE_TEXT,
+                speaker = speakerMapper.map(it.speaker)
+            )
+        }
+    }
+
+    fun map(eventApiData: EventApiData): EventData {
+        val startTime = getTimeByFormat(eventApiData.startTime ?: DEFAULT_START_TIME_TEXT)
+        val endTime = getTimeByFormat(eventApiData.endTime ?: DEFAULT_END_TIME_TEXT)
+        return EventData(
+            id = eventApiData.id ?: DEFAULT_EVENT_ID,
+            startTime = startTime,
+            endTime = endTime,
+            title = eventApiData.title ?: DEFAULT_EVENT_TITLE,
+            description = eventApiData.description ?: DEFAULT_EVENT_DESCRIPTION,
+            place = eventApiData.place ?: DEFAULT_PLACE_TEXT,
+            speaker = speakerMapper.map(eventApiData.speaker)
+        )
+    }
+
+    fun map(eventData: EventData?): EventApiData {
+        val startTime = eventData?.startTime.toString()
+        val endTime = eventData?.endTime.toString()
+        return EventApiData(
+            id = eventData?.id ?: DEFAULT_EVENT_ID,
+            startTime = startTime,
+            endTime = endTime,
+            title = eventData?.title ?: DEFAULT_EVENT_TITLE,
+            description = eventData?.description ?: DEFAULT_EVENT_DESCRIPTION,
+            place = eventData?.place ?: DEFAULT_PLACE_TEXT,
+            speaker = speakerMapper?.map(eventData?.speaker)
+        )
+    }
+
+    private fun getTimeByFormat(
+        time: String,
+    ): ZonedDateTime = try {
+        ZonedDateTime.parse(time) ?: ZonedDateTime.now()
+    } catch (e: ParseException) {
+        ZonedDateTime.now()
+    }
 }

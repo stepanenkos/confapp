@@ -7,8 +7,8 @@ import android.text.Editable
 import android.widget.Button
 import android.widget.EditText
 import kz.kolesateam.confapp.R
-import kz.kolesateam.confapp.events.data.datasource.UserNameDataSource
-import kz.kolesateam.confapp.events.presentation.UpcomingEventsRouter
+import kz.kolesateam.confapp.upcomingevents.data.datasource.UserNameDataSource
+import kz.kolesateam.confapp.upcomingevents.presentation.UpcomingEventsRouter
 import kz.kolesateam.confapp.presentation.common.AbstractTextWatcher
 import org.koin.android.ext.android.inject
 
@@ -27,6 +27,7 @@ class HelloActivity : AppCompatActivity() {
         initViews()
         if (userNameDataSource.isSavedUserName()) {
             startActivity(UpcomingEventsRouter().createIntent(this))
+            finish()
         }
     }
 
