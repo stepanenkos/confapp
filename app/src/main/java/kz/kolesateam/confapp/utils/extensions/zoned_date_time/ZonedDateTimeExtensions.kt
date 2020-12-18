@@ -1,4 +1,4 @@
-package kz.kolesateam.confapp.utils.extensions.ZonedDateTime
+package kz.kolesateam.confapp.utils.extensions.zoned_date_time
 
 import org.threeten.bp.ZonedDateTime
 import org.threeten.bp.format.DateTimeFormatter

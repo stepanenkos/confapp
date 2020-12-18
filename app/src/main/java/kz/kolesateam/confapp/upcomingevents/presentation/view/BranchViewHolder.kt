@@ -1,20 +1,21 @@
 package kz.kolesateam.confapp.upcomingevents.presentation.view
 
 import android.view.View
-import android.widget.*
+import android.widget.HorizontalScrollView
+import android.widget.ImageView
+import android.widget.TextView
+import java.util.Observer
+import java.util.Observable
 import kz.kolesateam.confapp.R
-import kz.kolesateam.confapp.upcomingevents.data.models.UpcomingEventsListItem
+import kz.kolesateam.confapp.favoriteevents.domain.FavoriteEventActionObservable
+import kz.kolesateam.confapp.favoriteevents.domain.model.FavoriteActionEvent
 import kz.kolesateam.confapp.models.BranchData
 import kz.kolesateam.confapp.models.EventData
 import kz.kolesateam.confapp.models.SpeakerData
 import kz.kolesateam.confapp.presentation.listeners.UpcomingItemsClickListener
 import kz.kolesateam.confapp.presentation.view.BaseViewHolder
-import kz.kolesateam.confapp.utils.extensions.ZonedDateTime.getEventFormattedDateTime
-import org.threeten.bp.format.DateTimeFormatter
-import java.text.SimpleDateFormat
-import java.util.*
-import kz.kolesateam.confapp.favoriteevents.domain.FavoriteEventActionObservable
-import kz.kolesateam.confapp.favoriteevents.domain.model.FavoriteActionEvent
+import kz.kolesateam.confapp.upcomingevents.data.models.UpcomingEventsListItem
+import kz.kolesateam.confapp.utils.extensions.zoned_date_time.getEventFormattedDateTime
 
 private const val FORMAT_STRING_FOR_DATE_AND_PLACE = "%s - %s • %s"
 private const val DATE_TIME_FORMAT = "HH:mm"

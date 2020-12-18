@@ -10,13 +10,13 @@ import kz.kolesateam.confapp.R
 import kz.kolesateam.confapp.allevents.presentation.AllEventsRouter
 import kz.kolesateam.confapp.eventdetails.presentation.EventDetailsRouter
 import kz.kolesateam.confapp.favoriteevents.domain.FavoriteEventActionObservable
-import kz.kolesateam.confapp.upcomingevents.data.models.UpcomingEventsListItem
+import kz.kolesateam.confapp.favoriteevents.presentation.FavoriteEventsActivity
 import kz.kolesateam.confapp.models.BranchData
 import kz.kolesateam.confapp.models.EventData
-import kz.kolesateam.confapp.upcomingevents.presentation.view.EventsAdapter
-import kz.kolesateam.confapp.favoriteevents.presentation.FavoriteEventsActivity
-import kz.kolesateam.confapp.presentation.listeners.UpcomingItemsClickListener
 import kz.kolesateam.confapp.models.ProgressState
+import kz.kolesateam.confapp.presentation.listeners.UpcomingItemsClickListener
+import kz.kolesateam.confapp.upcomingevents.data.models.UpcomingEventsListItem
+import kz.kolesateam.confapp.upcomingevents.presentation.view.EventsAdapter
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 

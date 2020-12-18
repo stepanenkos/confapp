@@ -5,7 +5,6 @@ import android.app.Application
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
-import java.util.Calendar
 import kz.kolesateam.confapp.models.EventData
 
 const val NOTIFICATION_CONTENT_KEY = "notification_title"

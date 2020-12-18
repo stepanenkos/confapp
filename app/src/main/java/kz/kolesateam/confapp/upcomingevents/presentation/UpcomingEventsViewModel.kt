@@ -14,7 +14,7 @@ import kz.kolesateam.confapp.models.BranchData
 import kz.kolesateam.confapp.models.EventData
 import kz.kolesateam.confapp.models.ProgressState
 import kz.kolesateam.confapp.notifications.NotificationAlarmHelper
-import kz.kolesateam.confapp.upcomingevents.data.datasource.UserNameDataSource
+import kz.kolesateam.confapp.user.data.datasource.UserNameDataSource
 import kz.kolesateam.confapp.utils.model.ResponseData
 
 class UpcomingEventsViewModel(

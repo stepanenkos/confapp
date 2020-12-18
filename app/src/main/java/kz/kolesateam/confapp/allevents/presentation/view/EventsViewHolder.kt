@@ -7,7 +7,7 @@ import kz.kolesateam.confapp.allevents.data.AllEventsListItem
 import kz.kolesateam.confapp.models.EventData
 import kz.kolesateam.confapp.presentation.view.BaseViewHolder
 import kz.kolesateam.confapp.presentation.listeners.AllEventsClickListener
-import kz.kolesateam.confapp.utils.extensions.ZonedDateTime.getEventFormattedDateTime
+import kz.kolesateam.confapp.utils.extensions.zoned_date_time.getEventFormattedDateTime
 import java.util.*
 import kz.kolesateam.confapp.favoriteevents.domain.FavoriteEventActionObservable
 import kz.kolesateam.confapp.favoriteevents.domain.model.FavoriteActionEvent

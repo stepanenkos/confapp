@@ -22,5 +22,4 @@ class DefaultEventDetailsRepository(
             ResponseData.Error(e)
         }
     }
-
 }

@@ -1,5 +1,6 @@
 package kz.kolesateam.confapp.eventdetails.presentation
 
+import android.graphics.drawable.Drawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -7,12 +8,14 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import com.bumptech.glide.Glide
-import java.text.SimpleDateFormat
-import java.util.*
+import com.bumptech.glide.load.DataSource
+import com.bumptech.glide.load.engine.GlideException
+import com.bumptech.glide.request.RequestListener
+import com.bumptech.glide.request.target.Target
 import kz.kolesateam.confapp.R
 import kz.kolesateam.confapp.models.EventData
 import kz.kolesateam.confapp.presentation.listeners.FavoritesClickListener
-import kz.kolesateam.confapp.utils.extensions.ZonedDateTime.getEventFormattedDateTime
+import kz.kolesateam.confapp.utils.extensions.zoned_date_time.getEventFormattedDateTime
 import org.koin.android.ext.android.inject
 
 private const val FORMAT_STRING_FOR_DATE_AND_PLACE = "%s - %s • %s"
@@ -56,13 +59,13 @@ class EventDetailsActivity : AppCompatActivity(), FavoritesClickListener {
         textViewEventDescription =
             findViewById(R.id.activity_event_details_text_view_event_description)
         eventId = intent.getIntExtra(EVENT_ID, DEFAULT_EVENT_ID)
-    }
 
-    private fun setListeners(eventData: EventData) {
         buttonGoBack.setOnClickListener {
             finish()
         }
+    }
 
+    private fun setListeners(eventData: EventData) {
         buttonToFavorites.setOnClickListener {
             eventData.isFavorite = !eventData.isFavorite
             val favoriteImageResource = getFavoriteImageResource(eventData.isFavorite)
@@ -97,9 +100,29 @@ class EventDetailsActivity : AppCompatActivity(), FavoritesClickListener {
 
         Glide.with(imageViewSpeakerPhoto.context)
             .load(eventData.speaker.photoUrl)
-            .placeholder(R.drawable.ic_to_favorites_fill)
-            .error(R.drawable.ic_to_favorites_fill)
-            .fallback(R.drawable.ic_to_favorites_fill)
+            .listener(object : RequestListener<Drawable> {
+                override fun onLoadFailed(
+                    e: GlideException?,
+                    model: Any?,
+                    target: Target<Drawable>?,
+                    isFirstResource: Boolean,
+                ): Boolean {
+                    imageViewSpeakerPhoto.visibility = View.GONE
+                    return false
+                }
+
+                override fun onResourceReady(
+                    resource: Drawable?,
+                    model: Any?,
+                    target: Target<Drawable>?,
+                    dataSource: DataSource?,
+                    isFirstResource: Boolean,
+                ): Boolean {
+                    imageViewSpeakerPhoto.visibility = View.VISIBLE
+                    return false
+                }
+
+            })
             .into(imageViewSpeakerPhoto)
 
         textViewSpeakerFullName.text = eventData.speaker.fullName

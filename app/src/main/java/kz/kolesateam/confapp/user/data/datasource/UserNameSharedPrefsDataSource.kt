@@ -1,4 +1,4 @@
-package kz.kolesateam.confapp.upcomingevents.data.datasource
+package kz.kolesateam.confapp.user.data.datasource
 
 import android.content.SharedPreferences
 

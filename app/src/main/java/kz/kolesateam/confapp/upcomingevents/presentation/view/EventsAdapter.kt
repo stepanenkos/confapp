@@ -39,6 +39,11 @@ class EventsAdapter(
         holder.onBind(branchDataList[position])
     }
 
+    override fun onViewRecycled(holder: BaseViewHolder<UpcomingEventsListItem>) {
+        super.onViewRecycled(holder)
+        (holder as? BranchViewHolder)?.onViewRecycled()
+    }
+
     override fun getItemCount(): Int = branchDataList.size
 
     override fun getItemViewType(position: Int): Int {
