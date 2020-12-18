@@ -5,17 +5,17 @@ import kz.kolesateam.confapp.models.BranchData
 
 private const val DEFAULT_BRANCH_NAME = ""
 
-class BranchApiDataMapper : Mapper<List<BranchApiData>?, List<BranchData>> {
+class BranchApiDataMapper {
     private val eventMapper = EventApiDataMapper()
 
-    override fun map(data: List<BranchApiData>?): List<BranchData> {
+    fun map(data: List<BranchApiData>?): List<BranchData> {
         data ?: return emptyList()
 
         return data.map {
             BranchData(
                 id = it.id ?: 0,
                 title = it.title ?: DEFAULT_BRANCH_NAME,
-                events = eventMapper.map(it.events)
+                events = eventMapper.mapToListEventData(it.events)
             )
         }
     }

@@ -8,6 +8,7 @@ import kz.kolesateam.confapp.utils.model.ResponseData
 
 class DefaultUpcomingEventsRepository(
     private val upcomingEventsDataSource: UpcomingEventsDataSource,
+    private val branchApiDataMapper: BranchApiDataMapper,
 ) : UpcomingEventsRepository {
 
     override fun getUpcomingEvents(): ResponseData<List<BranchData>, Exception> {
@@ -17,7 +18,7 @@ class DefaultUpcomingEventsRepository(
             if (response.isSuccessful) {
 
                 val branchDataList: List<BranchData> =
-                        BranchApiDataMapper().map(response.body()!!)
+                    branchApiDataMapper.map(response.body()!!)
 
                 ResponseData.Success(branchDataList)
             } else {

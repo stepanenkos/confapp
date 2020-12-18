@@ -7,6 +7,8 @@ import kz.kolesateam.confapp.favoriteevents.domain.FavoritesRepository
 import kz.kolesateam.confapp.models.EventData
 import java.io.FileInputStream
 import java.io.FileOutputStream
+import kz.kolesateam.confapp.upcomingevents.data.models.EventApiData
+import kz.kolesateam.confapp.utils.mappers.EventApiDataMapper
 import kz.kolesateam.confapp.favoriteevents.domain.FavoriteEventActionObservable
 
 private const val FAVORITE_EVENTS_FILE_NAME = "favorite_events.json"
@@ -14,6 +16,7 @@ private const val FAVORITE_EVENTS_FILE_NAME = "favorite_events.json"
 class DefaultFavoritesRepository(
     private val context: Context,
     private val objectMapper: ObjectMapper,
+    private val eventApiDataMapper: EventApiDataMapper,
     private val favoriteEventActionObservable: FavoriteEventActionObservable,
 ) : FavoritesRepository {
     private var favoriteEvents: MutableMap<Int, EventData> = mutableMapOf()
@@ -49,7 +52,14 @@ class DefaultFavoritesRepository(
 
 
     private fun saveFavoriteEventsToFile() {
-        val favoriteEventsJsonString: String = objectMapper.writeValueAsString(favoriteEvents)
+        val saveFavoritesMapToFile: MutableMap<Int, EventApiData> = mutableMapOf()
+
+        favoriteEvents.values.forEach { eventData ->
+            saveFavoritesMapToFile[eventData.id] = eventApiDataMapper.map(eventData)
+        }
+
+        val favoriteEventsJsonString: String =
+            objectMapper.writeValueAsString(saveFavoritesMapToFile)
         val fileOutputStream: FileOutputStream = context.openFileOutput(
             FAVORITE_EVENTS_FILE_NAME,
             Context.MODE_PRIVATE
@@ -69,13 +79,24 @@ class DefaultFavoritesRepository(
         val favoriteEventsJsonString: String =
             fileInputStream?.bufferedReader()?.readLines()?.joinToString().orEmpty()
 
-        if (favoriteEventsJsonString.isEmpty() && favoriteEventsJsonString.isBlank()) return emptyMap()
+        if (favoriteEventsJsonString.isBlank()) return emptyMap()
 
         val mapType: MapType = objectMapper.typeFactory.constructMapType(
             Map::class.java,
             Int::class.java,
-            EventData::class.java
+            EventApiData::class.java
         )
-        return objectMapper.readValue(favoriteEventsJsonString, mapType)
+
+        val favoritesFromFile: MutableMap<Int, EventData> = mutableMapOf()
+        val favoritesEventApiDataFromFile: Map<Int, EventApiData>? =
+            (objectMapper.readValue(favoriteEventsJsonString, mapType)) as? Map<Int, EventApiData>
+
+        favoritesEventApiDataFromFile?.values?.forEach { eventApiData ->
+            eventApiData.id?.let {
+                favoritesFromFile[eventApiData.id] = eventApiDataMapper.map(eventApiData)
+            } ?: return@forEach
+        }
+
+        return favoritesFromFile
     }
 }

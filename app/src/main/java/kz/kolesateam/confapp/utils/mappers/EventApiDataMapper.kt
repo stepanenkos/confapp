@@ -1,11 +1,9 @@
 package kz.kolesateam.confapp.utils.mappers
+
 import android.net.ParseException
 import kz.kolesateam.confapp.upcomingevents.data.models.EventApiData
-import kz.kolesateam.confapp.upcomingevents.data.models.SpeakerApiData
 import kz.kolesateam.confapp.models.EventData
-import kz.kolesateam.confapp.models.SpeakerData
-import java.text.SimpleDateFormat
-import java.util.*
+import org.threeten.bp.ZonedDateTime
 
 private const val DEFAULT_EVENT_TITLE = ""
 private const val DEFAULT_EVENT_DESCRIPTION = ""
@@ -13,15 +11,14 @@ private const val DEFAULT_EVENT_ID = 0
 private const val DEFAULT_START_TIME_TEXT = ""
 private const val DEFAULT_END_TIME_TEXT = ""
 private const val DEFAULT_PLACE_TEXT = ""
-private const val TIME_FORMAT = "HH:mm"
 
-class EventApiDataMapper : Mapper<List<EventApiData>?, List<EventData>> {
-    private val speakerMapper: Mapper<SpeakerApiData, SpeakerData> = SpeakerApiDataMapper()
+class EventApiDataMapper {
+    private val speakerMapper: SpeakerApiDataMapper = SpeakerApiDataMapper()
 
-    override fun map(data: List<EventApiData>?): List<EventData> {
-        data ?: return emptyList()
+    fun mapToListEventData(eventApiData: List<EventApiData>?): List<EventData> {
+        eventApiData ?: return emptyList()
 
-        return data.map {
+        return eventApiData.map {
             val startTime = getTimeByFormat(it.startTime ?: DEFAULT_START_TIME_TEXT)
             val endTime = getTimeByFormat(it.endTime ?: DEFAULT_END_TIME_TEXT)
             EventData(
@@ -35,26 +32,58 @@ class EventApiDataMapper : Mapper<List<EventApiData>?, List<EventData>> {
             )
         }
     }
-    fun map(eventApiData: EventApiData?) : EventData {
-        val startTime = getTimeByFormat(eventApiData?.startTime ?: DEFAULT_START_TIME_TEXT)
-        val endTime = getTimeByFormat(eventApiData?.endTime ?: DEFAULT_END_TIME_TEXT)
+
+    fun mapToListEventApiData(eventData: List<EventData>?): List<EventApiData> {
+        eventData ?: return emptyList()
+
+        return eventData.map {
+            val startTime = it.startTime.toString()
+            val endTime = it.endTime.toString()
+            EventApiData(
+                id = it.id ?: DEFAULT_EVENT_ID,
+                startTime = startTime,
+                endTime = endTime,
+                title = it.title ?: DEFAULT_EVENT_TITLE,
+                description = it.description ?: DEFAULT_EVENT_DESCRIPTION,
+                place = it.place ?: DEFAULT_PLACE_TEXT,
+                speaker = speakerMapper.map(it.speaker)
+            )
+        }
+    }
+
+    fun map(eventApiData: EventApiData): EventData {
+        val startTime = getTimeByFormat(eventApiData.startTime ?: DEFAULT_START_TIME_TEXT)
+        val endTime = getTimeByFormat(eventApiData.endTime ?: DEFAULT_END_TIME_TEXT)
         return EventData(
-            id = eventApiData?.id ?: DEFAULT_EVENT_ID,
+            id = eventApiData.id ?: DEFAULT_EVENT_ID,
             startTime = startTime,
             endTime = endTime,
-            title = eventApiData?.title ?: DEFAULT_EVENT_TITLE,
-            description = eventApiData?.description ?: DEFAULT_EVENT_DESCRIPTION,
-            place = eventApiData?.place ?: DEFAULT_PLACE_TEXT,
-            speaker = speakerMapper.map(eventApiData?.speaker)
+            title = eventApiData.title ?: DEFAULT_EVENT_TITLE,
+            description = eventApiData.description ?: DEFAULT_EVENT_DESCRIPTION,
+            place = eventApiData.place ?: DEFAULT_PLACE_TEXT,
+            speaker = speakerMapper.map(eventApiData.speaker)
         )
     }
-    private fun getTimeByFormat(
-        time: String
-    ): Date = try {
-        val simpleDateFormat = SimpleDateFormat(TIME_FORMAT, Locale.ROOT)
 
-        simpleDateFormat.parse(time) ?: Date()
+    fun map(eventData: EventData?): EventApiData {
+        val startTime = eventData?.startTime.toString()
+        val endTime = eventData?.endTime.toString()
+        return EventApiData(
+            id = eventData?.id ?: DEFAULT_EVENT_ID,
+            startTime = startTime,
+            endTime = endTime,
+            title = eventData?.title ?: DEFAULT_EVENT_TITLE,
+            description = eventData?.description ?: DEFAULT_EVENT_DESCRIPTION,
+            place = eventData?.place ?: DEFAULT_PLACE_TEXT,
+            speaker = speakerMapper?.map(eventData?.speaker)
+        )
+    }
+
+    private fun getTimeByFormat(
+        time: String,
+    ): ZonedDateTime = try {
+        ZonedDateTime.parse(time) ?: ZonedDateTime.now()
     } catch (e: ParseException) {
-        Date()
+        ZonedDateTime.now()
     }
 }

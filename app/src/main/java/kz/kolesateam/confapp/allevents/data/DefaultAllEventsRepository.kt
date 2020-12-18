@@ -8,6 +8,7 @@ import kz.kolesateam.confapp.utils.model.ResponseData
 
 class DefaultAllEventsRepository(
     private val allEventsDataSource: AllEventsDataSource,
+    private val eventApiDataMapper: EventApiDataMapper,
 ) : AllEventsRepository {
 
     override fun getAllEvents(
@@ -18,7 +19,7 @@ class DefaultAllEventsRepository(
 
             if (response.isSuccessful) {
                 val eventDataList: List<EventData> =
-                    EventApiDataMapper().map(response.body()!!)
+                    eventApiDataMapper.mapToListEventData(response.body()!!)
 
                 ResponseData.Success(eventDataList)
             } else {

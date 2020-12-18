@@ -21,6 +21,7 @@ val favoriteEventsModule: Module = module {
         DefaultFavoritesRepository(
             context = androidContext(),
             objectMapper = get(),
+            eventApiDataMapper = get(),
             favoriteEventActionObservable = get()
         )
     }

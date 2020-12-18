@@ -1,6 +1,7 @@
 package kz.kolesateam.confapp
 
 import androidx.multidex.MultiDexApplication
+import com.jakewharton.threetenabp.AndroidThreeTen
 import kz.kolesateam.confapp.allevents.di.allEventsScreenModule
 import kz.kolesateam.confapp.di.applicationModule
 import kz.kolesateam.confapp.upcomingevents.di.eventScreenModule
@@ -15,6 +16,7 @@ class ConfAppApplication : MultiDexApplication() {
     override fun onCreate() {
         super.onCreate()
         NotificationHelper.init(this)
+        AndroidThreeTen.init(this)
         startKoin {
             androidContext(this@ConfAppApplication)
             modules(
