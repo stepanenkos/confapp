@@ -42,22 +42,14 @@ class AllEventsViewModel(
         when (eventData.isFavorite) {
             true -> {
                 favoritesRepository.saveFavoriteEvent(eventData)
-                scheduleEvent(eventData)
+                notificationAlarmHelper.createNotificationAlarm(eventData)
             }
 
             else -> {
                 favoritesRepository.removeFavoriteEvent(eventData.id)
-                cancelNotificationEvent(eventData)
+                notificationAlarmHelper.cancelNotificationAlarm(eventData)
             }
         }
-    }
-
-    private fun scheduleEvent(eventData: EventData) {
-        notificationAlarmHelper.createNotificationAlarm(eventData)
-    }
-
-    private fun cancelNotificationEvent(eventData: EventData) {
-        notificationAlarmHelper.cancelNotificationAlarm(eventData)
     }
 
     private fun getAllEvents(branchId: Int, branchTitle: String) {
