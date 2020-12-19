@@ -2,6 +2,7 @@ package kz.kolesateam.confapp.favoriteevents.presentation.view
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import kz.kolesateam.confapp.R
 import kz.kolesateam.confapp.favoriteevents.domain.FavoriteEventActionObservable
@@ -13,8 +14,8 @@ class FavoriteEventsAdapter(
     private val allEventsClickListener: AllEventsClickListener,
     private val favoriteEventActionObservable: FavoriteEventActionObservable,
 ) : RecyclerView.Adapter<BaseViewHolder<EventData>>() {
-    private val favoriteEventsList: MutableList<EventData> = mutableListOf()
-
+    private var favoriteEventsList: List<EventData> = mutableListOf()
+    private lateinit var diffResult: DiffUtil.DiffResult
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int,
@@ -40,8 +41,8 @@ class FavoriteEventsAdapter(
     override fun getItemCount(): Int = favoriteEventsList.size
 
     fun setList(favoriteEventsList: List<EventData>) {
-        this.favoriteEventsList.clear()
-        this.favoriteEventsList.addAll(favoriteEventsList)
-        notifyDataSetChanged()
+        diffResult = DiffUtil.calculateDiff(FavoriteEventsDiffUtilCallback(this.favoriteEventsList, favoriteEventsList))
+        diffResult.dispatchUpdatesTo(this)
+        this.favoriteEventsList = favoriteEventsList
     }
 }

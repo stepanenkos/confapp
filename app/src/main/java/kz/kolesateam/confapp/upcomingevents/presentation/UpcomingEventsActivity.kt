@@ -16,7 +16,7 @@ import kz.kolesateam.confapp.models.EventData
 import kz.kolesateam.confapp.models.ProgressState
 import kz.kolesateam.confapp.presentation.listeners.UpcomingItemsClickListener
 import kz.kolesateam.confapp.upcomingevents.data.models.UpcomingEventsListItem
-import kz.kolesateam.confapp.upcomingevents.presentation.view.EventsAdapter
+import kz.kolesateam.confapp.upcomingevents.presentation.view.UpcomingEventsAdapter
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -27,7 +27,7 @@ class UpcomingEventsActivity : AppCompatActivity(), UpcomingItemsClickListener {
 
     private val upcomingEventsViewModel: UpcomingEventsViewModel by viewModel()
     private val favoriteEventActionObservable: FavoriteEventActionObservable by inject()
-    private val adapter = EventsAdapter(
+    private val adapter = UpcomingEventsAdapter(
         upcomingItemsClickListener = this,
         favoriteEventActionObservable = favoriteEventActionObservable
     )

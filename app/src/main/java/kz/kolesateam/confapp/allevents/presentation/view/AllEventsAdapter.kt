@@ -2,6 +2,7 @@ package kz.kolesateam.confapp.allevents.presentation.view
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import kz.kolesateam.confapp.R
 import kz.kolesateam.confapp.allevents.data.AllEventsListItem
@@ -14,8 +15,8 @@ class AllEventsAdapter(
     private val allEventsClickListener: AllEventsClickListener,
     private val favoriteEventActionObservable: FavoriteEventActionObservable
 ) : RecyclerView.Adapter<BaseViewHolder<AllEventsListItem>>() {
-    private val eventsDataList: MutableList<AllEventsListItem> = mutableListOf()
-
+    private var eventsDataList: List<AllEventsListItem> = mutableListOf()
+    private lateinit var diffResult: DiffUtil.DiffResult
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int,
@@ -51,8 +52,8 @@ class AllEventsAdapter(
     }
 
     fun setList(eventsDataList: List<AllEventsListItem>) {
-        this.eventsDataList.clear()
-        this.eventsDataList.addAll(eventsDataList)
-        notifyDataSetChanged()
+        diffResult = DiffUtil.calculateDiff(AllEventsDiffUtilCalback(this.eventsDataList, eventsDataList))
+        diffResult.dispatchUpdatesTo(this)
+        this.eventsDataList = eventsDataList
     }
 }

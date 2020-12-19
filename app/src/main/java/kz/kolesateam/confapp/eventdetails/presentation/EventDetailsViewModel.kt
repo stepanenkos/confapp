@@ -12,6 +12,8 @@ import kz.kolesateam.confapp.favoriteevents.domain.FavoritesRepository
 import kz.kolesateam.confapp.models.EventData
 import kz.kolesateam.confapp.notifications.NotificationAlarmHelper
 import kz.kolesateam.confapp.utils.model.ResponseData
+import org.threeten.bp.ZoneOffset
+import org.threeten.bp.ZonedDateTime
 
 class EventDetailsViewModel(
     private val eventDetailsRepository: EventDetailsRepository,
@@ -38,6 +40,7 @@ class EventDetailsViewModel(
             when (eventDetailsResponse) {
                 is ResponseData.Success -> {
                     eventDetailsResponse.result.isFavorite = favoritesRepository.isFavorite(eventId)
+                    eventDetailsResponse.result.isCompleted = isCompleted(eventDetailsResponse.result)
                     eventDetailsLiveData.value = eventDetailsResponse.result
                 }
                 is ResponseData.Error -> {
@@ -51,21 +54,19 @@ class EventDetailsViewModel(
         when (eventData.isFavorite) {
             true -> {
                 favoritesRepository.saveFavoriteEvent(eventData)
-                scheduleEvent(eventData)
+                notificationAlarmHelper.createNotificationAlarm(eventData)
             }
 
             else -> {
                 favoritesRepository.removeFavoriteEvent(eventData.id)
-                cancelNotificationEvent(eventData)
+                notificationAlarmHelper.cancelNotificationAlarm(eventData)
             }
         }
     }
 
-    private fun scheduleEvent(eventData: EventData) {
-        notificationAlarmHelper.createNotificationAlarm(eventData)
-    }
+    private fun isCompleted(eventData: EventData): Boolean {
+        val dateNow: ZonedDateTime = ZonedDateTime.now(ZoneOffset.ofHours(6))
 
-    private fun cancelNotificationEvent(eventData: EventData) {
-        notificationAlarmHelper.cancelNotificationAlarm(eventData)
+        return dateNow.isAfter(eventData.endTime)
     }
 }
