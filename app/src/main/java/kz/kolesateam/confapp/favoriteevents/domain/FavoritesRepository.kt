@@ -14,4 +14,6 @@ interface FavoritesRepository {
     fun getAllFavoriteEvents(): List<EventData>
 
     fun isFavorite(id: Int): Boolean
+
+    fun getFavoriteEvent(id: Int): EventData
 }

@@ -33,6 +33,10 @@ class FavoriteEventsActivity : AppCompatActivity(), AllEventsClickListener {
         favoriteEventsViewModel.onStart()
     }
 
+    override fun onStart() {
+        super.onStart()
+        favoriteEventsViewModel.onStart()
+    }
     private fun initViews() {
         recyclerView = findViewById(R.id.activity_favorite_events_recycler_view)
         recyclerView.apply {

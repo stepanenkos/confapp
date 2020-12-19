@@ -50,6 +50,10 @@ class DefaultFavoritesRepository(
 
     override fun isFavorite(id: Int): Boolean = favoriteEvents.containsKey(id)
 
+    override fun getFavoriteEvent(id: Int): EventData {
+        return favoriteEvents.values.toList()[id]
+    }
+
 
     private fun saveFavoriteEventsToFile() {
         val saveFavoritesMapToFile: MutableMap<Int, EventApiData> = mutableMapOf()
