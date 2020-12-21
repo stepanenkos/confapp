@@ -9,7 +9,7 @@
     >
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:orientation="vertical"
@@ -18,7 +18,7 @@
             <include
                 android:id="@+id/activity_all_events_event_card"
                 layout="@layout/events_card_layout"
-                android:layout_width="@dimen/events_card_width"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginBottom="@dimen/margin_16x"

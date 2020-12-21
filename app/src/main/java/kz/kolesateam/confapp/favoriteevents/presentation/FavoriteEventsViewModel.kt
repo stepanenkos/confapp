@@ -23,11 +23,13 @@ class FavoriteEventsViewModel(
             true -> {
                 favoritesRepository.saveFavoriteEvent(eventData)
                 notificationAlarmHelper.createNotificationAlarm(eventData)
+                getAllFavoriteEvents()
             }
 
             else -> {
                 favoritesRepository.removeFavoriteEvent(eventData.id)
                 notificationAlarmHelper.cancelNotificationAlarm(eventData)
+                getAllFavoriteEvents()
             }
         }
     }

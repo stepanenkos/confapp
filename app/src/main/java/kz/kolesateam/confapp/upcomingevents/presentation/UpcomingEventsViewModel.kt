@@ -14,8 +14,10 @@ import kz.kolesateam.confapp.models.BranchData
 import kz.kolesateam.confapp.models.EventData
 import kz.kolesateam.confapp.models.ProgressState
 import kz.kolesateam.confapp.notifications.NotificationAlarmHelper
-import kz.kolesateam.confapp.upcomingevents.data.datasource.UserNameDataSource
+import kz.kolesateam.confapp.user.data.datasource.UserNameDataSource
 import kz.kolesateam.confapp.utils.model.ResponseData
+import org.threeten.bp.ZoneOffset
+import org.threeten.bp.ZonedDateTime
 
 class UpcomingEventsViewModel(
     private val upcomingEventsRepository: UpcomingEventsRepository,
@@ -49,6 +51,7 @@ class UpcomingEventsViewModel(
             else -> {
                 favoritesRepository.removeFavoriteEvent(eventData.id)
                 cancelNotificationEvent(eventData)
+
             }
         }
     }
@@ -86,6 +89,7 @@ class UpcomingEventsViewModel(
                     branchDataList.forEach {
                         it.events.forEach { eventData ->
                             eventData.isFavorite = favoritesRepository.isFavorite(eventData.id)
+                            eventData.isCompleted = isCompleted(eventData)
                         }
                     }
 
@@ -102,5 +106,10 @@ class UpcomingEventsViewModel(
 
             progressLiveData.value = ProgressState.Done
         }
+    }
+    private fun isCompleted(eventData: EventData): Boolean {
+        val dateNow: ZonedDateTime = ZonedDateTime.now(ZoneOffset.ofHours(6))
+
+        return dateNow.isAfter(eventData.endTime)
     }
 }

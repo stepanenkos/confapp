@@ -5,10 +5,10 @@ import android.app.Application
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
-import java.util.Calendar
 import kz.kolesateam.confapp.models.EventData
 
 const val NOTIFICATION_CONTENT_KEY = "notification_title"
+const val NOTIFICATION_EVENT_ID_KEY = "event_id"
 
 class NotificationAlarmHelper(
     private val application: Application,
@@ -19,24 +19,27 @@ class NotificationAlarmHelper(
     ) as? AlarmManager
 
     fun createNotificationAlarm(eventData: EventData) {
-        pendingIntent =
-            Intent(application, NotificationAlarmBroadcastReceiver::class.java).apply {
-                putExtra(NOTIFICATION_CONTENT_KEY, eventData.title)
-            }.let {
-                PendingIntent.getBroadcast(application,
-                    eventData.id,
-                    it,
-                    PendingIntent.FLAG_UPDATE_CURRENT)
-            }
-        val fiveMinutesInSeconds = 300
-        val fiveMinutesBeforeTheStartOfTheEvent: Long =
-            (eventData.startTime.toEpochSecond() - fiveMinutesInSeconds) * 1000
+        if(!eventData.isCompleted) {
+            pendingIntent =
+                Intent(application, NotificationAlarmBroadcastReceiver::class.java).apply {
+                    putExtra(NOTIFICATION_CONTENT_KEY, eventData.title)
+                    putExtra(NOTIFICATION_EVENT_ID_KEY, eventData.id)
+                }.let {
+                    PendingIntent.getBroadcast(application,
+                        eventData.id,
+                        it,
+                        PendingIntent.FLAG_UPDATE_CURRENT)
+                }
+            val fiveMinutesInSeconds = 300
+            val fiveMinutesBeforeTheStartOfTheEvent: Long =
+                (eventData.startTime.toEpochSecond() - fiveMinutesInSeconds) * 1000
 
-        alarmManager?.setExact(
-            AlarmManager.RTC_WAKEUP,
-            fiveMinutesBeforeTheStartOfTheEvent,
-            pendingIntent
-        )
+            alarmManager?.setExact(
+                AlarmManager.RTC_WAKEUP,
+                fiveMinutesBeforeTheStartOfTheEvent,
+                pendingIntent
+            )
+        }
     }
 
     fun cancelNotificationAlarm(eventData: EventData) {

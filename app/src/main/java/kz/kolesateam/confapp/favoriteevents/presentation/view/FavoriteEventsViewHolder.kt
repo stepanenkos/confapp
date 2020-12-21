@@ -6,8 +6,10 @@ import kz.kolesateam.confapp.R
 import kz.kolesateam.confapp.models.EventData
 import kz.kolesateam.confapp.presentation.view.BaseViewHolder
 import kz.kolesateam.confapp.presentation.listeners.AllEventsClickListener
-import kz.kolesateam.confapp.utils.extensions.ZonedDateTime.getEventFormattedDateTime
-import org.threeten.bp.format.DateTimeFormatter
+import kz.kolesateam.confapp.utils.extensions.zoned_date_time.getEventFormattedDateTime
+import java.util.*
+import kz.kolesateam.confapp.favoriteevents.domain.FavoriteEventActionObservable
+import kz.kolesateam.confapp.favoriteevents.domain.model.FavoriteActionEvent
 
 private const val FORMAT_STRING_FOR_DATE_AND_PLACE = "%s - %s • %s"
 private const val DATE_TIME_FORMAT = "HH:mm"
@@ -15,8 +17,19 @@ private const val DATE_TIME_FORMAT = "HH:mm"
 class FavoriteEventsViewHolder(
     view: View,
     private val allEventsClickListener: AllEventsClickListener,
+    private val favoriteEventActionObservable: FavoriteEventActionObservable
 ) : BaseViewHolder<EventData>(view) {
+    private val favoriteObserver: Observer = object : Observer {
+        override fun update(o: Observable?, favoriteActionEventObject: Any?) {
+            val favoriteEventAction = (favoriteActionEventObject as? FavoriteActionEvent) ?: return
 
+            if(eventData.id == favoriteEventAction.eventId) {
+                toFavoritesImageButton.setImageResource(
+                    getFavoriteImageResource(favoriteEventAction.isFavorite)
+                )
+            }
+        }
+    }
     private val favoriteEvent: View =
         view.findViewById(R.id.activity_all_events_event_card)
 
@@ -30,6 +43,7 @@ class FavoriteEventsViewHolder(
         favoriteEvent.findViewById(R.id.events_card_layout_event_title_text_view)
     private val toFavoritesImageButton: ImageView =
         favoriteEvent.findViewById(R.id.events_card_layout_to_favorites_image_view)
+    private lateinit var eventData: EventData
 
     init {
         favoriteEvent.findViewById<TextView>(
@@ -38,9 +52,14 @@ class FavoriteEventsViewHolder(
     }
 
     override fun onBind(eventData: EventData) {
+        this.eventData = eventData
         fillEvent(eventData)
         setOnClickListeners(eventData)
+        favoriteEventActionObservable.subscribe(favoriteObserver)
+    }
 
+    fun onViewRecycled() {
+        favoriteEventActionObservable.unsubscribe(favoriteObserver)
     }
 
     private fun fillEvent(
@@ -82,6 +101,7 @@ class FavoriteEventsViewHolder(
         }
 
     }
+
     private fun getFavoriteImageResource(
         isFavorite: Boolean
     ): Int = when (isFavorite) {

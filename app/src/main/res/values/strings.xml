@@ -9,4 +9,5 @@
     <string name="activity_all_events_end_event_text">Завершён</string>
     <string name="button_to_home">На главную</string>
     <string name="activity_favorite_events_inscription_when_empty_activity">Здесь пока тихо</string>
+    <string name="activity_event_details_speaker_invited">Приглашённый спикер</string>
 </resources>

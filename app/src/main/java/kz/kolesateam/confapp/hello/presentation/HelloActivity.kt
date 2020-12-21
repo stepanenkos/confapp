@@ -1,18 +1,15 @@
 package kz.kolesateam.confapp.hello.presentation
 
-
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.widget.Button
 import android.widget.EditText
 import kz.kolesateam.confapp.R
-import kz.kolesateam.confapp.upcomingevents.data.datasource.UserNameDataSource
+import kz.kolesateam.confapp.user.data.datasource.UserNameDataSource
 import kz.kolesateam.confapp.upcomingevents.presentation.UpcomingEventsRouter
 import kz.kolesateam.confapp.presentation.common.AbstractTextWatcher
 import org.koin.android.ext.android.inject
-
-private const val USER_NAME = "user_name"
 
 class HelloActivity : AppCompatActivity() {
     private val userNameDataSource: UserNameDataSource by inject()

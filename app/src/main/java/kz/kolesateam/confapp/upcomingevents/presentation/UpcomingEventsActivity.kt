@@ -8,13 +8,16 @@ import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import kz.kolesateam.confapp.R
 import kz.kolesateam.confapp.allevents.presentation.AllEventsRouter
-import kz.kolesateam.confapp.upcomingevents.data.models.UpcomingEventsListItem
+import kz.kolesateam.confapp.eventdetails.presentation.EventDetailsRouter
+import kz.kolesateam.confapp.favoriteevents.domain.FavoriteEventActionObservable
+import kz.kolesateam.confapp.favoriteevents.presentation.FavoriteEventsActivity
 import kz.kolesateam.confapp.models.BranchData
 import kz.kolesateam.confapp.models.EventData
-import kz.kolesateam.confapp.upcomingevents.presentation.view.EventsAdapter
-import kz.kolesateam.confapp.favoriteevents.presentation.FavoriteEventsActivity
-import kz.kolesateam.confapp.presentation.listeners.UpcomingItemsClickListener
 import kz.kolesateam.confapp.models.ProgressState
+import kz.kolesateam.confapp.presentation.listeners.UpcomingItemsClickListener
+import kz.kolesateam.confapp.upcomingevents.data.models.UpcomingEventsListItem
+import kz.kolesateam.confapp.upcomingevents.presentation.view.UpcomingEventsAdapter
+import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 const val BRANCH_ID = "branch_id"
@@ -23,7 +26,11 @@ const val BRANCH_TITLE = "branch_title"
 class UpcomingEventsActivity : AppCompatActivity(), UpcomingItemsClickListener {
 
     private val upcomingEventsViewModel: UpcomingEventsViewModel by viewModel()
-    private val adapter = EventsAdapter(this)
+    private val favoriteEventActionObservable: FavoriteEventActionObservable by inject()
+    private val adapter = UpcomingEventsAdapter(
+        upcomingItemsClickListener = this,
+        favoriteEventActionObservable = favoriteEventActionObservable
+    )
 
     private lateinit var upcomingEventsProgressBar: ProgressBar
     private lateinit var recyclerView: RecyclerView
@@ -55,6 +62,7 @@ class UpcomingEventsActivity : AppCompatActivity(), UpcomingItemsClickListener {
 
         setOnClickListeners()
     }
+
     private fun setOnClickListeners() {
         buttonToFavorites.setOnClickListener {
             val intent = Intent(this, FavoriteEventsActivity::class.java)
@@ -63,7 +71,7 @@ class UpcomingEventsActivity : AppCompatActivity(), UpcomingItemsClickListener {
     }
 
     private fun handleProgressBarState(
-        progressState: ProgressState
+        progressState: ProgressState,
     ) {
         upcomingEventsProgressBar.isVisible = progressState is ProgressState.Loading
     }
@@ -84,8 +92,7 @@ class UpcomingEventsActivity : AppCompatActivity(), UpcomingItemsClickListener {
     }
 
     override fun onEventClick(eventData: EventData) {
-        Toast.makeText(this, "Event: ${eventData.title}", Toast.LENGTH_SHORT)
-            .show()
+        startActivity(EventDetailsRouter().createIntentForEventDetails(this, eventData.id))
     }
 
     override fun onFavoritesClicked(eventData: EventData) {

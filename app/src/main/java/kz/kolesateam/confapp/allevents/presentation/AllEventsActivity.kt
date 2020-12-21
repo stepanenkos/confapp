@@ -12,17 +12,24 @@ import androidx.recyclerview.widget.RecyclerView
 import kz.kolesateam.confapp.R
 import kz.kolesateam.confapp.allevents.data.AllEventsListItem
 import kz.kolesateam.confapp.allevents.presentation.view.AllEventsAdapter
+import kz.kolesateam.confapp.eventdetails.presentation.EventDetailsRouter
+import kz.kolesateam.confapp.favoriteevents.domain.FavoriteEventActionObservable
 import kz.kolesateam.confapp.upcomingevents.presentation.BRANCH_ID
 import kz.kolesateam.confapp.upcomingevents.presentation.BRANCH_TITLE
 import kz.kolesateam.confapp.favoriteevents.presentation.FavoriteEventsActivity
 import kz.kolesateam.confapp.models.EventData
 import kz.kolesateam.confapp.models.ProgressState
 import kz.kolesateam.confapp.presentation.listeners.AllEventsClickListener
+import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class AllEventsActivity() : AppCompatActivity(), AllEventsClickListener {
     private val allEventsViewModel: AllEventsViewModel by viewModel()
-    private val adapter = AllEventsAdapter(this)
+    private val favoriteEventActionObservable: FavoriteEventActionObservable by inject()
+    private val adapter = AllEventsAdapter(
+        allEventsClickListener = this,
+        favoriteEventActionObservable = favoriteEventActionObservable
+    )
 
     private lateinit var allEventsProgressBar: ProgressBar
     private lateinit var recyclerView: RecyclerView
@@ -60,7 +67,7 @@ class AllEventsActivity() : AppCompatActivity(), AllEventsClickListener {
             finish()
         }
 
-        buttonToFavorites.setOnClickListener{
+        buttonToFavorites.setOnClickListener {
             val intent = Intent(this, FavoriteEventsActivity::class.java)
             startActivity(intent)
         }
@@ -73,7 +80,7 @@ class AllEventsActivity() : AppCompatActivity(), AllEventsClickListener {
     }
 
     private fun handleProgressBarState(
-        progressState: ProgressState
+        progressState: ProgressState,
     ) {
         allEventsProgressBar.isVisible = progressState is ProgressState.Loading
     }
@@ -87,7 +94,7 @@ class AllEventsActivity() : AppCompatActivity(), AllEventsClickListener {
     }
 
     override fun onEventClick(eventData: EventData) {
-        Toast.makeText(this, "Event: ${eventData.title}", Toast.LENGTH_SHORT).show()
+        startActivity(EventDetailsRouter().createIntentForEventDetails(this, eventData.id))
 
     }
 

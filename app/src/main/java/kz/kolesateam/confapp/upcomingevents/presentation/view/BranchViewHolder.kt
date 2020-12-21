@@ -1,16 +1,21 @@
 package kz.kolesateam.confapp.upcomingevents.presentation.view
 
 import android.view.View
-import android.widget.*
+import android.widget.HorizontalScrollView
+import android.widget.ImageView
+import android.widget.TextView
+import java.util.Observer
+import java.util.Observable
 import kz.kolesateam.confapp.R
-import kz.kolesateam.confapp.upcomingevents.data.models.UpcomingEventsListItem
+import kz.kolesateam.confapp.favoriteevents.domain.FavoriteEventActionObservable
+import kz.kolesateam.confapp.favoriteevents.domain.model.FavoriteActionEvent
 import kz.kolesateam.confapp.models.BranchData
 import kz.kolesateam.confapp.models.EventData
 import kz.kolesateam.confapp.models.SpeakerData
 import kz.kolesateam.confapp.presentation.listeners.UpcomingItemsClickListener
 import kz.kolesateam.confapp.presentation.view.BaseViewHolder
-import kz.kolesateam.confapp.utils.extensions.ZonedDateTime.getEventFormattedDateTime
-import org.threeten.bp.format.DateTimeFormatter
+import kz.kolesateam.confapp.upcomingevents.data.models.UpcomingEventsListItem
+import kz.kolesateam.confapp.utils.extensions.zoned_date_time.getEventFormattedDateTime
 
 private const val FORMAT_STRING_FOR_DATE_AND_PLACE = "%s - %s • %s"
 private const val DATE_TIME_FORMAT = "HH:mm"
@@ -18,7 +23,30 @@ private const val DATE_TIME_FORMAT = "HH:mm"
 class BranchViewHolder(
     view: View,
     private val upcomingItemsClickListener: UpcomingItemsClickListener,
+    private val favoriteEventActionObservable: FavoriteEventActionObservable
 ) : BaseViewHolder<UpcomingEventsListItem>(view) {
+    private val favoriteObserver: Observer = object : Observer {
+        override fun update(o: Observable?, favoriteActionEventObject: Any?) {
+            val favoriteEventAction = (favoriteActionEventObject as? FavoriteActionEvent) ?: return
+
+            if(branchData.events.isEmpty()) return
+
+            val firstEvent = branchData.events.first()
+            val lastEvent = branchData.events.last()
+
+            if(firstEvent.id == favoriteEventAction.eventId) {
+                currentToFavoritesImageButton.setImageResource(
+                    getFavoriteImageResource(favoriteEventAction.isFavorite)
+                )
+            }
+
+            if(lastEvent.id == favoriteEventAction.eventId) {
+                nextToFavoritesImageButton.setImageResource(
+                    getFavoriteImageResource(favoriteEventAction.isFavorite)
+                )
+            }
+        }
+    }
 
     private val horizontalScrollView: HorizontalScrollView =
         view.findViewById(R.id.activity_upcoming_events_horizontal_scroll_view)
@@ -67,6 +95,8 @@ class BranchViewHolder(
     private val nextBranchEventPaddingLeft = nextBranchEvent.paddingLeft
     private val nextBranchEventPaddingRight = nextBranchEvent.paddingRight
 
+    private lateinit var branchData: BranchData
+
     init {
         currentBranchEvent.findViewById<TextView>(
             R.id.events_card_layout_next_event_text_view
@@ -82,8 +112,12 @@ class BranchViewHolder(
         )
     }
 
+    fun onViewRecycled() {
+        favoriteEventActionObservable.unsubscribe(favoriteObserver)
+    }
+
     override fun onBind(data: UpcomingEventsListItem) {
-        val branchData: BranchData =
+        branchData =
             (data as? UpcomingEventsListItem.BranchListItem)?.data ?: return
         val currentEvent = branchData.events[0]
         val nextEvent = branchData.events[1]
@@ -100,6 +134,7 @@ class BranchViewHolder(
 
         setOnClickListeners(currentEvent, nextEvent, branchData)
 
+        favoriteEventActionObservable.subscribe(favoriteObserver)
     }
 
     private fun formatStringForDateAndPlace(event: EventData): String {

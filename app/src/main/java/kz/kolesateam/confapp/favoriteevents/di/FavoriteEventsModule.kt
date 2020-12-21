@@ -1,6 +1,7 @@
 package kz.kolesateam.confapp.favoriteevents.di
 
 import kz.kolesateam.confapp.favoriteevents.data.DefaultFavoritesRepository
+import kz.kolesateam.confapp.favoriteevents.domain.FavoriteEventActionObservable
 import kz.kolesateam.confapp.favoriteevents.domain.FavoritesRepository
 import kz.kolesateam.confapp.favoriteevents.presentation.FavoriteEventsViewModel
 import org.koin.android.ext.koin.androidContext
@@ -20,7 +21,12 @@ val favoriteEventsModule: Module = module {
         DefaultFavoritesRepository(
             context = androidContext(),
             objectMapper = get(),
-            eventApiDataMapper = get()
+            eventApiDataMapper = get(),
+            favoriteEventActionObservable = get()
         )
+    }
+
+    single<FavoriteEventActionObservable> {
+        FavoriteEventActionObservable()
     }
 }

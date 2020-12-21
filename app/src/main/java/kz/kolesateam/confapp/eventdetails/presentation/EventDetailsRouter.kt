@@ -3,7 +3,7 @@ package kz.kolesateam.confapp.eventdetails.presentation
 import android.content.Context
 import android.content.Intent
 
-const val PUSH_NOTIFICATION_MESSAGE = "push_message"
+const val EVENT_ID = "event_id"
 
 class EventDetailsRouter {
 
@@ -11,10 +11,10 @@ class EventDetailsRouter {
         context: Context
     ): Intent = Intent(context, EventDetailsActivity::class.java)
 
-    fun createIntentForNotification(
+    fun createIntentForEventDetails(
         context: Context,
-        messageFromPush: String,
+        eventId: Int,
     ): Intent = createIntent(context).apply {
-        putExtra(PUSH_NOTIFICATION_MESSAGE, messageFromPush)
+        putExtra(EVENT_ID, eventId)
     }
 }
